@@ -136,4 +136,48 @@ namespace GOTHIC_NAMESPACE
 		if (!t_npc) return;
 		t_npc->CloseDeadNpc();
 	}
+
+	static int Npc_GetDistToPos(oCNpc* t_npc, C_POSITION* t_position)
+	{
+		int dist = INT_MAX;
+
+		if (!t_npc || !t_position) return dist;
+
+		zVEC3 pos = zVEC3(
+			(float)t_position->X,
+			(float)t_position->Y,
+			(float)t_position->Z);
+		dist = static_cast<int>(t_npc->GetDistanceToPos2(pos, 1));
+		return dist;
+	}
+
+	static int Npc_GetDistToVob(oCNpc* t_npc, const zSTRING& t_vobName)
+	{
+		int dist = INT_MAX;
+
+		if (!t_npc || t_vobName.IsEmpty()) return dist;
+
+		static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Npc_GetDistToVob");
+
+		zCVob* vob = FindVobByName(t_vobName, log);
+
+		if (!vob) return dist;
+
+		dist = static_cast<int>(t_npc->GetDistanceToVob(*vob));
+		return dist;
+	}
+
+	static zSTRING Npc_GetVisualBody(oCNpc* t_npc)
+	{
+		if (!t_npc) return zSTRING{};
+
+		return t_npc->GetVisualBody();
+	}
+
+	static zSTRING Npc_GetVisualHead(oCNpc* t_npc)
+	{
+		if (!t_npc) return zSTRING{};
+
+		return t_npc->GetVisualHead();
+	}
 }
