@@ -204,7 +204,7 @@ namespace GOTHIC_NAMESPACE
 			zPAR_TYPE_VOID, zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT, zPAR_TYPE_INT, 0);
 		parserMenu->DefineExternal("Menu_GetItemText", Menu_GetItemText_Old,
 			zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT, 0);
-		parserMenu->DefineExternal("Hlp_StrCmp", Hlp_StrCmp_Old,
+		parserMenu->DefineExternal("Hlp_StrCmp", Hlp_StrCmp,
 			zPAR_TYPE_INT, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0);
 	}
 

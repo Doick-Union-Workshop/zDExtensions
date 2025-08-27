@@ -21,11 +21,6 @@ namespace GOTHIC_NAMESPACE
     {
         return static_cast<int>(t_vob != nullptr);
     }
-    
-    static int Hlp_StrCmp(const zSTRING& t_str1, const zSTRING& t_str2)
-    {
-        return static_cast<int>(Str_Upper(t_str1) == Str_Upper(t_str2));
-    }
 
     static oCNpc* Hlp_GetNpcPlunderedByPlayer()
     {
@@ -35,7 +30,15 @@ namespace GOTHIC_NAMESPACE
     }
 
     // For menu parser
-    static int Hlp_StrCmp_Old()
+
+    /*
+    static int Hlp_StrCmp(const zSTRING& t_str1, const zSTRING& t_str2)
+    {
+        return static_cast<int>(Str_Upper(t_str1) == Str_Upper(t_str2));
+    }
+    */
+
+    static int Hlp_StrCmp()
     {
         zSTRING s1, s2;
         const auto par = zCParser::GetParser();
