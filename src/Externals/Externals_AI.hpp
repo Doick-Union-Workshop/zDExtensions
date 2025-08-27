@@ -18,13 +18,9 @@ namespace GOTHIC_NAMESPACE
 		}
 
 		log->Warning("No Waypoint found with specified name: {0}. Looking for Vob...", pointName.ToChar());
-		zCVob* vob = world->SearchVobByName(pointName);
+		zCVob* vob = FindVobByName(t_pointName, log);
 
-		if (!vob)
-		{
-			log->Error("No Vob found with specified name: {0}", pointName.ToChar());
-			return;
-		}
+		if (!vob) return;
 
 		t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOVOB, vob), t_npc);
 	}
@@ -36,14 +32,9 @@ namespace GOTHIC_NAMESPACE
 
 		static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::AI_TurnToVob");
 
-		zSTRING pointName = zSTRING(t_pointName).Upper();
-		zCVob* vob = ogame->GetGameWorld()->SearchVobByName(pointName);
+		zCVob* vob = FindVobByName(t_pointName, log);
 
-		if (!vob)
-		{
-			log->Error("No Vob found with specified name: {0}", pointName.ToChar());
-			return;
-		}
+		if (!vob) return;
 
 		t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOVOB, vob), t_npc);
 	}

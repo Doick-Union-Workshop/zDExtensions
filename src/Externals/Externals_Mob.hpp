@@ -6,18 +6,13 @@ namespace GOTHIC_NAMESPACE
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Mob_SetFocusName");
 
-        zSTRING mobName = zSTRING(t_mobName).Upper();
-        zCVob* vob = ogame->GetGameWorld()->SearchVobByName(mobName);
+        zCVob* vob = FindVobByName(t_mobName, log);
 
-        if (!vob)
-        {
-            log->Error("No Vob found with specified name: {0}", mobName.ToChar());
-            return;
-        }
+        if (!vob) return;
 
         oCMOB* mob = vob->CastTo<oCMOB>();
-        zSTRING focusName = t_focusName;
-        mob->SetName(focusName.Upper());
+        zSTRING focusName = zSTRING(t_focusName).Upper();
+        mob->SetName(focusName);
     }
 
     static zSTRING Mob_GetFocusName(const zSTRING& t_mobName)
@@ -27,14 +22,9 @@ namespace GOTHIC_NAMESPACE
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Mob_GetFocusName");
 
-        zSTRING mobName = zSTRING(t_mobName).Upper();
-        zCVob* vob = ogame->GetGameWorld()->SearchVobByName(mobName);
+        zCVob* vob = FindVobByName(t_mobName, log);
 
-        if (!vob)
-        {
-            log->Error("No Vob found with specified name: {0}", mobName.ToChar());
-            return zSTRING{};
-        }
+        if (!vob) return zSTRING{};
 
         oCMOB* mob = vob->CastTo<oCMOB>();
         return mob->GetName();

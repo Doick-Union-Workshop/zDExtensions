@@ -7,13 +7,9 @@ namespace GOTHIC_NAMESPACE
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
 
         zSTRING name = zSTRING(t_name).Upper();
-        zCMenuItem* menuItem = zCMenuItem::GetByName(name);
+        zCMenuItem* menuItem = FindMenuItemByName(name, log);
 
-        if (!menuItem)
-        {
-            log->Error("Invalid Menu Item: {0}", name.ToChar());
-            return;
-        }
+        if (!menuItem) return;
 
         menuItem->SetText(t_text, t_line, t_drawNow);
 #if ENGINE > Engine_G1A
@@ -31,13 +27,9 @@ namespace GOTHIC_NAMESPACE
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
 
         zSTRING name = zSTRING(t_name).Upper();
-        zCMenuItem* menuItem = zCMenuItem::GetByName(name);
+        zCMenuItem* menuItem = FindMenuItemByName(name, log);
 
-        if (!menuItem)
-        {
-            log->Error("Invalid Menu Item: {0}", name.ToChar());
-            return zSTRING{};
-        }
+        if (!menuItem) return zSTRING{};
 
         zSTRING result = menuItem->GetText(t_line);
 
@@ -65,10 +57,12 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(menuItemText);
         par->GetParameter(menuItemName);
 
-        menuItemName.Upper();
-        zCMenuItem* menuItem = zCMenuItem::GetByName(menuItemName);
-
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText_Old");
+
+        menuItemName.Upper();
+        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, log);
+
+        if (!menuItem) return 0;
 
         if (!menuItem)
         {
@@ -97,6 +91,9 @@ namespace GOTHIC_NAMESPACE
         zCMenuItem* menuItem = zCMenuItem::GetByName(menuItemName);
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
+
+        menuItemName.Upper();
+        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, log);
 
         if (!menuItem)
         {

@@ -1,19 +1,5 @@
 namespace GOTHIC_NAMESPACE
 {
-    void SetPositionWorld(zCVob* t_vob, const zVEC3& t_position)
-    {
-        if (!t_vob || t_position == zVEC3{})
-            return;
-
-        const bool collDetectionStatic = t_vob->collDetectionStatic;
-        const bool collDetectionDynamic = t_vob->collDetectionDynamic;
-        t_vob->collDetectionStatic = 0;
-        t_vob->collDetectionDynamic = 0;
-        t_vob->SetPositionWorld(t_position);
-        t_vob->collDetectionStatic = collDetectionStatic;
-        t_vob->collDetectionDynamic = collDetectionDynamic;
-    }
-
     template<typename T>
     static void Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
@@ -34,7 +20,7 @@ namespace GOTHIC_NAMESPACE
         }
         else
         {
-            zCVob* pointVob = world->SearchVobByName(pointName);
+            zCVob* pointVob = FindVobByName(t_pointName, log);
 
             if (!pointVob)
             {
@@ -48,7 +34,7 @@ namespace GOTHIC_NAMESPACE
 
         vob->SetVobName(vobName);
         world->AddVob(vob);
-        SetPositionWorld(vob, pos);
+        SetVobPositionWorld(vob, pos);
         vob->Release();
     }
 
@@ -67,7 +53,7 @@ namespace GOTHIC_NAMESPACE
         );
         vob->SetVobName(vobName);
         ogame->GetGameWorld()->AddVob(vob);
-        SetPositionWorld(vob, pos);
+        SetVobPositionWorld(vob, pos);
         vob->Release();
     }
 
@@ -77,17 +63,11 @@ namespace GOTHIC_NAMESPACE
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
 
-        oCWorld* world = ogame->GetGameWorld();
-        zSTRING vobName = zSTRING(t_vobName).Upper();
-        zCVob* vob = world->SearchVobByName(vobName);
+        zCVob* vob = FindVobByName(t_vobName, log);
 
-        if (!vob)
-        {
-            log->Error("No Vob found with specified name: {0}", vobName.ToChar());
-            return 0;
-        }
+        if (!vob) return 0;
 
-        world->RemoveVob(vob);
+        ogame->GetGameWorld()->RemoveVob(vob);
         vob->Release();
         return 1;
     }
@@ -121,13 +101,6 @@ namespace GOTHIC_NAMESPACE
     static zSTRING Wld_GetWorldName()
     {
 	    return ogame->GetGameWorld()->GetWorldName();
-    }
-
-    static float GetTimeAsFraction(const int t_hour, const int t_minutes)
-    {
-        int totalMinutesInDay = 24 * 60;
-        int totalMinutes = t_hour * 60 + t_minutes;
-        return static_cast<float>(totalMinutes) / static_cast<float>(totalMinutesInDay);
     }
 
     static int Wld_SetRainTime(const int t_startHr, const int t_startMin, const int t_endHr, const int t_endMin)
@@ -190,14 +163,7 @@ namespace GOTHIC_NAMESPACE
 		skyCtrl->rainFX.outdoorRainFX->UpdateSound(0);
     }
 
-    static zVEC3 GetColorFromString(const zSTRING& s)
-    {
-        return zVEC3((s.PickWord_Old(1, "\r\t ").ToFloat()),
-            (s.PickWord_Old(2, "\r\t ").ToFloat()),
-            (s.PickWord_Old(3, "\r\t ").ToFloat()));
-    }
-
-    static void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color)
+    static void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
     {
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
 
