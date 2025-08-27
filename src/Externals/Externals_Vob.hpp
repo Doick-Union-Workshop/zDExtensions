@@ -1,14 +1,16 @@
 ﻿namespace GOTHIC_NAMESPACE
 {
-    static void Vob_Rotate(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    static void Vob_Rotate(const zSTRING& t_vobName, C_POSITION* t_vobPosition) // Save for compatibility!
+    {
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
+        log->Warning("This external is deprecated. Use 'Vob_RotateWorld' or 'Vob_RotateLocal' instead.");
+    }
+
+    static void Vob_RotateWorld(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
     {
         if (t_vobName.IsEmpty() || !t_vobPosition) return;
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
-
-        if (!wld) return 0;
-
-        zREAL diff = t_vob->GetPositionWorld()[VY] - t_vob->bbox3D.mins[VY];
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
 
         zCVob* vob = FindVobByName(t_vobName, log);
 
@@ -22,6 +24,29 @@
         vob->RotateWorldX((float)t_vobPosition->X);
         vob->RotateWorldY((float)t_vobPosition->Y);
         vob->RotateWorldZ((float)t_vobPosition->Z);
+
+        vob->collDetectionStatic = collDetectionStatic;
+        vob->collDetectionDynamic = collDetectionDynamic;
+    }
+
+    static void Vob_RotateLocal(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    {
+        if (t_vobName.IsEmpty() || !t_vobPosition) return;
+
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
+
+        zCVob* vob = FindVobByName(t_vobName, log);
+
+        if (!vob) return;
+
+        const bool collDetectionStatic = vob->collDetectionStatic;
+        const bool collDetectionDynamic = vob->collDetectionDynamic;
+        vob->collDetectionStatic = 0;
+        vob->collDetectionDynamic = 0;
+
+        vob->RotateLocalX((float)t_vobPosition->X);
+        vob->RotateLocalY((float)t_vobPosition->Y);
+        vob->RotateLocalZ((float)t_vobPosition->Z);
 
         vob->collDetectionStatic = collDetectionStatic;
         vob->collDetectionDynamic = collDetectionDynamic;
@@ -57,8 +82,7 @@
 
     static void Vob_MoveTo(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
-        if (t_vobName.IsEmpty() || t_pointName.IsEmpty())
-            return;
+        if (t_vobName.IsEmpty() || t_pointName.IsEmpty()) return;
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
 
@@ -112,13 +136,39 @@
         vob->collDetectionStatic = staticCollDet;
     }
 
-        if (!vob)
-        {
-            log->Warning("No Vob found with specified name: {0}", vobName.ToChar());
-            return;
-        }
+    static int Vob_GetDistToPos(const zSTRING& t_vobName, C_POSITION* t_position)
+    {
+        int dist = INT_MAX;
 
-        vob->collDetectionDynamic = dynamicCollDet;
-        vob->collDetectionStatic = staticCollDet;
+        if (!t_vobName.IsEmpty() || !t_position) return dist;
+
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
+
+        zCVob* vob = FindVobByName(t_vobName, log);
+
+        if (!vob) return dist;
+
+        zVEC3 pos = zVEC3(
+            (float)t_position->X,
+            (float)t_position->Y,
+            (float)t_position->Z);
+        dist = static_cast<int>(GetVobDistanceToPos2(vob, pos, 1));
+        return dist;
+    }
+
+    static int Vob_GetDistToNpc(const zSTRING& t_vobName, oCNpc* t_npc)
+    {
+        int dist = INT_MAX;
+
+        if (!t_npc || t_vobName.IsEmpty()) return dist;
+
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
+
+        zCVob* vob = FindVobByName(t_vobName, log);
+
+        if (!vob) return dist;
+
+        dist = static_cast<int>(vob->GetDistanceToVob(*t_npc));
+        return dist;
     }
 }
