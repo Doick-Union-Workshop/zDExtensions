@@ -17,8 +17,7 @@ namespace GOTHIC_NAMESPACE
 
     static zSTRING Mob_GetFocusName(const zSTRING& t_mobName)
     {
-        if (t_mobName.IsEmpty())
-            return zSTRING{};
+        if (t_mobName.IsEmpty()) return zSTRING{};
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Mob_GetFocusName");
 
@@ -28,5 +27,19 @@ namespace GOTHIC_NAMESPACE
 
         oCMOB* mob = vob->CastTo<oCMOB>();
         return mob->GetName();
+    }
+
+    static zSTRING Mob_GetScemeName(const zSTRING& t_mobName)
+    {
+        if (t_mobName.IsEmpty()) return zSTRING{};
+
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Mob_GetScemeName");
+
+        zCVob* vob = FindVobByName(t_mobName, log);
+
+        if (!vob) return zSTRING{};
+
+        oCMobInter* mobInter = vob->CastTo<oCMobInter>();
+        return mobInter->GetScemeName();
     }
 }

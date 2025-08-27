@@ -177,6 +177,7 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Vob_SetToFloor),
 		BetterDaedalusExternal(Mob_SetFocusName),
 		BetterDaedalusExternal(Mob_GetFocusName),
+		BetterDaedalusExternal(Mob_GetScemeName),
 		BetterDaedalusExternalWithName(RGBA, Ext_RGBA)
 	);
 
