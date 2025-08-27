@@ -24,7 +24,6 @@ namespace GOTHIC_NAMESPACE
 
             if (!pointVob)
             {
-                log->Error("No Vob found with specified name: {0}", pointName.ToChar());
                 vob->Release();
                 return;
             }
@@ -41,8 +40,7 @@ namespace GOTHIC_NAMESPACE
     template<typename T>
     static void Wld_InsertVobPos(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
     {
-        if (t_vobName.IsEmpty() || !t_vobPosition)
-            return;
+        if (t_vobName.IsEmpty() || !t_vobPosition) return;
 
         zSTRING vobName = zSTRING(t_vobName).Upper();
         T* vob = new T{};

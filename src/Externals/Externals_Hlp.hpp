@@ -45,7 +45,7 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(s1);
         s1.Upper();
         s2.Upper();
-        BOOL result = s1 == s2;
+        int result = s1 == s2;
         par->SetReturn(result);
         return 0;
     }

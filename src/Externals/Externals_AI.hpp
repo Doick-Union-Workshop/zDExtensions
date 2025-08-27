@@ -2,8 +2,7 @@ namespace GOTHIC_NAMESPACE
 {
 	static void AI_TurnToWP(oCNpc* t_npc, const zSTRING& t_pointName)
 	{
-		if (!t_npc || t_pointName.IsEmpty())
-			return;
+		if (!t_npc || t_pointName.IsEmpty()) return;
 
 		static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::AI_TurnToWP");
 
@@ -27,8 +26,7 @@ namespace GOTHIC_NAMESPACE
 
 	static void AI_TurnToVob(oCNpc* t_npc, const zSTRING& t_pointName)
 	{
-		if (!t_npc || t_pointName.IsEmpty())
-			return;
+		if (!t_npc || t_pointName.IsEmpty()) return;
 
 		static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::AI_TurnToVob");
 

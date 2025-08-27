@@ -6,7 +6,7 @@ namespace GOTHIC_NAMESPACE
 
 		zSTRING routine = t_npc->state.GetRoutineName();
 
-		if (routine.Search("RTN_", 0) != 0) // StartsWith with "RTN_"
+		if (!Str_StartsWith(routine, "RTN_"))
 			return zSTRING{};
 		return routine;
 	}
@@ -19,22 +19,20 @@ namespace GOTHIC_NAMESPACE
 		zSTRING prefix = "RTN_";
 		zSTRING suffix = "_" + zSTRING(t_npc->idx);
 
-		if (routine.Search(prefix, 0) == 0) // StartsWith with specified prefix
+		if (Str_StartsWith(routine, prefix))
 			routine.Delete(0, prefix.Length());
 
 		int rtnLen = routine.Length();
-		int suffixPos = rtnLen - suffix.Length();
 
-		if (routine.Search(suffix, suffixPos) == suffixPos) // EndsWith with specified suffix
-			routine.Delete(suffixPos, rtnLen);
+		if (Str_EndsWith(routine, suffix))
+			routine.Delete(rtnLen - suffix.Length(), rtnLen);
 
 		return routine;
 	}
 
 	static void Npc_EquipItem(oCNpc* t_npc, const int t_instance)
 	{
-		if (!t_npc || !t_instance)
-			return;
+		if (!t_npc || !t_instance) return;
 
 		auto par = zCParser::GetParser();
 		zCPar_Symbol* sym = par->GetSymbol(t_instance);
@@ -49,17 +47,16 @@ namespace GOTHIC_NAMESPACE
 	{
 		if (!t_npc) return -1;
 
-		oCAniCtrl_Human* aniCtrl = t_npc->anictrl;
-		zSTRING walkmode = aniCtrl->GetWalkModeString();
-		walkmode.Upper();
+		zSTRING walkMode = t_npc->anictrl->GetWalkModeString();
+		walkMode.Upper();
 
-		if (walkmode == "RUN")
+		if (walkMode == "RUN")
 			return static_cast<int>(ANI_WALKMODE_RUN);
-		else if (walkmode == "WALK")
+		else if (walkMode == "WALK")
 			return static_cast<int>(ANI_WALKMODE_WALK);
-		else if (walkmode == "SNEAK")
+		else if (walkMode == "SNEAK")
 			return static_cast<int>(ANI_WALKMODE_SNEAK);
-		else if (walkmode.IsEmpty())
+		else if (walkMode.IsEmpty())
 			return static_cast<int>(ANI_WALKMODE_WATER);
 
 		return -1;
@@ -68,19 +65,20 @@ namespace GOTHIC_NAMESPACE
 	static int Npc_IsStanding(oCNpc* t_npc)
 	{
 		if (!t_npc) return 0;
+
 		return static_cast<int>(t_npc->anictrl->IsStanding());
 	}
 
 	static int Npc_IsWalking(oCNpc* t_npc)
 	{
 		if (!t_npc) return 0;
+
 		return static_cast<int>(t_npc->anictrl->IsWalking());
 	}
 
 	static int Npc_HasOverlayMds(oCNpc* t_npc, const zSTRING& t_overlay)
 	{
-		if (!t_npc || t_overlay.IsEmpty())
-			return 0;
+		if (!t_npc || t_overlay.IsEmpty()) return 0;
 
 		zSTRING overlay = zSTRING(t_overlay).Upper();
 		return t_npc->activeOverlays.IsInList(overlay);
@@ -88,8 +86,7 @@ namespace GOTHIC_NAMESPACE
 
 	static int Npc_HasTimedOverlayMds(oCNpc* t_npc, const zSTRING& t_overlay)
 	{
-		if (!t_npc || t_overlay.IsEmpty())
-			return 0;
+		if (!t_npc || t_overlay.IsEmpty()) return 0;
 
 		zSTRING overlay = zSTRING(t_overlay).Upper();
 		auto list = t_npc->timedOverlays.GetNextInList();
@@ -116,24 +113,28 @@ namespace GOTHIC_NAMESPACE
 	static void Npc_OpenDeadNpcInventory(oCNpc* t_npc)
 	{
 		if (!t_npc) return;
+
 		t_npc->OpenDeadNpc();
 	}
 
 	static void Npc_CloseInventory(oCNpc* t_npc)
 	{
 		if (!t_npc) return;
+
 		t_npc->CloseInventory();
 	}
 
 	static void Npc_CloseInventorySteal(oCNpc* t_npc)
 	{
 		if (!t_npc) return;
+
 		t_npc->CloseSteal();
 	}
 
 	static void Npc_CloseDeadNpcInventory(oCNpc* t_npc)
 	{
 		if (!t_npc) return;
+
 		t_npc->CloseDeadNpc();
 	}
 

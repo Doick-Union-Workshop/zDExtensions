@@ -12,7 +12,7 @@ namespace GOTHIC_NAMESPACE
         if (!menuItem) return;
 
         menuItem->SetText(t_text, t_line, t_drawNow);
-#if ENGINE > Engine_G1A
+#if ENGINE > Engine_G2
         menuItem->Release();
 #else
         delete menuItem;
@@ -21,8 +21,7 @@ namespace GOTHIC_NAMESPACE
 
     static zSTRING Menu_GetItemText(const zSTRING& t_name, const int t_line)
     {
-        if (t_name.IsEmpty())
-            return zSTRING{};
+        if (t_name.IsEmpty()) return zSTRING{};
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
 
@@ -38,7 +37,7 @@ namespace GOTHIC_NAMESPACE
             log->Warning("Menu item '{0}' has no value at {1} text line.", name.ToChar(), t_line);
         }
 
-#if ENGINE > Engine_G1A
+#if ENGINE > Engine_G2
         menuItem->Release();
 #else
         delete menuItem;
@@ -50,8 +49,10 @@ namespace GOTHIC_NAMESPACE
     static int Menu_SetItemText_Old()
     {
         auto const par = zCParser::GetParser();
+
         zSTRING menuItemName, menuItemText;
 		int line, drawNow;
+
         par->GetParameter(drawNow);
         par->GetParameter(line);
         par->GetParameter(menuItemText);
@@ -64,17 +65,11 @@ namespace GOTHIC_NAMESPACE
 
         if (!menuItem) return 0;
 
-        if (!menuItem)
-        {
-            log->Error("Invalid Menu Item: {0}", menuItemName.ToChar());
-            return 0;
-        }
-
         menuItem->SetText(menuItemText, line, drawNow);
-#if ENGINE == Engine_G2A
+#if ENGINE >= Engine_G2
         menuItem->Release();
 #else
-        menuItem = NULL;
+        delete menuItem;
 #endif
         return 0;
     }
@@ -83,12 +78,12 @@ namespace GOTHIC_NAMESPACE
     {
         static zSTRING result = "";
         auto const par = zCParser::GetParser();
+
         zSTRING menuItemName;
         int line;
+
         par->GetParameter(line);
         par->GetParameter(menuItemName);
-        menuItemName = menuItemName.Upper();
-        zCMenuItem* menuItem = zCMenuItem::GetByName(menuItemName);
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
 
@@ -97,7 +92,6 @@ namespace GOTHIC_NAMESPACE
 
         if (!menuItem)
         {
-            log->Error("Invalid Menu Item: {0}", menuItemName.ToChar());
             par->SetReturn((zSTRING&)result);
             return 0;
         }
@@ -105,14 +99,12 @@ namespace GOTHIC_NAMESPACE
         result = (zSTRING&)menuItem->GetText(line);
 
         if (result.IsEmpty())
-        {
             log->Warning("Menu item '{0}' has no value at {1} text line.", menuItemName.ToChar(), line);
-        }
 
-#if ENGINE == Engine_G2A
+#if ENGINE >= Engine_G2
         menuItem->Release();
 #else
-        menuItem = NULL;
+        delete menuItem;
 #endif
         par->SetReturn(result);
         return 0;
