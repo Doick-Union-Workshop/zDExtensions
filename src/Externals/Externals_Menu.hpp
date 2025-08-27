@@ -6,7 +6,7 @@ namespace GOTHIC_NAMESPACE
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
 
-        zSTRING name = zSTRING(t_name).Upper();
+        zSTRING name = Str_Upper(t_name);
         zCMenuItem* menuItem = FindMenuItemByName(name, log);
 
         if (!menuItem) return;
@@ -25,7 +25,7 @@ namespace GOTHIC_NAMESPACE
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
 
-        zSTRING name = zSTRING(t_name).Upper();
+        zSTRING name = Str_Upper(t_name);
         zCMenuItem* menuItem = FindMenuItemByName(name, log);
 
         if (!menuItem) return zSTRING{};

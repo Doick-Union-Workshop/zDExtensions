@@ -2,27 +2,43 @@ namespace GOTHIC_NAMESPACE
 {
 	static zSTRING Str_Upper(const zSTRING& t_str)
 	{
+		if (t_str.IsEmpty()) return zSTRING{};
+
 		return zSTRING(t_str).Upper();
 	}
 
 	static zSTRING Str_Lower(const zSTRING& t_str)
 	{
+		if (t_str.IsEmpty()) return zSTRING{};
+
 		return zSTRING(t_str).Lower();
 	}
 
 	static zSTRING Str_Capitel(const zSTRING& t_str)
 	{
+		if (t_str.IsEmpty()) return zSTRING{};
+
 		return zSTRING(t_str).UpperFirstLowerRest();
 	}
 
-	static zSTRING Str_StartsWith(const zSTRING& t_str, const zSTRING& t_prefix)
+	static int Str_StartsWith(const zSTRING& t_str, const zSTRING& t_prefix)
 	{
-		return t_str.Search(t_prefix, 0) == 0;
+		if (t_str.IsEmpty() || t_prefix.IsEmpty()) return 0;
+
+		zSTRING str = Str_Upper(t_str);
+		zSTRING prefix = Str_Upper(t_prefix);
+
+		return str.Search(prefix, 0) == 0;
 	}
 
-	static zSTRING Str_EndsWith(const zSTRING& t_str, const zSTRING& t_suffix)
+	static int Str_EndsWith(const zSTRING& t_str, const zSTRING& t_suffix)
 	{
-		int suffixPos = t_str.Length() - t_suffix.Length();
-		return t_str.Search(t_suffix, suffixPos) == suffixPos;
+		if (t_str.IsEmpty() || t_suffix.IsEmpty()) return 0;
+
+		zSTRING str = Str_Upper(t_str);
+		zSTRING suffix = Str_Upper(t_suffix);
+		int suffixPos = str.Length() - suffix.Length();
+
+		return str.Search(suffix, suffixPos) == suffixPos;
 	}
 }

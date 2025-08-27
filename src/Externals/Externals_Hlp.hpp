@@ -24,9 +24,7 @@ namespace GOTHIC_NAMESPACE
     
     static int Hlp_StrCmp(const zSTRING& t_str1, const zSTRING& t_str2)
     {
-        zSTRING str1 = zSTRING(t_str1).Upper();
-        zSTRING str2 = zSTRING(t_str2).Upper();
-        return static_cast<int>(str1 == str2);
+        return static_cast<int>(Str_Upper(t_str1) == Str_Upper(t_str2));
     }
 
     static oCNpc* Hlp_GetNpcPlunderedByPlayer()
@@ -41,11 +39,11 @@ namespace GOTHIC_NAMESPACE
     {
         zSTRING s1, s2;
         const auto par = zCParser::GetParser();
+
         par->GetParameter(s2);
         par->GetParameter(s1);
-        s1.Upper();
-        s2.Upper();
-        int result = s1 == s2;
+
+        int result = Str_Upper(s1) == Str_Upper(s2);
         par->SetReturn(result);
         return 0;
     }

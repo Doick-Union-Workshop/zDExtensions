@@ -15,10 +15,10 @@
 // Externals
 #include "Externals/Structs.hpp"
 #include "Externals/Helpers.hpp"
+#include "Externals/Externals_Str.hpp"
 #include "Externals/Externals_AI.hpp"
 #include "Externals/Externals_Cast.hpp"
 #include "Externals/Externals_Hlp.hpp"
-#include "Externals/Externals_Str.hpp"
 #include "Externals/Externals_Log.hpp"
 #include "Externals/Externals_Menu.hpp"
 #include "Externals/Externals_Npc.hpp"

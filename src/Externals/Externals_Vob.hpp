@@ -62,7 +62,7 @@
 
         if (!vob) return;
 
-        zSTRING visualName = zSTRING(t_visualName).Upper();
+        zSTRING visualName = Str_Upper(t_visualName);
         vob->SetVisual(zCVisual::LoadVisual(visualName));
     }
 
@@ -90,7 +90,7 @@
 
         if (!vob) return;
 
-        zSTRING pointName = zSTRING(t_pointName).Upper();
+        zSTRING pointName = Str_Upper(t_pointName);
         oCWorld* world = ogame->GetGameWorld();
         zCWaypoint* wp = world->wayNet->GetWaypoint(pointName);
         zVEC3 pos;

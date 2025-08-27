@@ -80,7 +80,7 @@ namespace GOTHIC_NAMESPACE
 	{
 		if (!t_npc || t_overlay.IsEmpty()) return 0;
 
-		zSTRING overlay = zSTRING(t_overlay).Upper();
+		zSTRING overlay = Str_Upper(t_overlay);
 		return t_npc->activeOverlays.IsInList(overlay);
 	}
 
@@ -88,7 +88,7 @@ namespace GOTHIC_NAMESPACE
 	{
 		if (!t_npc || t_overlay.IsEmpty()) return 0;
 
-		zSTRING overlay = zSTRING(t_overlay).Upper();
+		zSTRING overlay = Str_Upper(t_overlay);
 		auto list = t_npc->timedOverlays.GetNextInList();
 
 		while (list)
@@ -106,8 +106,8 @@ namespace GOTHIC_NAMESPACE
 	{
 		if (!t_npc || t_point.IsEmpty()) return;
 
-		zSTRING point = t_point;
-		t_npc->BeamTo(point.Upper());
+		zSTRING point = Str_Upper(t_point);
+		t_npc->BeamTo(point);
 	}
 
 	static void Npc_OpenDeadNpcInventory(oCNpc* t_npc)

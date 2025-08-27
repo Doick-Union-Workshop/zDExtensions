@@ -8,8 +8,8 @@ namespace GOTHIC_NAMESPACE
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
 
-        zSTRING vobName = zSTRING(t_vobName).Upper();
-        zSTRING pointName = zSTRING(t_pointName).Upper();
+        zSTRING vobName = Str_Upper(t_vobName);
+        zSTRING pointName = Str_Upper(t_pointName);
         T* vob = new T{};
         oCWorld* world = ogame->GetGameWorld();
         zCWaypoint* wp = world->wayNet->GetWaypoint(pointName);
@@ -42,7 +42,7 @@ namespace GOTHIC_NAMESPACE
     {
         if (t_vobName.IsEmpty() || !t_vobPosition) return;
 
-        zSTRING vobName = zSTRING(t_vobName).Upper();
+        zSTRING vobName = Str_Upper(t_vobName);
         T* vob = new T{};
         zVEC3 pos = zVEC3(
             (float)t_vobPosition->X,

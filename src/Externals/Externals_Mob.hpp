@@ -11,7 +11,7 @@ namespace GOTHIC_NAMESPACE
         if (!vob) return;
 
         oCMOB* mob = vob->CastTo<oCMOB>();
-        zSTRING focusName = zSTRING(t_focusName).Upper();
+        zSTRING focusName = Str_Upper(t_focusName);
         mob->SetName(focusName);
     }
 
