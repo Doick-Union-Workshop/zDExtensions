@@ -31,4 +31,19 @@ namespace GOTHIC_NAMESPACE
 			break;
 		}
 	}
+	
+	inline bool CheckIfIndexExists(zCParser* const t_parser, const zSTRING& t_indexName, Utils::Logger* t_logger = nullptr)
+	{
+		if (!t_parser || t_indexName.IsEmpty())
+			return false;
+
+		const int index = t_parser->GetIndex(t_indexName);
+
+		if (index > 0) return true;
+
+		if (t_logger)
+			LogDaedalusCallError(t_logger, t_indexName, eCallFuncError::WRONG_SYMBOL, Utils::LoggerLevel::Warn);
+
+		return false;
+	}
 }
