@@ -181,4 +181,13 @@ namespace GOTHIC_NAMESPACE
 
 		return t_npc->GetVisualHead();
 	}
+
+	static zSTRING Npc_GetPortalRoom(oCNpc* t_npc)
+	{
+		if (!t_npc) return zSTRING{};
+
+		if (auto portal = t_npc->GetSectorNameVobIsIn())
+			return *portal;
+		return zSTRING{};
+	}
 }

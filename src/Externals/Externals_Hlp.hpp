@@ -3,8 +3,7 @@ namespace GOTHIC_NAMESPACE
     static oCItem* Hlp_GetItem(const int t_instance)
     {
         oCItem* item = nullptr;
-        const auto par = zCParser::GetParser();
-        zCPar_Symbol* sym = par->GetSymbol(t_instance);
+        zCPar_Symbol* sym = parser->GetSymbol(t_instance);
 
         if (!sym) return item;
 

@@ -165,4 +165,19 @@
         dist = static_cast<int>(vob->GetDistanceToVob(*t_npc));
         return dist;
     }
+
+    static zSTRING Vob_GetPortalRoom(const zSTRING& t_vobName)
+    {
+        if (!t_vobName.IsEmpty()) return zSTRING{};
+
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
+
+        zCVob* vob = FindVobByName(t_vobName, log);
+
+        if (!vob) return zSTRING{};
+
+        if (auto portal = vob->GetSectorNameVobIsIn())
+            return *portal;
+        return zSTRING{};
+    }
 }
