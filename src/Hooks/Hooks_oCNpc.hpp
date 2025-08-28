@@ -5,6 +5,9 @@ namespace GOTHIC_NAMESPACE
     auto Hook_oCNpc_EV_DropVob = Union::CreateHook(reinterpret_cast<void*>(0x007538C0), &oCNpc::Hook_EV_DropVob);
     int __thiscall oCNpc::Hook_EV_DropVob(oCMsgManipulate* t_csg)
     {
+        if (!IsHookAPIRegistered(C_PLAYER_CAN_DROP_ITEM))
+            return (this->*Hook_oCNpc_EV_DropVob)(t_csg);
+
         static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
         zCModel* model = GetModel();
         SetBodyState(BS_INVENTORY);
@@ -16,17 +19,14 @@ namespace GOTHIC_NAMESPACE
             oCItem* itm = dynamic_cast<oCItem*>(t_csg->targetVob);
             int canDropItem = 1;
 
-            if (IsHookAPIRegistered(C_PLAYER_CAN_DROP_ITEM))
-            {
-                parser->SetInstance("ITEM", itm);
-                parser->SetInstance("SELF", this);
-                const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_DROP_ITEM), {});
+            parser->SetInstance("ITEM", itm);
+            parser->SetInstance("SELF", this);
+            const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_DROP_ITEM), {});
 
-                if (result.has_value())
-                    canDropItem = *result;
-                else
-                    LogDaedalusCallError(log, C_PLAYER_CAN_DROP_ITEM, result.error());
-            }
+            if (result.has_value())
+                canDropItem = *result;
+            else
+                LogDaedalusCallError(log, C_PLAYER_CAN_DROP_ITEM, result.error());
 
             if (!canDropItem)
             {
@@ -69,8 +69,13 @@ namespace GOTHIC_NAMESPACE
     auto Hook_oCNpc_OpenDeadNpc = Union::CreateHook(reinterpret_cast<void*>(0x00762970), &oCNpc::Hook_OpenDeadNpc);
     void __thiscall oCNpc::Hook_OpenDeadNpc(void)
     {
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
+        if (!IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
+        {
+            (this->*Hook_oCNpc_OpenDeadNpc)();
+            return;
+        }
 
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
         stealnpc = GetFocusNpc();
 
         if (stealnpc)
@@ -79,17 +84,14 @@ namespace GOTHIC_NAMESPACE
             {
                 int canLootNpc = 1;
 
-                if (IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
-                {
-                    parser->SetInstance("OTHER", stealnpc);
-                    parser->SetInstance("SELF", this);
-                    const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_LOOT_NPC), {});
+                parser->SetInstance("OTHER", stealnpc);
+                parser->SetInstance("SELF", this);
+                const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_LOOT_NPC), {});
 
-                    if (result.has_value())
-                        canLootNpc = *result;
-                    else
-                        LogDaedalusCallError(log, C_PLAYER_CAN_LOOT_NPC, result.error());
-                }
+                if (result.has_value())
+                    canLootNpc = *result;
+                else
+                    LogDaedalusCallError(log, C_PLAYER_CAN_LOOT_NPC, result.error());
 
                 if (!canLootNpc)
                 {
@@ -127,6 +129,12 @@ namespace GOTHIC_NAMESPACE
     auto Hook_oCNpc_CloseDeadNpc = Union::CreateHook(reinterpret_cast<void*>(0x00762B40), &oCNpc::Hook_CloseDeadNpc);
     void __thiscall oCNpc::Hook_CloseDeadNpc(void)
     {
+        if (!IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
+        {
+            (this->*Hook_oCNpc_CloseDeadNpc)();
+            return;
+        }
+
         if (!npcContainer) return;
 
         CloseInventory();

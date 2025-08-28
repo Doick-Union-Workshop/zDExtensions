@@ -5,6 +5,9 @@ namespace GOTHIC_NAMESPACE
     auto Hook_oCViewDialogTrade_OnTransferLeft = Union::CreateHook(reinterpret_cast<void*>(0x0068B840), &oCViewDialogTrade::Hook_OnTransferLeft);
     int __fastcall oCViewDialogTrade::Hook_OnTransferLeft(short t_amount)
     {
+        if (!IsHookAPIRegistered(C_PLAYER_CAN_SELL_ITEM))
+            return (this->*Hook_oCViewDialogTrade_OnTransferLeft)(t_amount);
+
         static Utils::Logger* log = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
         oCItem* pItemChosen = NULL;
 
@@ -34,18 +37,15 @@ namespace GOTHIC_NAMESPACE
 
         int canSellItem = 1;
 
-        if (IsHookAPIRegistered(C_PLAYER_CAN_SELL_ITEM))
-        {
-            parser->SetInstance("ITEM", item);
-            parser->SetInstance("SELF", this->NpcRight); // Player
-            parser->SetInstance("OTHER", this->NpcLeft); // Trader
-            const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_SELL_ITEM), {});
+        parser->SetInstance("ITEM", item);
+        parser->SetInstance("SELF", this->NpcRight); // Player
+        parser->SetInstance("OTHER", this->NpcLeft); // Trader
+        const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_SELL_ITEM), {});
 
-            if (result.has_value())
-                canSellItem = *result;
-            else
-                LogDaedalusCallError(log, C_PLAYER_CAN_SELL_ITEM, result.error());
-        }
+        if (result.has_value())
+            canSellItem = *result;
+        else
+            LogDaedalusCallError(log, C_PLAYER_CAN_SELL_ITEM, result.error());
 
         if (!canSellItem)
         {
