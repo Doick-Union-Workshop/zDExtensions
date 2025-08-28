@@ -47,8 +47,7 @@ namespace GOTHIC_NAMESPACE
         zVEC3 pos = zVEC3(
             (float)t_vobPosition->X,
             (float)t_vobPosition->Y,
-            (float)t_vobPosition->Z
-        );
+            (float)t_vobPosition->Z);
         vob->SetVobName(vobName);
         ogame->GetGameWorld()->AddVob(vob);
         SetVobPositionWorld(vob, pos);
@@ -77,23 +76,6 @@ namespace GOTHIC_NAMESPACE
         vobPosition->Y = t_posY;
         vobPosition->Z = t_posZ;
         return vobPosition;
-    }
-
-    static zSTRING Wld_GetPlayerPortalRoom()
-    {
-        if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal)
-            return *name;
-        return zSTRING{};
-    }
-
-    static int Wld_IsDay()
-    {
-        return ogame->GetWorldTimer()->IsDay(); // 6,30-18,30
-    }
-
-    static int Wld_IsNight()
-    {
-		return ogame->GetWorldTimer()->IsNight(); // 18,30-6,30
     }
 
     static zSTRING Wld_GetWorldName()
