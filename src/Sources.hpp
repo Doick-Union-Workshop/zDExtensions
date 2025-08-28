@@ -7,6 +7,7 @@
 
 // Hooks
 #include "Hooks/Globals.hpp"
+#include "Hooks/Helpers.hpp"
 #include "Hooks/Hooks_oCMenuSavegame.hpp"
 #include "Hooks/Hooks_oCMenu_Status.hpp"
 #include "Hooks/Hooks_oCNpc.hpp"

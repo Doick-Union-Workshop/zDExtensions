@@ -16,7 +16,7 @@ namespace GOTHIC_NAMESPACE
             oCItem* itm = dynamic_cast<oCItem*>(t_csg->targetVob);
             int canDropItem = 1;
 
-            if (CheckIfIndexExists(parser, C_PLAYER_CAN_DROP_ITEM, log))
+            if (IsHookAPIRegistered(C_PLAYER_CAN_DROP_ITEM))
             {
                 parser->SetInstance("ITEM", itm);
                 parser->SetInstance("SELF", this);
@@ -25,7 +25,7 @@ namespace GOTHIC_NAMESPACE
                 if (result.has_value())
                     canDropItem = *result;
                 else
-                    LogDaedalusCallError(log, C_PLAYER_CAN_DROP_ITEM, result.error(), Utils::LoggerLevel::Warn);
+                    LogDaedalusCallError(log, C_PLAYER_CAN_DROP_ITEM, result.error());
             }
 
             if (!canDropItem)
@@ -79,7 +79,7 @@ namespace GOTHIC_NAMESPACE
             {
                 int canLootNpc = 1;
 
-                if (CheckIfIndexExists(parser, C_PLAYER_CAN_LOOT_NPC, log))
+                if (IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
                 {
                     parser->SetInstance("OTHER", stealnpc);
                     parser->SetInstance("SELF", this);
@@ -88,7 +88,7 @@ namespace GOTHIC_NAMESPACE
                     if (result.has_value())
                         canLootNpc = *result;
                     else
-                        LogDaedalusCallError(log, C_PLAYER_CAN_LOOT_NPC, result.error(), Utils::LoggerLevel::Warn);
+                        LogDaedalusCallError(log, C_PLAYER_CAN_LOOT_NPC, result.error());
                 }
 
                 if (!canLootNpc)

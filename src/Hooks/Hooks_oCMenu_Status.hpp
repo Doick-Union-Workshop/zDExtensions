@@ -12,13 +12,14 @@ namespace GOTHIC_NAMESPACE
 	{
 		(this->*Hook_oCMenu_Status_InitForDisplay)();
 
-		static Utils::Logger* log = Utils::CreateLogger("zDExt::oCMenu_Status::InitForDisplay");
+		if (!IsHookAPIRegistered(MENU_STATUS_API)) return;
 
+		static Utils::Logger* log = Utils::CreateLogger("zDExt::oCMenu_Status::InitForDisplay");
 		const auto api = DaedalusCall(parser, DCFunction(MENU_STATUS_API), {});
 
 		if (api.has_value())
 			log->Info("Successfully called {0}", MENU_STATUS_API.ToChar());
 		else
-			LogDaedalusCallError(log, MENU_STATUS_API, api.error(), Utils::LoggerLevel::Warn);
+			LogDaedalusCallError(log, MENU_STATUS_API, api.error());
 	}
 }

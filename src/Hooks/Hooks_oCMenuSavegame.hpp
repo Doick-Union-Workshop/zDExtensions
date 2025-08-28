@@ -12,13 +12,14 @@ namespace GOTHIC_NAMESPACE
 	{
 		(this->*Hook_oCMenuSavegame_HandleSlotChange)(t_key);
 
-		static Utils::Logger* log = Utils::CreateLogger("zDExt::oCMenuSavegame::HandleSlotChange");
+		if (!IsHookAPIRegistered(MENU_SAVELOADGAME_API)) return;
 
+		static Utils::Logger* log = Utils::CreateLogger("zDExt::oCMenuSavegame::HandleSlotChange");
 		const auto api = DaedalusCall(parserMenu, DCFunction(MENU_SAVELOADGAME_API), {});
 
 		if (api.has_value())
 			log->Info("Successfully called {0} for save slot nr {1}", MENU_SAVELOADGAME_API.ToChar(), t_key);
 		else
-			LogDaedalusCallError(log, MENU_SAVELOADGAME_API, api.error(), Utils::LoggerLevel::Warn);
+			LogDaedalusCallError(log, MENU_SAVELOADGAME_API, api.error());
 	}
 }

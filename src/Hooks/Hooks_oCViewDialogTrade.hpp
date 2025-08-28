@@ -34,7 +34,7 @@ namespace GOTHIC_NAMESPACE
 
         int canSellItem = 1;
 
-        if (CheckIfIndexExists(parser, C_PLAYER_CAN_SELL_ITEM, log))
+        if (IsHookAPIRegistered(C_PLAYER_CAN_SELL_ITEM))
         {
             parser->SetInstance("ITEM", item);
             parser->SetInstance("SELF", this->NpcRight); // Player
@@ -44,7 +44,7 @@ namespace GOTHIC_NAMESPACE
             if (result.has_value())
                 canSellItem = *result;
             else
-                LogDaedalusCallError(log, C_PLAYER_CAN_SELL_ITEM, result.error(), Utils::LoggerLevel::Warn);
+                LogDaedalusCallError(log, C_PLAYER_CAN_SELL_ITEM, result.error());
         }
 
         if (!canSellItem)
