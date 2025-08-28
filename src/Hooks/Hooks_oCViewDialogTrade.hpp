@@ -32,13 +32,9 @@ namespace GOTHIC_NAMESPACE
             return 1;
         }
 
-        int conditionFunc = parser->GetIndex(C_PLAYER_CAN_SELL_ITEM);
         int canSellItem = 1;
 
-        if (conditionFunc <= 0) {
-            LogDaedalusCallError(log, C_PLAYER_CAN_SELL_ITEM, eCallFuncError::WRONG_SYMBOL, Utils::LoggerLevel::Warn);
-        }
-        else
+        if (CheckIfIndexExists(parser, C_PLAYER_CAN_SELL_ITEM, log))
         {
             parser->SetInstance("ITEM", item);
             parser->SetInstance("SELF", this->NpcRight); // Player

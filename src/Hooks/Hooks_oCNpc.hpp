@@ -14,14 +14,9 @@ namespace GOTHIC_NAMESPACE
             if (t_csg->IsInUse()) return 1;
 
             oCItem* itm = dynamic_cast<oCItem*>(t_csg->targetVob);
-
-            int conditionFunc = parser->GetIndex(C_PLAYER_CAN_DROP_ITEM);
             int canDropItem = 1;
 
-            if (conditionFunc <= 0) {
-                LogDaedalusCallError(log, C_PLAYER_CAN_DROP_ITEM, eCallFuncError::WRONG_SYMBOL, Utils::LoggerLevel::Warn);
-            }
-            else
+            if (CheckIfIndexExists(parser, C_PLAYER_CAN_DROP_ITEM, log))
             {
                 parser->SetInstance("ITEM", itm);
                 parser->SetInstance("SELF", this);
@@ -68,6 +63,77 @@ namespace GOTHIC_NAMESPACE
         }
 
         return 0;
+    }
+
+    // G2A: 0x00762970 public: void __thiscall oCNpc::OpenDeadNpc(void)
+    auto Hook_oCNpc_OpenDeadNpc = Union::CreateHook(reinterpret_cast<void*>(0x00762970), &oCNpc::Hook_OpenDeadNpc);
+    void __thiscall oCNpc::Hook_OpenDeadNpc(void)
+    {
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
+
+        stealnpc = GetFocusNpc();
+
+        if (stealnpc)
+        {
+            if (stealnpc->IsDead() || stealnpc->IsUnconscious())
+            {
+                int canLootNpc = 1;
+
+                if (CheckIfIndexExists(parser, C_PLAYER_CAN_LOOT_NPC, log))
+                {
+                    parser->SetInstance("OTHER", stealnpc);
+                    parser->SetInstance("SELF", this);
+                    const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_LOOT_NPC), {});
+
+                    if (result.has_value())
+                        canLootNpc = *result;
+                    else
+                        LogDaedalusCallError(log, C_PLAYER_CAN_LOOT_NPC, result.error(), Utils::LoggerLevel::Warn);
+                }
+
+                if (!canLootNpc)
+                {
+                    log->Info("Cannot loot NPC: {0}", stealnpc->GetInstanceName().ToChar());
+                    SetFocusVob(nullptr);
+                    return;
+                }
+
+                if (npcContainer)
+                {
+                    delete npcContainer;
+                    npcContainer = nullptr;
+                }
+
+                npcContainer = zNEW(oCNpcContainer)();
+                npcContainer->SetOwner(stealnpc);
+
+                if (!npcContainer->IsEmpty())
+                {
+                    zSTRING containerName = stealnpc->GetName(0);
+                    npcContainer->SetName(containerName);
+                    npcContainer->Open(0, 0, INV_MODE_PLUNDER);
+                    OpenInventory(INV_MODE_DEFAULT);
+                    npcContainer->Activate();
+                    oCNpc::game_mode = NPC_GAME_PLUNDER;
+                    return;
+                }
+            }
+        }
+
+        GetEM()->OnMessage(zNEW(oCMsgManipulate)(oCMsgManipulate::EV_CALLSCRIPT, PLAYER_PLUNDER_IS_EMPTY, -1), this);
+    }
+
+    // G2A: 0x00762B40 public: void __thiscall oCNpc::CloseDeadNpc(void)
+    auto Hook_oCNpc_CloseDeadNpc = Union::CreateHook(reinterpret_cast<void*>(0x00762B40), &oCNpc::Hook_CloseDeadNpc);
+    void __thiscall oCNpc::Hook_CloseDeadNpc(void)
+    {
+        if (!npcContainer) return;
+
+        CloseInventory();
+        npcContainer->Close();
+        delete (npcContainer);
+        npcContainer = nullptr;
+        oCNpc::game_mode = NPC_GAME_NORMAL;
     }
 #endif
 }
