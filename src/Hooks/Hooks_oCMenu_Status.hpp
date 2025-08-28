@@ -1,7 +1,5 @@
 namespace GOTHIC_NAMESPACE
 {
-	static const zSTRING MENU_STATUS_API = "MENU_STATUS_API";
-
 	// G1:	0x0042C420 public: void __thiscall oCMenu_Status::InitForDisplay(void)
 	// G1A:	0x00480370 public: void __thiscall oCMenu_Status::InitForDisplay(void)
 	// G2:	0x0047C8F0 public: void __thiscall oCMenu_Status::InitForDisplay(void)
