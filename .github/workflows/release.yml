@@ -1,8 +1,17 @@
 name: "Plugin CI/CD"
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Plugin version'
+        type: string
+        required: true
+      branch:
+        description: 'Branch to push version change to'
+        required: false
+        type: string
+        default: main
 
 permissions:
   contents: write
@@ -20,21 +29,19 @@ jobs:
 
       - name: Set plugin version
         shell: pwsh
-        run: |
-          $version = "${{ github.ref_name }}"
-          & ./set-version.ps1 $version
+        run: ./set-version.ps1 "${{ inputs.version }}"
 
       - name: Commit version change
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git fetch --all
-          git checkout main
+          git checkout ${{ inputs.branch }}
           $changes = $(git status -s)
           if ($changes) {
             git add CMakeLists.txt
-            git commit -m "chore: bump version to ${{ github.ref_name }}"
-            git push origin main
+            git commit -m "chore: bump version to ${{ inputs.version }} [skip ci]"
+            git push origin ${{ inputs.branch }}
           } else {
             echo "No changes to commit"
           }
@@ -57,20 +64,9 @@ jobs:
           echo "plugin_dll=$plugin_dll" >> $env:GITHUB_ENV
           echo "Found plugin path: $plugin_dll"
 
-      - name: Generate changelog
-        id: changelog
-        if: ${{ github.event.release.body == '' }}
-        run: |
-          $lastTag = git describe --tags --abbrev=0 2>$null
-          if ([string]::IsNullOrEmpty($lastTag)) {
-            $body = "- Initial release"
-          } else {
-            $body = git log --pretty=format:"- %s" "$lastTag..HEAD"
-          }
-          echo "body=$body" >> $env:GITHUB_OUTPUT
-
-      - name: Upload plugin
+      - name: Create release and upload plugin
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ steps.changelog.outputs.body }}
+          tag_name: ${{ inputs.version }}
+          name: ${{ inputs.version }}
           files: ${{ env.plugin_dll }}
