@@ -88,18 +88,18 @@ if (Str_EndsWith("CHEST_BIG", "_BIG"))
 
 ## Str_Cut
 
-Returns a substring (slice) of a string between two given indices.
+Gets a substring (slice) of a string between two given indices.
 
 ```dae
 func string Str_Cut(var string str, var int startIndex, var int length) {};
 ```
 
 - `str` – string to cut
-- `startIndex` – the starting index (0-based)
+- `startIndex` – the starting index
 - `length` – number of characters to extract
 - `return` - extracted substring. If the input is invalid, returns an empty string
 
 ```dae title="Example usage"
 var string part;
-part = Str_Cut("CHEST_BIG", 6, 3); // Returns "BIG"
+part = Str_Cut("CHEST_BIG", 5, 4); // Returns "CHEST"
 ```
