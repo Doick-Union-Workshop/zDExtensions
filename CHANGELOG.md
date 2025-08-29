@@ -1,24 +1,19 @@
-- chore: update changelog and contributing guidelines
-- build: set version to 1.0.0 and change project name
-- docs: rewrite README
-- refactor: move zDDocs to docs directory
-- refactor: merge zDExternals with zDHooks
-
-[Hooks]
-- chore: bump version to 1.0.1
-- docs: add contributing guidelines
-- docs: rewrite README
-- fix: hook creation type casting for item drop and trade transfer hooks
-- feat: add DaedalusCall by @bogu9821
-- build: require minimum version 3.25 and set CXX_STANDARD to 23
-
-[Externals]
-- refactor: move BDE to utils and update Sources.hpp
-- style: correct displaying characters in utils externals
-- docs: add contributing guidelines
-- docs: rewrite README
-- docs: update changelog
-- chore: changelog and bump plugin version
-- refactor: simplify string handling in project and improve debug logs
-- refactor: add more parameters in menu externals
-- fix: correct order of value assignment in Vob_SetCollisionDetection
+- refactor(hooks): reduce logging info and improve hook helpers
+- feat(externals): add Str_Cut
+- refactor(hooks): use unhooked functions if API isnt't registered
+- feat(hooks): add hooks registration
+- feat(hooks): add hook to check if player can loot npc
+- feat(hooks): add check if index exists
+- refactor(hooks): add hook globals
+- feat(externals): add Npc_GetPortalRoom and Vob_GetPortalRoom
+- refactor(externals): remove Vob_Rotate and some world externals
+- refactor(externals): rename Hlp_StrCmp duplicate for menu parser
+- refactor(externals): add case insensitivity to string externals and check if they are empty
+- docs: update README
+- refactor(externals): use string funcs in npc externals and do some styling fixes
+- feat(externals): add new vob externals and divide Vob_Rotate
+- feat(externals): add new mob external
+- feat(externals): add new npc externals
+- feat(externals): add new string externals
+- refactor(externals): seperate helpers
+- docs: update docs link in README
