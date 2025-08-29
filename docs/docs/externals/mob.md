@@ -1,4 +1,4 @@
-# MOB - interactive object functions
+# MOB – interactive object functions
 
 ## Mob_SetFocusName
 
@@ -24,7 +24,7 @@ func string Mob_GetFocusName(var string mobName) {};
 ```
 
 - `mobName` – name of the mob (interactive vob) in the game world
-- `return` - focus name of oCMOB
+- `return` – focus name of oCMOB
 
 ```dae title="Example usage"
 var string focusName;
@@ -45,7 +45,7 @@ func string Mob_GetScemeName(var string mobName) {};
 ```
 
 - `mobName` – name of the mob (interactive vob) in the game world
-- `return` - sceme name. If the mob is not found or is not an interactive object, it's an empty string
+- `return` – sceme name. If the mob is not found or is not an interactive object, it's an empty string
 
 ```dae title="Example usage"
 var string sceme;

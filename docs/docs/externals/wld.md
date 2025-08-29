@@ -1,4 +1,4 @@
-# WLD - world manipulation functions
+# WLD – world manipulation functions
 
 ## Wld_InsertVob
 
@@ -8,8 +8,8 @@ Inserts a vob into the world at the position of a given waypoint, freepoint, or 
 func void Wld_InsertVob(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertVob("SECRET_CHEST", "WP_START");
@@ -23,8 +23,8 @@ Inserts a static interactive object (mob) into the world at a given location.
 func void Wld_InsertMob(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertMob("SIGNPOST", "WP_START");
@@ -38,8 +38,8 @@ Inserts an interactive mob (e.g., cauldron, forge) into the world at a given loc
 func void Wld_InsertMobInter(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertMobInter("EDDA_CAULDRON", "WP_START");
@@ -53,8 +53,8 @@ Inserts a container mob (e.g., chest) into the world at a given location.
 func void Wld_InsertMobContainer(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertMobContainer("CAVALORN_CHEST", "WP_START");
@@ -68,8 +68,8 @@ Inserts a fire mob (e.g., campfire, torch) into the world at a given location.
 func void Wld_InsertMobFire(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertMobFire("CAVALORN_CAMPFIRE", "WP_START");
@@ -83,8 +83,8 @@ Inserts a door mob into the world at a given location.
 func void Wld_InsertMobDoor(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertMobDoor("BOSPER_HOUSE_DOOR", "NW_CITY_BOSPER_HOUSE_ENTRANCE");
@@ -98,8 +98,8 @@ Inserts a bed mob into the world at a given location.
 func void Wld_InsertMobBed(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `pointName` - name of waypoint, freepoint or vob in the game world
+- `vobName` – name of vob in the game world
+- `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
 Wld_InsertMobDoor("BOSPER_BED", "NW_CITY_BOSPER_HOUSE_BED");
@@ -113,8 +113,8 @@ Inserts a vob into the world at exact coordinates.
 func void Wld_InsertVobPos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(0, 0, 0);
@@ -129,8 +129,8 @@ Inserts a mob into the world at exact coordinates.
 func void Wld_InsertMobPos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(23120, 1400, 16795);
@@ -145,8 +145,8 @@ Inserts an interactive mob into the world at exact coordinates.
 func void Wld_InsertMobInterPos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(16795, 1400, 23120);
@@ -161,8 +161,8 @@ Inserts a container mob into the world at exact coordinates.
 func void Wld_InsertMobContainerPos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
@@ -177,8 +177,8 @@ Inserts a fire mob into the world at exact coordinates.
 func void Wld_InsertMobFirePos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
@@ -193,8 +193,8 @@ Inserts a door mob into the world at exact coordinates.
 func void Wld_InsertMobDoorPos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(1400, 16795, 23120);
@@ -209,8 +209,8 @@ Inserts a bed mob into the world at exact coordinates.
 func void Wld_InsertMobBedPos(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(1400, 16795, 23120);
@@ -225,8 +225,8 @@ Removes a specified vob from the game world.
 func int Wld_RemoveVob(var string vobName) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `return` - `TRUE` if the vob has been correctly removed, `FALSE` otherwise
+- `vobName` – name of vob in the game world
+- `return` – `TRUE` if the vob has been correctly removed, `FALSE` otherwise
 
 ```dae
 if (Wld_RemoveVob("CHEST_LOBART"))
@@ -243,10 +243,10 @@ Creates and returns a `C_Position` object from the given coordinates or angles.
 func C_Position Wld_GetPos(var int posX, var int posY, vart int posZ) {};
 ```
 
-- `posX` - position or angle in X axis
-- `posY` - position or angle in Y axis
-- `posZ` - position or angle in Z axis
-- `return` - C_Position
+- `posX` – position or angle in X axis
+- `posY` – position or angle in Y axis
+- `posZ` – position or angle in Z axis
+- `return` – C_Position
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(0, 180, 0);

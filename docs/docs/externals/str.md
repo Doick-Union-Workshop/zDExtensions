@@ -8,8 +8,8 @@ Returns string with uppercase.
 var string Str_Upper(var string str) {};
 ```
 
-- `str` - string to format
-- `return` - formatted string
+- `str` – string to format
+- `return` – formatted string
 
 ```dae title="Example usage"
 var string str; str = Str_Upper("Start");
@@ -24,8 +24,8 @@ Returns string with lowercase.
 var string Str_Lower(var string str) {};
 ```
 
-- `str` - string to format
-- `return` - formatted string
+- `str` – string to format
+- `return` – formatted string
 
 ```dae title="Example usage"
 var string str; str = Str_Lower("Start");
@@ -40,8 +40,8 @@ Returns string with capitelcase.
 var string Str_Capitel(var string str) {};
 ```
 
-- `str` - string to format
-- `return` - formatted string
+- `str` – string to format
+- `return` – formatted string
 
 ```dae title="Example usage"
 var string str; str = Str_Capitel("start");
@@ -56,9 +56,9 @@ Checks whether a string starts with a given prefix (case-insensitive).
 func int Str_StartsWith(var string str, var string prefix) {};
 ```
 
-- `str` - string to check
-- `prefix` - the prefix to compare against
-- `return` - `TRUE` if the string starts with the given prefix, otherwise returns `FALSE`
+- `str` – string to check
+- `prefix` – the prefix to compare against
+- `return` – `TRUE` if the string starts with the given prefix, otherwise returns `FALSE`
 
 ```dae title="Example usage"
 if (Str_StartsWith("GATE_MAIN", "GATE"))
@@ -75,9 +75,9 @@ Checks whether a string ends with a given suffix (case-insensitive).
 func int Str_EndsWith(var string str, var string suffix) {};
 ```
 
-- `str` - string to check
+- `str` – string to check
 - `suffix` – the suffix to compare against
-- `return` - `TRUE` if the string ends with the given suffix, otherwise returns `FALSE`
+- `return` – `TRUE` if the string ends with the given suffix, otherwise returns `FALSE`
 
 ```dae title="Example usage"
 if (Str_EndsWith("CHEST_BIG", "_BIG"))
@@ -97,7 +97,7 @@ func string Str_Cut(var string str, var int startIndex, var int length) {};
 - `str` – string to cut
 - `startIndex` – the starting index
 - `length` – number of characters to extract
-- `return` - extracted substring. If the input is invalid, returns an empty string
+- `return` – extracted substring. If the input is invalid, returns an empty string
 
 ```dae title="Example usage"
 var string part;

@@ -1,4 +1,4 @@
-# VOB - functions for object manipulation
+# VOB – functions for object manipulation
 
 ## Vob_RotateLocal
 
@@ -8,8 +8,8 @@ Rotates a specified vob by given angles in local scope.
 func void Vob_RotateLocal(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(0, 180, 90);
@@ -24,8 +24,8 @@ Rotates a specified vob by given angles in global scope.
 func void Vob_RotateWorld(var string vobName, var C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in the game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(0, 180, 90);
@@ -40,8 +40,8 @@ Moves a specified vob to the position of a given waypoint, freepoint, or another
 func void Vob_MoveTo(var string vobName, var string pointName) {};
 ```
 
-- `vobName` - name of vob in game world
-- `pointName` - name of waypoint, freepoint or vob in game world
+- `vobName` – name of vob in game world
+- `pointName` – name of waypoint, freepoint or vob in game world
 
 ```dae title="Example usage"
 Vob_MoveTo("CHEST_LOBART", "START");
@@ -55,8 +55,8 @@ Moves a specified vob to the exact coordinates (X, Y, Z) in the game world.
 func void Vob_MoveToPos(var string t_vobName, C_Position vobPosition) {};
 ```
 
-- `vobName` - name of vob in game world
-- `vobPosition` - coordinates (X, Y, Z) in the game world
+- `vobName` – name of vob in game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
@@ -71,7 +71,7 @@ Sticks a vob with a specified name to the ground.
 func void Vob_SetToFloor(var string vobName) {};
 ```
 
-- `vobName` - name of vob in game world
+- `vobName` – name of vob in game world
 
 ```dae title="Example usage"
 Vob_SetOnFloor("CHEST_LOBART");
@@ -85,8 +85,8 @@ Sets the visual of a specified vob in the game world.
 func void Vob_SetVisual(var string vobName, var string visualName) {};
 ```
 
-- `vobName` - name of vob in game world
-- `visualName` - name of assets (e.g. 3DS, ASC or MDS)
+- `vobName` – name of vob in game world
+- `visualName` – name of assets (e.g. 3DS, ASC or MDS)
 
 ```dae title="Example usage"
 Vob_SetVisual("CHEST_LOBART", "CHESTBIG_OCCHESTLARGELOCKED.MDS");
@@ -100,9 +100,9 @@ Enables or disables dynamic and static collision detection for a specified vob.
 func void Vob_SetCollisionDetection(var string vobName, var int dynamicCollDet, var int staticCollDet) {};
 ```
 
-- `vobName` - name of vob in game world
-- `dynamicCollDet`
-- `staticCollDet`
+- `vobName` – name of vob in game world
+- `dynamicCollDet` – dynamic collision detection
+- `staticCollDet` – static collision detection
 
 ```dae title="Example usage"
 Vob_SetCollisionDetection("CHEST_LOBART", FALSE, TRUE);
@@ -118,7 +118,7 @@ func int Vob_GetDistToPos(var string vobName, var C_Position position) {};
 
 - `vobName` – name of vob in game world
 - `position` – coordinates of target position
-- `return` - distance between vob and position in cm
+- `return` – distance between vob and position in cm
 
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
@@ -139,7 +139,7 @@ func int Vob_GetDistToNpc(var string vobName, var C_NPC npc) {};
 
 - `vobName` – name of vob in game world
 - `npc` – instance of the NPC
-- `return` - distance between vob and NPC in cm
+- `return` – distance between vob and NPC in cm
 
 ```dae title="Example usage"
 if (Vob_GetDistToNpc("CHEST_LOBART", hero) <= 500)
@@ -157,7 +157,7 @@ func string Vob_GetPortalRoom(var string vobName) {};
 ```
 
 - `vobName` – name of vob in game world
-- `return` - name of portal room
+- `return` – name of portal room
 
 ```dae title="Example usage"
 var string room; room = Vob_GetPortalRoom("CHEST_LOBART");
