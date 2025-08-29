@@ -41,4 +41,12 @@ namespace GOTHIC_NAMESPACE
 
 		return str.Search(suffix, suffixPos) == suffixPos;
 	}
+
+	static zSTRING Str_Cut(const zSTRING& t_str, const int t_start, const int t_end)
+	{
+		if (t_str.IsEmpty()) return 0;
+
+		zSTRING str = Str_Upper(t_str);
+		return str.Delete(t_start, t_end);
+	}
 }
