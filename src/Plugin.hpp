@@ -121,6 +121,7 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Str_Capitel),
 		BetterDaedalusExternal(Str_StartsWith),
 		BetterDaedalusExternal(Str_EndsWith),
+		BetterDaedalusExternal(Str_Cut),
 		BetterDaedalusExternal(AI_TurnToWP),
 		BetterDaedalusExternal(AI_TurnToVob),
 		BetterDaedalusExternal(Npc_GetRoutineFuncName),

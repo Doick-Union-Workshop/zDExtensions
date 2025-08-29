@@ -17,9 +17,7 @@ namespace GOTHIC_NAMESPACE
 		static Utils::Logger* log = Utils::CreateLogger("zDExt::oCMenuSavegame::HandleSlotChange");
 		const auto api = DaedalusCall(parserMenu, DCFunction(MENU_SAVELOADGAME_API), {});
 
-		if (api.has_value())
-			log->Info("Successfully called {0} for save slot nr {1}", MENU_SAVELOADGAME_API.ToChar(), t_key);
-		else
+		if (!api.has_value())
 			LogDaedalusCallError(log, MENU_SAVELOADGAME_API, api.error());
 	}
 }

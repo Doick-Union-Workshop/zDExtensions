@@ -15,16 +15,18 @@ namespace GOTHIC_NAMESPACE
             if (index > 0)
             {
                 registeredHookAPIs.Insert(name);
-                log->Info("Registered hook API: {0}", name.ToChar());
+                log->Info("Registered: {0}", name.ToChar());
             }
             else {
                 log->Warning("Failed to register {0}: {1}", name.ToChar(), DaedalusCallErrorToString(eCallFuncError::WRONG_SYMBOL));
             }
         }
+
+        hookAPIs.Clear();
     }
 
     inline bool IsHookAPIRegistered(const zSTRING& t_name)
     {
-        return registeredHookAPIs.IsIn(t_name);
+        return static_cast<bool>(registeredHookAPIs.IsIn(t_name));
     }
 }
