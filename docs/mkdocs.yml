@@ -2,7 +2,7 @@
 site_name: zDExtensions Docs
 site_url: https://doick-union-workshop.github.io/zDExtensions
 site_author: Doick
-site_description: zDExtensions is a collection of Union plugins, externals, hooks, and tools for extending and enhancing Gothic games.
+site_description: zDExtensions is a collection of Union plugins, externals, and hooks for extending and enhancing Gothic games.
 
 # Repository
 repo_name: zDExtensions
@@ -59,6 +59,7 @@ nav:
     - Status menu: hooks/menu_status.md
     - Dropping items by player: hooks/player_drop_item.md
     - Selling items by player: hooks/player_sell_item.md
+    - Prevent looting NPCs: hooks/prevent_loot_npc.md
 
 # Extras
 extra:

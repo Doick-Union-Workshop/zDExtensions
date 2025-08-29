@@ -2,7 +2,7 @@
 
 ## Log_GetMissionStatus
 
-Returns the status of diary topic. Works only for missions, not for notes.
+Gets the status of diary topic. Works only for missions, not for notes.
 
 - `0` - Free
 - `1` - Running

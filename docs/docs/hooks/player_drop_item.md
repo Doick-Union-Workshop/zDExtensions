@@ -8,6 +8,9 @@ It lets you control whether an item can be dropped by using a script condition.
 
 When an item is about to be dropped, the hook checks for a Daedalus function: `C_PlayerCanDropItem`.
 
+- `item` - selected item in player's inventory to drop
+- `self` - player
+
 ```dae title="Example usage"
 func int C_PlayerCanDropItem()
 {

@@ -28,10 +28,10 @@ func int Hlp_IsValidVob(var instance object) {};
 
 ## Hlp_GetNpcPlunderedByPlayer
 
-Returns the NPC is currently plundered by the player.
+Gets the NPC is currently plundered by the player.
 
 ```dae
 func C_NPC Hlp_GetNpcPlunderedByPlayer() {};
 ```
 
-- `return` - NPC
+- `return` - instance of the NPC

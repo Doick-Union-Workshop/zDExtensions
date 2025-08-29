@@ -4,7 +4,7 @@
     It's only available for **Gothic 2 Addon (G2A)**!
 
 This hook is triggered whenever the player tries to **sell an item** to an NPC during a trade.  
-It extends the default Gothic 2 Addon trading system by allowing script conditions to decide whether an item can be sold.  
+It extends the default trading system by allowing script conditions to decide whether an item can be sold.  
 
 When the player attempts to sell an item, the hook looks for the following Daedalus function: `C_PlayerCanSellItem`.
 
