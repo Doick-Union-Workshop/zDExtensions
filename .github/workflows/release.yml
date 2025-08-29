@@ -18,6 +18,25 @@ jobs:
           submodules: recursive
           lfs: true
 
+      - name: Set plugin version
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}"
+          & set-version.ps1 $version
+
+      - name: Commit version change
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          $changes = $(git status -s)
+          if ($changes) {
+            git add CMakeLists.txt
+            git commit -m "chore: bump version to ${{ github.ref_name }}"
+            git push origin main
+          } else {
+            echo "No changes to commit"
+          }
+
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1.13.0
         with:
@@ -36,8 +55,19 @@ jobs:
           echo "plugin_dll=$plugin_dll" >> $env:GITHUB_ENV
           echo "Found plugin path: $plugin_dll"
 
+      - name: Generate changelog
+        id: changelog
+        run: |
+          $lastTag = git describe --tags --abbrev=0 2>$null
+          if ([string]::IsNullOrEmpty($lastTag)) {
+            $body = "- Initial release"
+          } else {
+            $body = git log --pretty=format:"- %s" "$lastTag..HEAD"
+          }
+          echo "body=$body" >> $env:GITHUB_OUTPUT
+
       - name: Upload plugin
         uses: softprops/action-gh-release@v2
         with:
-          body_path: changelog.md
+          body: ${{ steps.changelog.outputs.body }}
           files: ${{ env.plugin_dll }}
