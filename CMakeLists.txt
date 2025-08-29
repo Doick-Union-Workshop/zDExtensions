@@ -7,7 +7,7 @@ include(target_add_versioninfo)
 
 project(zDExtensions
 	DESCRIPTION "Union plugin for Gothic Games"
-	VERSION 1.0.0.0
+	VERSION 1.1.0.0
 )
 
 set(CMAKE_CXX_STANDARD 23)
@@ -31,7 +31,7 @@ target_include_directories(${CMAKE_PROJECT_NAME}
 
 target_add_versioninfo(${CMAKE_PROJECT_NAME}
 	VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}.${PROJECT_VERSION_TWEAK}"
-	COMPANY_NAME "Gothic Community"
+	COMPANY_NAME "Doick"
 	PRODUCT_NAME "${CMAKE_PROJECT_NAME}"
 )
 
