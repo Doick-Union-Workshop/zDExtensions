@@ -6,6 +6,7 @@ if (-not ($version -match '^v?(\d+)\.(\d+)\.(\d+)$')) {
 }
 
 $version = $version -replace '^v', ''
+$version = $version + '.0'
 Write-Host "Setting version to $version."
 
 $cmake = Get-Content -Path ./CMakeLists.txt

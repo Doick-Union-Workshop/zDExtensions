@@ -22,12 +22,14 @@ jobs:
         shell: pwsh
         run: |
           $version = "${{ github.ref_name }}"
-          & set-version.ps1 $version
+          & ./set-version.ps1 $version
 
       - name: Commit version change
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git fetch --all
+          git checkout main
           $changes = $(git status -s)
           if ($changes) {
             git add CMakeLists.txt
@@ -57,6 +59,7 @@ jobs:
 
       - name: Generate changelog
         id: changelog
+        if: ${{ github.event.release.body == '' }}
         run: |
           $lastTag = git describe --tags --abbrev=0 2>$null
           if ([string]::IsNullOrEmpty($lastTag)) {
