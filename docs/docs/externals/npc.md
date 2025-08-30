@@ -299,7 +299,7 @@ if (Hlp_StrCmp(room, ""))
 
 ## Npc_Teleport
 
-Teleports the NPC to the specified location without AI queque.
+Teleports the NPC to the specified location without an AI queue.
 
 ```dae
 func void Npc_Teleport(var C_NPC npc, var string point) {};
