@@ -1,0 +1,72 @@
+/* 
+ * Extra CSS for Daedalus highlighting.
+ * Original stylesheet from Gothic Modding Community:
+ * https://github.com/Gothic-Modding-Community/gmc/blob/main/overrides/assets/stylesheets/extra.css
+ * No modifications have been made.
+ */
+
+:root {
+    --code-hl-externals-color: #2e7700;
+    --code-hl-zparserextender-color: #b00048;
+    --code-hl-variable-color: #716e00;
+    --code-hl-string-color: #694e37;
+    --code-hl-type-color: #197277;
+}
+
+@media screen
+{
+    [data-md-color-scheme=slate]
+    {
+        --code-hl-externals-color: #50c000;
+        --code-hl-zparserextender-color: #ff2e8c;
+        --code-hl-variable-color: #b7b400;
+        --code-hl-string-color: #ce9172;
+        --code-hl-type-color: #2bbac5;
+    }
+}
+
+.md-main__inner.md-grid {
+    /* Default 61rem */
+    max-width: 70rem;
+}
+
+.md-grid {
+    /* Default 61rem */
+    max-width: 45rem;
+}
+
+.highlight .nb-Externals
+{
+    color: var(--code-hl-externals-color);
+}
+
+.highlight .nb-ZParserExtender
+{
+    color: var(--code-hl-zparserextender-color);
+}
+
+.highlight .nb-Other
+{
+    color: var(--md-code-hl-function-color);
+}
+
+.highlight .vi
+{
+    color: var(--code-hl-variable-color);
+}
+
+.highlight .s
+{
+    color: var(--code-hl-string-color);
+}
+
+.highlight .kt
+{
+    color: var(--code-hl-type-color);
+}
+
+.highlight .kc
+{
+    color: var(--md-code-hl-keyword-color);
+    font-style: italic;
+}
