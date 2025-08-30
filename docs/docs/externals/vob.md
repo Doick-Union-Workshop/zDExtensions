@@ -1,5 +1,24 @@
 # VOB – functions for object manipulation
 
+## Vob_Rotate <small>[Deprecated]</small>
+
+Rotates a specified vob by given angles.
+
+```dae
+func void Vob_Rotate(var string vobName, var C_Position vobPosition) {};
+```
+
+- `vobName` – name of vob in the game world
+- `vobPosition` – coordinates (X, Y, Z) in the game world
+
+```dae title="Example usage"
+var C_Position pos; pos = Wld_GetPos(0, 180, 90);
+Vob_Rotate("CHEST_LOBART", pos);
+```
+
+!!! warning
+    This function is deprecated. Use [Vob_RotateLocal](#vob_rotatelocal) or [Vob_RotateWorld](#vob_rotateworld) instead.
+
 ## Vob_RotateLocal
 
 Rotates a specified vob by given angles in local scope.
