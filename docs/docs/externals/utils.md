@@ -13,7 +13,7 @@ func int GetIntArrayValue(var string arr, var int index) {};
 - `return` – value of index
 
 ```dae title="Example usage"
-var int i; i = GetIntArrayValue(self.HitChance, NPC_TALENT_1H);
+var int i; i = GetIntArrayValue(self.hitChance, NPC_TALENT_1H);
 ```
 
 ## GetStringArrayValue
@@ -43,7 +43,7 @@ func void SetIntArrayValue(var string arr, var int index, var int value) {};
 - `value` – integer value to set
 
 ```dae title="Example usage"
-SetIntArrayValue(self.HitChance, NPC_TALENT_1H, 25);
+SetIntArrayValue(self.hitChance, NPC_TALENT_1H, 25);
 ```
 
 ## SetStringArrayValue

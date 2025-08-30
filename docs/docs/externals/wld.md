@@ -273,4 +273,4 @@ if (Hlp_StrCmp(playerPortalRoom, "hütte2"))
 ```
 
 !!! note
-    You can also use [Npc_GetPortalRoom](http://127.0.0.1:8000/zDExtensions/externals/npc/#npc_getportalroom) instead.
+    You can also use [Npc_GetPortalRoom](https://doick-union-workshop.github.io/zDExtensions/externals/npc/#npc_getportalroom) instead.
