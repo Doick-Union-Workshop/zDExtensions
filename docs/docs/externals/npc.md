@@ -296,3 +296,18 @@ if (Hlp_StrCmp(room, ""))
     //...
 };
 ```
+
+## Npc_Teleport
+
+Teleports the NPC to the specified location without AI queque.
+
+```dae
+func void Npc_Teleport(var C_NPC npc, var string point) {};
+```
+
+- `npc` – instance of the NPC
+- `point` – name of the waypoint, freepoint or any vob in the game world
+
+```dae title="Example usage"
+Npc_Teleport(hero, "START");
+```
