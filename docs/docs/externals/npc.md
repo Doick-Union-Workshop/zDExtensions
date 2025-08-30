@@ -105,37 +105,37 @@ if (Npc_IsWalking(self))
 };
 ```
 
-## Npc_HasOverlay
+## Npc_HasOverlayMds
 
 Checks if the NPC has the specified animation overlay active.
 
 ```dae
-func int Npc_HasOverlay(var C_NPC npc, var string overlay) {};
+func int Npc_HasOverlayMds(var C_NPC npc, var string overlay) {};
 ```
 
 - `npc` – instance of the NPC
 - `return` – `TRUE` if NPC has overlay with specified name, `FALSE` otherwise
 
 ```dae title="Example usage"
-if (Npc_HasOverlay(self, "Humans_Tired.mds"))
+if (Npc_HasOverlayMds(self, "Humans_Tired.mds"))
 {
     //...
 };
 ```
 
-## Npc_HasTimedOverlay
+## Npc_HasTimedOverlayMds
 
 Checks if the NPC has the specified timed animation overlay active.
 
 ```dae
-func int Npc_HasTimedOverlay(var C_NPC npc, var string overlay) {};
+func int Npc_HasTimedOverlayMds(var C_NPC npc, var string overlay) {};
 ```
 
 - `npc` – instance of the NPC
 - `return` – `TRUE` if NPC has overlay with specified name, `FALSE` otherwise
 
 ```dae title="Example usage"
-if (Npc_HasTimedOverlay(self, "Humans_Sprint.mds"))
+if (Npc_HasTimedOverlayMds(self, "Humans_Sprint.mds"))
 {
     //...
 };
