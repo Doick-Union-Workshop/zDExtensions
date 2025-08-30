@@ -1,5 +1,11 @@
 ﻿namespace GOTHIC_NAMESPACE
 {
+    static void Vob_Rotate(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    {
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
+        log->Warning("Vob_Rotate is deprecated. Use Vob_RotateLocal or Vob_RotateWorld instead.");
+    }
+
     static void Vob_RotateWorld(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
     {
         if (t_vobName.IsEmpty() || !t_vobPosition) return;
