@@ -14,14 +14,14 @@ When an item is about to be dropped, the hook checks for a Daedalus function: `C
 ```dae title="Example usage"
 func int C_PlayerCanDropItem()
 {
-    if (!Hlp_IsValidItem(item)) { return false; };
+    if (!Hlp_IsValidItem(item)) { return FALSE; };
 
     if (Hlp_GetInstanceID(item) == ItMi_InnosEye_Mis)
     {
         Print("You cannot drop this unique item!");
-        return false;
+        return FALSE;
     };
 
-    return true;
+    return TRUE;
 };
 ```

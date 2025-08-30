@@ -1,3 +1,7 @@
+---
+status: new
+---
+
 # Prevent looting NPCs by player
 
 !!! info "Engine restrictions"
@@ -15,15 +19,15 @@ To control looting behavior, define the following Daedalus function: `C_PlayerCa
 func int C_PlayerCanLootNpc()
 {
     if (!Hlp_IsValidNpc(self) || !Hlp_IsValidNpc(other)) { 
-        return false;
+        return FALSE;
     };
 
     if (Hlp_GetInstanceID(other) == NONE_100_Xardas)
     {
         AI_PlayAni(self, "T_DONTKNOW");
-        return false;
+        return FALSE;
     };
 
-    return true;
+    return TRUE;
 };
 ```
