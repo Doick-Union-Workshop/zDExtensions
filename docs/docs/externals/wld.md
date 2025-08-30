@@ -251,3 +251,26 @@ func C_Position Wld_GetPos(var int posX, var int posY, vart int posZ) {};
 ```dae title="Example usage"
 var C_Position pos; pos = Wld_GetPos(0, 180, 0);
 ```
+
+## Wld_GetPlayerPortalRoom
+
+Gets name of portal room where the player currently is.
+
+```dae
+func string Wld_GetPlayerPortalRoom() {};
+```
+
+- `return` - name of player's portal room
+
+```dae title="Example usage"
+var string playerPortalRoom;
+playerPortalRoom = Wld_GetPlayerPortalRoom();
+
+if (Hlp_StrCmp(playerPortalRoom, "hütte2"))
+{
+    //...
+};
+```
+
+!!! note
+    You can also use [Npc_GetPortalRoom](http://127.0.0.1:8000/zDExtensions/externals/npc/#npc_getportalroom) instead.
