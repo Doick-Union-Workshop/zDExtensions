@@ -2,7 +2,7 @@
 site_name: zDExtensions Docs
 site_url: https://doick-union-workshop.github.io/zDExtensions
 site_author: Doick
-site_description: zDExtensions is a collection of Union plugins, externals, and hooks for extending and enhancing Gothic games.
+site_description: zDExtensions is a Union plugin collecting externals, and hooks for extending and enhancing Gothic games.
 
 # Repository
 repo_name: zDExtensions
@@ -14,6 +14,9 @@ copyright: Copyright &copy; 2025 Doick
 # Configuration
 theme:
   name: material
+  custom_dir: overrides
+  favicon: assets/images/logo.png
+  logo: assets/images/logo.png
   palette:
     - scheme: slate
       primary: black
@@ -63,13 +66,31 @@ nav:
 
 # Extras
 extra:
+  status:
+    new: Recently added
+    deprecated: Deprecated
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/Doick-Union-Workshop/zDDocs
-      name: zDDocs repository
+      name: zDExtensions repository
     - icon: fontawesome/brands/discord
       link: https://discordapp.com/users/219766962312577024
       name: Doick's profile
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+# Validation
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: warn
+    unrecognized_links: warn
 
 # Plugins
 plugins:
