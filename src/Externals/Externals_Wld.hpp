@@ -78,6 +78,13 @@ namespace GOTHIC_NAMESPACE
         return vobPosition;
     }
 
+    static zSTRING Wld_GetPlayerPortalRoom()
+    {
+        if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal)
+            return *name;
+        return zSTRING{};
+    }
+
     static zSTRING Wld_GetWorldName()
     {
 	    return ogame->GetGameWorld()->GetWorldName();

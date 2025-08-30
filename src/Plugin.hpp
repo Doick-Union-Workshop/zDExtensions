@@ -165,6 +165,7 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Wld_SetRainTime),
 		BetterDaedalusExternal(Wld_SetRainOn),
 		BetterDaedalusExternal(Wld_SetRainOff),
+		BetterDaedalusExternal(Wld_GetPlayerPortalRoom),
 		BetterDaedalusExternal(Wld_GetWorldName),
 		BetterDaedalusExternal(Wld_OverrideWorldFogColors),
 		BetterDaedalusExternal(Wld_GetPos),
