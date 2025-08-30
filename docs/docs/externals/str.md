@@ -2,10 +2,10 @@
 
 ## Str_Upper
 
-Returns string with uppercase.
+Gets string with uppercase.
 
 ```dae
-var string Str_Upper(var string str) {};
+func string Str_Upper(var string str) {};
 ```
 
 - `str` – string to format
@@ -18,10 +18,10 @@ Print(str); // Returns "START"
 
 ## Str_Lower
 
-Returns string with lowercase.
+Gets string with lowercase.
 
 ```dae
-var string Str_Lower(var string str) {};
+func string Str_Lower(var string str) {};
 ```
 
 - `str` – string to format
@@ -34,10 +34,10 @@ Print(str); // Returns "start"
 
 ## Str_Capitel
 
-Returns string with capitelcase.
+Gets string with capitelcase.
 
 ```dae
-var string Str_Capitel(var string str) {};
+func string Str_Capitel(var string str) {};
 ```
 
 - `str` – string to format
