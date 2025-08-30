@@ -172,6 +172,7 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Vob_MoveTo),
 		BetterDaedalusExternal(Vob_MoveToPos),
 		BetterDaedalusExternal(Vob_SetCollisionDetection),
+		BetterDaedalusExternal(Vob_Rotate),
 		BetterDaedalusExternal(Vob_RotateWorld),
 		BetterDaedalusExternal(Vob_RotateLocal),
 		BetterDaedalusExternal(Vob_SetVisual),
