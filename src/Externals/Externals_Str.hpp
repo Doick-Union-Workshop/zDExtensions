@@ -48,6 +48,7 @@ namespace GOTHIC_NAMESPACE
 
 		zSTRING str = Str_Upper(t_str);
 		str.Delete(t_start, t_end);
+
 		return str;
 	}
 }

@@ -11,6 +11,13 @@ namespace GOTHIC_NAMESPACE
         if (!vob) return;
 
         oCMOB* mob = vob->CastTo<oCMOB>();
+
+        if (!mob)
+        {
+            log->Error("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
+            return;
+        }
+
         zSTRING focusName = Str_Upper(t_focusName);
         mob->SetName(focusName);
     }
@@ -26,6 +33,13 @@ namespace GOTHIC_NAMESPACE
         if (!vob) return zSTRING{};
 
         oCMOB* mob = vob->CastTo<oCMOB>();
+
+        if (!mob)
+        {
+            log->Warning("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
+            return zSTRING{};
+        }
+
         return mob->GetName();
     }
 
@@ -39,7 +53,14 @@ namespace GOTHIC_NAMESPACE
 
         if (!vob) return zSTRING{};
 
-        oCMobInter* mobInter = vob->CastTo<oCMobInter>();
-        return mobInter->GetScemeName();
+        oCMOB* mob = vob->CastTo<oCMOB>();
+
+        if (!mob)
+        {
+            log->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
+            return zSTRING{};
+        }
+
+        return mob->GetScemeName();
     }
 }
