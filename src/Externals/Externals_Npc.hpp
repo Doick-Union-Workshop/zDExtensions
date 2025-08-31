@@ -45,40 +45,32 @@ namespace GOTHIC_NAMESPACE
 
 	static int Npc_GetWalkMode(oCNpc* t_npc)
 	{
-		if (!t_npc) return -1;
+		if (!t_npc || !t_npc->anictrl)
+			return -1;
 
-		zSTRING walkMode = t_npc->anictrl->GetWalkModeString();
-		walkMode.Upper();
-
-		if (walkMode == "RUN")
-			return static_cast<int>(ANI_WALKMODE_RUN);
-		else if (walkMode == "WALK")
-			return static_cast<int>(ANI_WALKMODE_WALK);
-		else if (walkMode == "SNEAK")
-			return static_cast<int>(ANI_WALKMODE_SNEAK);
-		else if (walkMode.IsEmpty())
-			return static_cast<int>(ANI_WALKMODE_WATER);
-
-		return -1;
+		return t_npc->anictrl->walkmode;
 	}
 
 	static int Npc_IsStanding(oCNpc* t_npc)
 	{
-		if (!t_npc) return 0;
+		if (!t_npc || !t_npc->anictrl)
+			return 0;
 
-		return static_cast<int>(t_npc->anictrl->IsStanding());
+		return t_npc->anictrl->IsStanding();
 	}
 
 	static int Npc_IsWalking(oCNpc* t_npc)
 	{
-		if (!t_npc) return 0;
+		if (!t_npc || !t_npc->anictrl)
+			return 0;
 
-		return static_cast<int>(t_npc->anictrl->IsWalking());
+		return t_npc->anictrl->IsWalking();
 	}
 
 	static int Npc_HasOverlayMds(oCNpc* t_npc, const zSTRING& t_overlay)
 	{
-		if (!t_npc || t_overlay.IsEmpty()) return 0;
+		if (!t_npc || t_overlay.IsEmpty())
+			return 0;
 
 		zSTRING overlay = Str_Upper(t_overlay);
 		return t_npc->activeOverlays.IsInList(overlay);
@@ -86,7 +78,8 @@ namespace GOTHIC_NAMESPACE
 
 	static int Npc_HasTimedOverlayMds(oCNpc* t_npc, const zSTRING& t_overlay)
 	{
-		if (!t_npc || t_overlay.IsEmpty()) return 0;
+		if (!t_npc || t_overlay.IsEmpty())
+			return 0;
 
 		zSTRING overlay = Str_Upper(t_overlay);
 		auto list = t_npc->timedOverlays.GetNextInList();
