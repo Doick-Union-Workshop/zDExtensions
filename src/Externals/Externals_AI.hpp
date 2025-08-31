@@ -12,7 +12,7 @@ namespace GOTHIC_NAMESPACE
 
 		if (wp)
 		{
-			t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOVOB, (zCVob*)wp), t_npc);
+			t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOPOS, wp->GetPositionWorld()), t_npc);
 			return;
 		}
 
@@ -21,7 +21,7 @@ namespace GOTHIC_NAMESPACE
 
 		if (!vob) return;
 
-		t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOVOB, vob), t_npc);
+		t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOPOS, vob->GetPositionWorld()), t_npc);
 	}
 
 	static void AI_TurnToVob(oCNpc* t_npc, const zSTRING& t_pointName)
@@ -34,6 +34,6 @@ namespace GOTHIC_NAMESPACE
 
 		if (!vob) return;
 
-		t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOVOB, vob), t_npc);
+		t_npc->GetEM(0)->OnMessage(new oCMsgMovement(oCMsgMovement::EV_TURNTOPOS, vob->GetPositionWorld()), t_npc);
 	}
 }
