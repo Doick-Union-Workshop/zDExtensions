@@ -7,7 +7,7 @@ include(target_add_versioninfo)
 
 project(zDExtensions
 	DESCRIPTION "Union plugin for Gothic Games"
-	VERSION 1.1.2.0
+	VERSION 1.1.3.0
 )
 
 set(CMAKE_CXX_STANDARD 23)
