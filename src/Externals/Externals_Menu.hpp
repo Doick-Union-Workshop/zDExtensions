@@ -80,11 +80,11 @@ namespace GOTHIC_NAMESPACE
 
         if (!menuItem)
         {
-            par->SetReturn((zSTRING&)result);
+            par->SetReturn(result);
             return 0;
         }
 
-        result = (zSTRING&)menuItem->GetText(line);
+        result = menuItem->GetText(line);
 
         if (result.IsEmpty())
             log->Warning("Menu item '{0}' has no value at {1} text line.", menuItemName.ToChar(), line);
