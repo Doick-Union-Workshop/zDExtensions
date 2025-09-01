@@ -55,12 +55,20 @@ Npc_EquipItem(self, ItLsTorch);
 
 Gets the current walk mode of the NPC.
 
+- `-1` - invalid  
+- `0` / `NPC_RUN` - run  
+- `1` / `NPC_WALK` - walk  
+- `2` / `NPC_SNEAK` - sneak  
+- `3` - in water  
+- `4` - swim  
+- `5` - dive
+
 ```dae
 func int Npc_GetWalkMode(var C_NPC npc) {};
 ```
 
 - `npc` – instance of the NPC
-- `return` – integer value of walk mode
+- `return` – walk mode  
 
 ```dae title="Example usage"
 if (Npc_GetWalkMode(self) == NPC_SNEAK)
