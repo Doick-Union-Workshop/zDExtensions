@@ -12,11 +12,7 @@ namespace GOTHIC_NAMESPACE
         if (!menuItem) return;
 
         menuItem->SetText(t_text, t_line, t_drawNow);
-#if ENGINE > Engine_G2
-        menuItem->Release();
-#else
-        delete menuItem;
-#endif
+        MenuItem_Release(menuItem);
     }
 
     static zSTRING Menu_GetItemText(const zSTRING& t_name, const int t_line)
@@ -37,11 +33,7 @@ namespace GOTHIC_NAMESPACE
             log->Warning("Menu item '{0}' has no value at {1} text line.", name.ToChar(), t_line);
         }
 
-#if ENGINE > Engine_G2
-        menuItem->Release();
-#else
-        delete menuItem;
-#endif
+        MenuItem_Release(menuItem);
         return result;
     }
 
@@ -66,11 +58,7 @@ namespace GOTHIC_NAMESPACE
         if (!menuItem) return 0;
 
         menuItem->SetText(menuItemText, line, drawNow);
-#if ENGINE >= Engine_G2
-        menuItem->Release();
-#else
-        delete menuItem;
-#endif
+        MenuItem_Release(menuItem);
         return 0;
     }
 
@@ -101,11 +89,7 @@ namespace GOTHIC_NAMESPACE
         if (result.IsEmpty())
             log->Warning("Menu item '{0}' has no value at {1} text line.", menuItemName.ToChar(), line);
 
-#if ENGINE >= Engine_G2
-        menuItem->Release();
-#else
-        delete menuItem;
-#endif
+        MenuItem_Release(menuItem);
         par->SetReturn(result);
         return 0;
     }

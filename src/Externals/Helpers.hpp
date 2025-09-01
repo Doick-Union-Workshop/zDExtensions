@@ -104,4 +104,18 @@ namespace GOTHIC_NAMESPACE
             (t_str.PickWord_Old(2, "\r\t ").ToFloat()),
             (t_str.PickWord_Old(3, "\r\t ").ToFloat()));
     }
+
+    void MenuItem_Release(zCMenuItem* t_menuItem)
+    {
+        if (!t_menuItem) return;
+
+#if ENGINE >= Engine_G2
+        t_menuItem->Release();
+#else
+        t_menuItem->m_iRefCtr--;
+
+        if (t_menuItem->m_iRefCtr <= 0 && !t_menuItem->registeredCPP)
+            delete t_menuItem;
+#endif
+    }
 }
