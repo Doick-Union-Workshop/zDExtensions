@@ -143,5 +143,38 @@ namespace GOTHIC_NAMESPACE
         npcContainer = nullptr;
         oCNpc::game_mode = NPC_GAME_NORMAL;
     }
+
+    // G2A: 0x00751AF0 public: int __thiscall oCNpc::EV_AttackFinish(class oCMsgAttack *)
+    auto Hook_oCNpc_EV_AttackFinish = Union::CreateHook(reinterpret_cast<void*>(0x00751AF0), &oCNpc::Hook_EV_AttackFinish);
+    int __thiscall oCNpc::Hook_EV_AttackFinish(oCMsgAttack* t_csg)
+    {
+        if (!IsHookAPIRegistered(C_CAN_FINISH_NPC))
+        {
+            return (this->*Hook_oCNpc_EV_AttackFinish)(t_csg);
+        }
+
+        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
+
+        oCNpc* pTargetNpc = zDYNAMIC_CAST<oCNpc>(t_csg->target);
+
+        int canFinishNpc = 1;
+
+        parser->SetInstance("OTHER", pTargetNpc);
+        parser->SetInstance("SELF", this);
+        const auto result = DaedalusCall<int>(parser, DCFunction(C_CAN_FINISH_NPC), {});
+
+        if (result.has_value())
+            canFinishNpc = *result;
+        else
+            LogDaedalusCallError(log, C_CAN_FINISH_NPC, result.error());
+
+        if (!canFinishNpc)
+        {
+            log->Info("Cannot finish NPC: {0}", pTargetNpc->GetInstanceName().ToChar());
+            return 1;
+        }
+
+        return (this->*Hook_oCNpc_EV_AttackFinish)(t_csg);
+    }
 #endif
 }

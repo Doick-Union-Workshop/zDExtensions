@@ -6,6 +6,7 @@ namespace GOTHIC_NAMESPACE
     static const zSTRING C_PLAYER_CAN_DROP_ITEM = "C_PLAYERCANDROPITEM";
     static const zSTRING C_PLAYER_CAN_SELL_ITEM = "C_PLAYERCANSELLITEM";
     static const zSTRING C_PLAYER_CAN_LOOT_NPC  = "C_PLAYERCANLOOTNPC";
+    static const zSTRING C_CAN_FINISH_NPC       = "C_CANFINISHNPC";
 
     static oCNpcContainer* npcContainer         = nullptr;
 
@@ -15,7 +16,8 @@ namespace GOTHIC_NAMESPACE
         MENU_STATUS_API,
         C_PLAYER_CAN_DROP_ITEM,
         C_PLAYER_CAN_SELL_ITEM,
-        C_PLAYER_CAN_LOOT_NPC
+        C_PLAYER_CAN_LOOT_NPC,
+        C_CAN_FINISH_NPC
     };
     Union::Array<zSTRING> registeredHookAPIs;
 }
