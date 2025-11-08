@@ -9,7 +9,6 @@
 #ifdef __G1
 #define GOTHIC_NAMESPACE Gothic_I_Classic
 #define ENGINE Engine_G1
-HOOKSPACE(Gothic_I_Classic, GetGameVersion() == ENGINE);
 HOOKSPACE_WITH_SG_RC(Gothic_I_Classic, GetGameVersion() == ENGINE, IDR_GOTHIC_1_CLASSIC_TXT, RT_RCDATA);
 #include "Sources.hpp"
 #endif
@@ -17,7 +16,6 @@ HOOKSPACE_WITH_SG_RC(Gothic_I_Classic, GetGameVersion() == ENGINE, IDR_GOTHIC_1_
 #ifdef __G1A
 #define GOTHIC_NAMESPACE Gothic_I_Addon
 #define ENGINE Engine_G1A
-HOOKSPACE(Gothic_I_Addon, GetGameVersion() == ENGINE);
 HOOKSPACE_WITH_SG_RC(Gothic_I_Addon, GetGameVersion() == ENGINE, IDR_GOTHIC_1_ADDON_TXT, RT_RCDATA);
 #include "Sources.hpp"
 #endif
