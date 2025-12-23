@@ -65,7 +65,6 @@ namespace GOTHIC_NAMESPACE
         if (!vob) return 0;
 
         ogame->GetGameWorld()->RemoveVob(vob);
-        vob->Release();
         return 1;
     }
 
