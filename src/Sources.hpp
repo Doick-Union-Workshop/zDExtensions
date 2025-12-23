@@ -15,7 +15,6 @@
 #include "Hooks/Hooks_oCInfo.hpp"
 
 // Externals
-#include "Externals/Structs.hpp"
 #include "Externals/Helpers.hpp"
 #include "Externals/Externals_Str.hpp"
 #include "Externals/Externals_AI.hpp"

@@ -1,14 +1,14 @@
 ﻿namespace GOTHIC_NAMESPACE
 {
-    static void Vob_Rotate(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    static void Vob_Rotate(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
         log->Warning("Vob_Rotate is deprecated. Use Vob_RotateLocal or Vob_RotateWorld instead.");
     }
 
-    static void Vob_RotateWorld(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    static void Vob_RotateWorld(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty() || !t_vobPosition) return;
+        if (t_vobName.IsEmpty()) return;
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
 
@@ -21,17 +21,17 @@
         vob->collDetectionStatic = 0;
         vob->collDetectionDynamic = 0;
 
-        vob->RotateWorldX((float)t_vobPosition->X);
-        vob->RotateWorldY((float)t_vobPosition->Y);
-        vob->RotateWorldZ((float)t_vobPosition->Z);
+        vob->RotateWorldX((float)t_posX);
+        vob->RotateWorldY((float)t_posY);
+        vob->RotateWorldZ((float)t_posZ);
 
         vob->collDetectionStatic = collDetectionStatic;
         vob->collDetectionDynamic = collDetectionDynamic;
     }
 
-    static void Vob_RotateLocal(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    static void Vob_RotateLocal(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty() || !t_vobPosition) return;
+        if (t_vobName.IsEmpty()) return;
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
 
@@ -44,9 +44,9 @@
         vob->collDetectionStatic = 0;
         vob->collDetectionDynamic = 0;
 
-        vob->RotateLocalX((float)t_vobPosition->X);
-        vob->RotateLocalY((float)t_vobPosition->Y);
-        vob->RotateLocalZ((float)t_vobPosition->Z);
+        vob->RotateLocalX((float)t_posX);
+        vob->RotateLocalY((float)t_posY);
+        vob->RotateLocalZ((float)t_posZ);
 
         vob->collDetectionStatic = collDetectionStatic;
         vob->collDetectionDynamic = collDetectionDynamic;
@@ -63,7 +63,9 @@
         if (!vob) return;
 
         zSTRING visualName = Str_Upper(t_visualName);
-        vob->SetVisual(zCVisual::LoadVisual(visualName));
+        zCVisual* visual = zCVisual::LoadVisual(visualName);
+        vob->SetVisual(visual);
+        visual->Release();
     }
 
     static void Vob_SetToFloor(const zSTRING& t_vobName)
@@ -108,9 +110,9 @@
         SetVobPositionWorld(vob, pos);
     }
 
-    static void Vob_MoveToPos(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    static void Vob_MoveToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty() || !t_vobPosition) return;
+        if (t_vobName.IsEmpty()) return;
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
 
@@ -118,7 +120,10 @@
 
         if (!vob) return;
 
-        zVEC3 pos = zVEC3(t_vobPosition->X, t_vobPosition->Y, t_vobPosition->Z);
+        zVEC3 pos = zVEC3(
+            (float)t_posX,
+            (float)t_posY,
+            (float)t_posZ);
         SetVobPositionWorld(vob, pos);
     }
 
@@ -136,11 +141,11 @@
         vob->collDetectionStatic = staticCollDet;
     }
 
-    static int Vob_GetDistToPos(const zSTRING& t_vobName, C_POSITION* t_position)
+    static int Vob_GetDistToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
         int dist = INT_MAX;
 
-        if (!t_vobName.IsEmpty() || !t_position) return dist;
+        if (!t_vobName.IsEmpty()) return dist;
 
         static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
 
@@ -149,9 +154,9 @@
         if (!vob) return dist;
 
         zVEC3 pos = zVEC3(
-            (float)t_position->X,
-            (float)t_position->Y,
-            (float)t_position->Z);
+            (float)t_posX,
+            (float)t_posY,
+            (float)t_posZ);
         dist = static_cast<int>(GetVobDistanceToPos2(vob, pos, 1));
         return dist;
     }

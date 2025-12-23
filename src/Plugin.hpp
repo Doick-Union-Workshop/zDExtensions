@@ -168,7 +168,6 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Wld_GetPlayerPortalRoom),
 		BetterDaedalusExternal(Wld_GetWorldName),
 		BetterDaedalusExternal(Wld_OverrideWorldFogColors),
-		BetterDaedalusExternal(Wld_GetPos),
 		BetterDaedalusExternal(Vob_MoveTo),
 		BetterDaedalusExternal(Vob_MoveToPos),
 		BetterDaedalusExternal(Vob_SetCollisionDetection),

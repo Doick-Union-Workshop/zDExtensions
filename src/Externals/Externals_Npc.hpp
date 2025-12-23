@@ -131,16 +131,16 @@ namespace GOTHIC_NAMESPACE
 		t_npc->CloseDeadNpc();
 	}
 
-	static int Npc_GetDistToPos(oCNpc* t_npc, C_POSITION* t_position)
+	static int Npc_GetDistToPos(oCNpc* t_npc, const int t_posX, const int t_posY, const int t_posZ)
 	{
 		int dist = INT_MAX;
 
-		if (!t_npc || !t_position) return dist;
+		if (!t_npc) return dist;
 
 		zVEC3 pos = zVEC3(
-			(float)t_position->X,
-			(float)t_position->Y,
-			(float)t_position->Z);
+			(float)t_posX,
+			(float)t_posY,
+			(float)t_posZ);
 		dist = static_cast<int>(t_npc->GetDistanceToPos2(pos, 1));
 		return dist;
 	}

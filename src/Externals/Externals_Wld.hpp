@@ -38,16 +38,16 @@ namespace GOTHIC_NAMESPACE
     }
 
     template<typename T>
-    static void Wld_InsertVobPos(const zSTRING& t_vobName, C_POSITION* t_vobPosition)
+    static void Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty() || !t_vobPosition) return;
+        if (t_vobName.IsEmpty()) return;
 
         zSTRING vobName = Str_Upper(t_vobName);
         T* vob = new T{};
         zVEC3 pos = zVEC3(
-            (float)t_vobPosition->X,
-            (float)t_vobPosition->Y,
-            (float)t_vobPosition->Z);
+            (float)t_posX,
+            (float)t_posY,
+            (float)t_posZ);
         vob->SetVobName(vobName);
         ogame->GetGameWorld()->AddVob(vob);
         SetVobPositionWorld(vob, pos);
@@ -66,15 +66,6 @@ namespace GOTHIC_NAMESPACE
 
         ogame->GetGameWorld()->RemoveVob(vob);
         return 1;
-    }
-
-    static C_POSITION* Wld_GetPos(const int t_posX, const int t_posY, const int t_posZ)
-    {
-        C_POSITION* vobPosition = new C_POSITION;
-        vobPosition->X = t_posX;
-        vobPosition->Y = t_posY;
-        vobPosition->Z = t_posZ;
-        return vobPosition;
     }
 
     static zSTRING Wld_GetPlayerPortalRoom()
