@@ -2,7 +2,11 @@ namespace GOTHIC_NAMESPACE
 {
 #if ENGINE == Engine_G2A
     // G2A: 0x0068B840 protected: int __fastcall oCViewDialogTrade::OnTransferLeft(short)
-    auto Hook_oCViewDialogTrade_OnTransferLeft = Union::CreateHook(reinterpret_cast<void*>(0x0068B840), &oCViewDialogTrade::Hook_OnTransferLeft);
+    auto Hook_oCViewDialogTrade_OnTransferLeft = Union::CreateHook(
+        reinterpret_cast<void*>(0x0068B840),
+        &oCViewDialogTrade::Hook_OnTransferLeft,
+        Union::HookType::Hook_Detours
+    );
     int __fastcall oCViewDialogTrade::Hook_OnTransferLeft(short t_amount)
     {
         if (!IsHookAPIRegistered(C_PLAYER_CAN_SELL_ITEM))

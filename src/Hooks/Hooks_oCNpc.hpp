@@ -2,7 +2,11 @@ namespace GOTHIC_NAMESPACE
 {
 #if ENGINE == Engine_G2A
     // G2A: 0x007538C0 protected: int __thiscall oCNpc::EV_DropVob(class oCMsgManipulate *)
-    auto Hook_oCNpc_EV_DropVob = Union::CreateHook(reinterpret_cast<void*>(0x007538C0), &oCNpc::Hook_EV_DropVob);
+    auto Hook_oCNpc_EV_DropVob = Union::CreateHook(
+        reinterpret_cast<void*>(0x007538C0),
+        &oCNpc::Hook_EV_DropVob,
+        Union::HookType::Hook_Detours
+    );
     int __thiscall oCNpc::Hook_EV_DropVob(oCMsgManipulate* t_csg)
     {
         if (!IsHookAPIRegistered(C_PLAYER_CAN_DROP_ITEM))
@@ -66,7 +70,11 @@ namespace GOTHIC_NAMESPACE
     }
 
     // G2A: 0x00762970 public: void __thiscall oCNpc::OpenDeadNpc(void)
-    auto Hook_oCNpc_OpenDeadNpc = Union::CreateHook(reinterpret_cast<void*>(0x00762970), &oCNpc::Hook_OpenDeadNpc);
+    auto Hook_oCNpc_OpenDeadNpc = Union::CreateHook(
+        reinterpret_cast<void*>(0x00762970),
+        &oCNpc::Hook_OpenDeadNpc,
+        Union::HookType::Hook_Detours
+    );
     void __thiscall oCNpc::Hook_OpenDeadNpc(void)
     {
         if (!IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
@@ -126,7 +134,11 @@ namespace GOTHIC_NAMESPACE
     }
 
     // G2A: 0x00762B40 public: void __thiscall oCNpc::CloseDeadNpc(void)
-    auto Hook_oCNpc_CloseDeadNpc = Union::CreateHook(reinterpret_cast<void*>(0x00762B40), &oCNpc::Hook_CloseDeadNpc);
+    auto Hook_oCNpc_CloseDeadNpc = Union::CreateHook(
+        reinterpret_cast<void*>(0x00762B40),
+        &oCNpc::Hook_CloseDeadNpc,
+        Union::HookType::Hook_Detours
+    );
     void __thiscall oCNpc::Hook_CloseDeadNpc(void)
     {
         if (!IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
@@ -145,7 +157,11 @@ namespace GOTHIC_NAMESPACE
     }
 
     // G2A: 0x00751AF0 public: int __thiscall oCNpc::EV_AttackFinish(class oCMsgAttack *)
-    auto Hook_oCNpc_EV_AttackFinish = Union::CreateHook(reinterpret_cast<void*>(0x00751AF0), &oCNpc::Hook_EV_AttackFinish);
+    auto Hook_oCNpc_EV_AttackFinish = Union::CreateHook(
+        reinterpret_cast<void*>(0x00751AF0),
+        &oCNpc::Hook_EV_AttackFinish,
+        Union::HookType::Hook_Detours
+    );
     int __thiscall oCNpc::Hook_EV_AttackFinish(oCMsgAttack* t_csg)
     {
         if (!IsHookAPIRegistered(C_CAN_FINISH_NPC))

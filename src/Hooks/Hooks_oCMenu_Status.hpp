@@ -6,7 +6,8 @@ namespace GOTHIC_NAMESPACE
 	// G2A:	0x0047DDC0 public: void __thiscall oCMenu_Status::InitForDisplay(void)
 	auto Hook_oCMenu_Status_InitForDisplay = Union::CreateHook(
 		reinterpret_cast<void*>(zSwitch(0x00476A20, 0x00480370, 0x0047C8F0, 0x0047DDC0)),
-		&oCMenu_Status::Hook_InitForDisplay
+		&oCMenu_Status::Hook_InitForDisplay,
+		Union::HookType::Hook_Detours
 	);
 	void __thiscall oCMenu_Status::Hook_InitForDisplay(void)
 	{
