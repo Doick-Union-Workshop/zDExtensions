@@ -1,3 +1,5 @@
+#include <Windows.h>
+
 namespace GOTHIC_NAMESPACE
 {
     static oCItem* Hlp_GetItem(const int t_instance)
@@ -48,5 +50,50 @@ namespace GOTHIC_NAMESPACE
         int result = Str_Upper(s1) == Str_Upper(s2);
         par->SetReturn(result);
         return 0;
+    }
+
+    static int Hlp_IsOptionExists(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const int t_defaultValue)
+    {
+        zCOption* options = GetOptionsLevel(t_level);
+
+        if (t_option.IsEmpty())
+            return options->SectionExists(t_section);
+
+        return options->EntryExists(t_section, t_option);
+    }
+
+    static int Hlp_GetOptionIntValue(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const int t_defaultValue)
+    {
+        return GetOptionsLevel(t_level)->ReadInt(t_section, t_option, t_defaultValue);
+    }
+
+    static float Hlp_GetOptionFloatValue(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const float t_defaultValue)
+    {
+        return GetOptionsLevel(t_level)->ReadReal(t_section, t_option, t_defaultValue);
+    }
+
+    static zSTRING Hlp_GetOptionStringValue(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const zSTRING& t_defaultValue)
+    {
+        return GetOptionsLevel(t_level)->ReadString(t_section, t_option, t_defaultValue);
+    }
+
+    static void Hlp_SetOptionIntValue(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const int t_defaultValue)
+    {
+        GetOptionsLevel(t_level)->WriteInt(t_section, t_option, t_defaultValue, 0);
+    }
+
+    static void Hlp_SetOptionFloatValue(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const float t_defaultValue)
+    {
+        GetOptionsLevel(t_level)->WriteReal(t_section, t_option, t_defaultValue, 0);
+    }
+
+    static void Hlp_SetOptionStringValue(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const zSTRING& t_defaultValue)
+    {
+        GetOptionsLevel(t_level)->WriteString(t_section, t_option, t_defaultValue, 0);
+    }
+
+    static int Hlp_IsDevModeActive()
+    {
+        return ogame->game_testmode == TRUE;
     }
 }

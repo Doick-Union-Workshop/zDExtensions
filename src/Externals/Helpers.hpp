@@ -118,4 +118,12 @@ namespace GOTHIC_NAMESPACE
             delete t_menuItem;
 #endif
     }
+
+    static zCOption* GetOptionsLevel(const zSTRING& t_level)
+    {
+        zSTRING upper = zSTRING(t_level).Upper();
+        if (upper == "MOD")
+            return zgameoptions;
+        return zoptions;
+    }
 }
