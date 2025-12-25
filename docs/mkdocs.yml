@@ -63,6 +63,7 @@ nav:
     - Dropping items by player: hooks/player_drop_item.md
     - Selling items by player: hooks/player_sell_item.md
     - Prevent looting NPCs: hooks/prevent_loot_npc.md
+    - Prevent finishing NPCs: hooks/prevent_finish_npc.md
 
 # Extras
 extra:
