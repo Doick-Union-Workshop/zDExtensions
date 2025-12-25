@@ -52,7 +52,7 @@ namespace GOTHIC_NAMESPACE
         return 0;
     }
 
-    static int Hlp_IsOptionExists(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option, const int t_defaultValue)
+    static int Hlp_IsOptionExists(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option)
     {
         zCOption* options = GetOptionsLevel(t_level);
 

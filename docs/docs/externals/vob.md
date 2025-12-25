@@ -1,38 +1,20 @@
 # VOB – functions for object manipulation
 
-## Vob_Rotate <small>[Deprecated]</small>
-
-Rotates a specified vob by given angles.
-
-```dae
-func void Vob_Rotate(var string vobName, var C_Position vobPosition) {};
-```
-
-- `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
-
-```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(0, 180, 90);
-Vob_Rotate("CHEST_LOBART", pos);
-```
-
-!!! warning
-    This function is deprecated. Use [Vob_RotateLocal](#vob_rotatelocal) or [Vob_RotateWorld](#vob_rotateworld) instead.
-
 ## Vob_RotateLocal
 
 Rotates a specified vob by given angles in local scope.
 
 ```dae
-func void Vob_RotateLocal(var string vobName, var C_Position vobPosition) {};
+func void Vob_RotateLocal(var string vobName, var int rotX, var int rotY, var int rotZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `rotX` – rotation angle around X axis (degrees)
+- `rotY` – rotation angle around Y axis (degrees)
+- `rotZ` – rotation angle around Z axis (degrees)
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(0, 180, 90);
-Vob_RotateLocal("CHEST_LOBART", pos);
+Vob_RotateLocal("CHEST_LOBART", 0, 180, 90);
 ```
 
 ## Vob_RotateWorld
@@ -40,15 +22,16 @@ Vob_RotateLocal("CHEST_LOBART", pos);
 Rotates a specified vob by given angles in global scope.
 
 ```dae
-func void Vob_RotateWorld(var string vobName, var C_Position vobPosition) {};
+func void Vob_RotateWorld(var string vobName, var int rotX, var int rotY, var int rotZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `rotX` – rotation angle around X axis (degrees)
+- `rotY` – rotation angle around Y axis (degrees)
+- `rotZ` – rotation angle around Z axis (degrees)
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(0, 180, 90);
-Vob_RotateWorld("CHEST_LOBART", pos);
+Vob_RotateWorld("CHEST_LOBART", 0, 180, 90);
 ```
 
 ## Vob_MoveTo
@@ -71,15 +54,16 @@ Vob_MoveTo("CHEST_LOBART", "START");
 Moves a specified vob to the exact coordinates (X, Y, Z) in the game world.
 
 ```dae
-func void Vob_MoveToPos(var string t_vobName, C_Position vobPosition) {};
+func void Vob_MoveToPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
-Vob_MoveTo("CHEST_LOBART", pos);
+Vob_MoveToPos("CHEST_LOBART", 16795, 23120, 1400);
 ```
 
 ## Vob_SetToFloor
@@ -93,7 +77,7 @@ func void Vob_SetToFloor(var string vobName) {};
 - `vobName` – name of vob in game world
 
 ```dae title="Example usage"
-Vob_SetOnFloor("CHEST_LOBART");
+Vob_SetToFloor("CHEST_LOBART");
 ```
 
 ## Vob_SetVisual
@@ -132,17 +116,17 @@ Vob_SetCollisionDetection("CHEST_LOBART", FALSE, TRUE);
 Gets the distance between a specified vob and a given position in the world (in cm).
 
 ```dae
-func int Vob_GetDistToPos(var string vobName, var C_Position position) {};
+func int Vob_GetDistToPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in game world
-- `position` – coordinates of target position
+- `posX` – X coordinate of target position
+- `posY` – Y coordinate of target position
+- `posZ` – Z coordinate of target position
 - `return` – distance between vob and position in cm
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
-
-if (Vob_GetDistToPos("CHEST_LOBART", pos) <= 500)
+if (Vob_GetDistToPos("CHEST_LOBART", 16795, 23120, 1400) <= 500)
 {
     //...
 };

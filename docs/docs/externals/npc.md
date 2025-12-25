@@ -210,17 +210,17 @@ Npc_CloseDeadNpcInventory(self);
 Gets the distance between the NPC and a given position in the world (in cm).
 
 ```dae
-func int Vob_GetDistToPos(var string vobName, var C_Position position) {};
+func int Npc_GetDistToPos(var C_NPC npc, var int posX, var int posY, var int posZ) {};
 ```
 
 - `npc` – instance of the NPC
-- `position` – coordinates (X, Y, Z) in the game world
-- `return` – distance between NPC and position in cm
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
+- `return` – distance between `npc` and the specified position (in cm)
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
-
-if (Npc_GetDistToPos(hero, pos) <= 500)
+if (Npc_GetDistToPos(hero, 16795, 23120, 1400) <= 500)
 {
     //...
 };
@@ -254,7 +254,7 @@ func string Npc_GetVisualBody(var C_NPC npc) {};
 ```
 
 - `npc` – instance of the NPC
-- `return` – name of the portal room
+- `return` – name of the NPC's visual body (for example HUM_BODY_NAKED0)
 
 ```dae title="Example usage"
 var string body; body = Npc_GetVisualBody(hero);
@@ -274,7 +274,7 @@ func string Npc_GetVisualHead(var C_NPC npc) {};
 ```
 
 - `npc` – instance of the NPC
-- `return` – name of the portal room
+- `return` – name of the NPC's visual head (for example HUM_HEAD_PONY)
 
 ```dae title="Example usage"
 var string head; head = Npc_GetVisualHead(hero);

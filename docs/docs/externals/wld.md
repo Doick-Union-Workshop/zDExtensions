@@ -102,7 +102,7 @@ func void Wld_InsertMobBed(var string vobName, var string pointName) {};
 - `pointName` – name of waypoint, freepoint or vob in the game world
 
 ```dae title="Example usage"
-Wld_InsertMobDoor("BOSPER_BED", "NW_CITY_BOSPER_HOUSE_BED");
+Wld_InsertMobBed("BOSPER_BED", "NW_CITY_BOSPER_HOUSE_BED");
 ```
 
 ## Wld_InsertVobPos
@@ -110,15 +110,16 @@ Wld_InsertMobDoor("BOSPER_BED", "NW_CITY_BOSPER_HOUSE_BED");
 Inserts a vob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertVobPos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertVobPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(0, 0, 0);
-Wld_InsertVobPos("SECRET_CHEST", pos);
+Wld_InsertVobPos("SECRET_CHEST", 0, 0, 0);
 ```
 
 ## Wld_InsertMobPos
@@ -126,15 +127,16 @@ Wld_InsertVobPos("SECRET_CHEST", pos);
 Inserts a mob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertMobPos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertMobPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(23120, 1400, 16795);
-Wld_InsertMobPos("SIGNPOST", pos);
+Wld_InsertMobPos("SIGNPOST", 23120, 1400, 16795);
 ```
 
 ## Wld_InsertMobInterPos
@@ -142,15 +144,16 @@ Wld_InsertMobPos("SIGNPOST", pos);
 Inserts an interactive mob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertMobInterPos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertMobInterPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(16795, 1400, 23120);
-Wld_InsertMobInterPos("EDDA_CAULDRON", pos);
+Wld_InsertMobInterPos("EDDA_CAULDRON", 16795, 1400, 23120);
 ```
 
 ## Wld_InsertMobContainerPos
@@ -158,15 +161,16 @@ Wld_InsertMobInterPos("EDDA_CAULDRON", pos);
 Inserts a container mob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertMobContainerPos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertMobContainerPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
-Wld_InsertMobContainerPos("CAVALORN_CHEST", pos);
+Wld_InsertMobContainerPos("CAVALORN_CHEST", 16795, 23120, 1400);
 ```
 
 ## Wld_InsertMobFirePos
@@ -174,15 +178,16 @@ Wld_InsertMobContainerPos("CAVALORN_CHEST", pos);
 Inserts a fire mob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertMobFirePos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertMobFirePos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(16795, 23120, 1400);
-Wld_InsertMobFirePos("CAVALORN_CAMPFIRE", pos);
+Wld_InsertMobFirePos("CAVALORN_CAMPFIRE", 16795, 23120, 1400);
 ```
 
 ## Wld_InsertMobDoorPos
@@ -190,15 +195,16 @@ Wld_InsertMobFirePos("CAVALORN_CAMPFIRE", pos);
 Inserts a door mob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertMobDoorPos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertMobDoorPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(1400, 16795, 23120);
-Wld_InsertMobDoorPos("BOSPER_HOUSE_DOOR", pos);
+Wld_InsertMobDoorPos("BOSPER_HOUSE_DOOR", 1400, 16795, 23120);
 ```
 
 ## Wld_InsertMobBedPos
@@ -206,15 +212,16 @@ Wld_InsertMobDoorPos("BOSPER_HOUSE_DOOR", pos);
 Inserts a bed mob into the world at exact coordinates.
 
 ```dae
-func void Wld_InsertMobBedPos(var string vobName, var C_Position vobPosition) {};
+func void Wld_InsertMobBedPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
-- `vobPosition` – coordinates (X, Y, Z) in the game world
+- `posX` – X coordinate in the game world
+- `posY` – Y coordinate in the game world
+- `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(1400, 16795, 23120);
-Wld_InsertMobBedPos("BOSPER_BED", pos);
+Wld_InsertMobBedPos("BOSPER_BED", 1400, 16795, 23120);
 ```
 
 ## Wld_RemoveVob
@@ -233,23 +240,6 @@ if (Wld_RemoveVob("CHEST_LOBART"))
 {
     Print("Vob successfully removed");
 };
-```
-
-## Wld_GetPos
-
-Creates and returns a `C_Position` object from the given coordinates or angles.
-
-```dae
-func C_Position Wld_GetPos(var int posX, var int posY, vart int posZ) {};
-```
-
-- `posX` – position or angle in X axis
-- `posY` – position or angle in Y axis
-- `posZ` – position or angle in Z axis
-- `return` – C_Position
-
-```dae title="Example usage"
-var C_Position pos; pos = Wld_GetPos(0, 180, 0);
 ```
 
 ## Wld_GetPlayerPortalRoom
