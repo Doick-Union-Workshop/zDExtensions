@@ -1,101 +1,39 @@
 namespace GOTHIC_NAMESPACE
 {
 #if ENGINE == Engine_G2A
-    // G2A: 0x0068B840 protected: int __fastcall oCViewDialogTrade::OnTransferLeft(short)
-    auto Hook_oCViewDialogTrade_OnTransferLeft = Union::CreateHook(
-        reinterpret_cast<void*>(0x0068B840),
-        &oCViewDialogTrade::Hook_OnTransferLeft,
-        Union::HookType::Hook_Detours
-    );
-    int __fastcall oCViewDialogTrade::Hook_OnTransferLeft(short t_amount)
+    void __fastcall oCViewDialogTrade_OnTransferLeft(Union::Registers& reg);
+    auto PartialHook__oCViewDialogTrade_OnTransferLeft = Union::CreatePartialHook(reinterpret_cast<void*>(0x0068B888), &oCViewDialogTrade_OnTransferLeft);
+    void __fastcall oCViewDialogTrade_OnTransferLeft(Union::Registers& reg)
     {
-        if (!IsHookAPIRegistered(C_PLAYER_CAN_SELL_ITEM))
-            return (this->*Hook_oCViewDialogTrade_OnTransferLeft)(t_amount);
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
-        oCItem* pItemChosen = NULL;
-
-        if (this->SectionTrade != TRADE_SECTION_RIGHT_INVENTORY)
-            return 1;
-
-        IncTransferCount(t_amount);
-        oCItem* item = this->DlgInventoryPlayer->GetSelectedItem();
-
-        if (!item)
-        {
-            log->Error("No item selected in the player's inventory.");
-            return 1;
-        }
-
-        if (item->amount <= t_amount)
-        {
-            t_amount = item->amount;
-            SetTransferCount(0);
-        }
-
-        if (item->GetInstanceName() == oCItemContainer::GetCurrencyInstanceName())
-        {
-            log->Info("Cannot sell item '{0}', because it's currency item.", item->GetInstanceName().ToChar());
-            return 1;
-        }
+        auto self = reinterpret_cast<oCViewDialogTrade*>(reg.edi);
+        auto itm = reinterpret_cast<oCItem*>(reg.esi);
 
         int canSellItem = 1;
 
-        parser->SetInstance("ITEM", item);
-        parser->SetInstance("SELF", this->NpcRight); // Player
-        parser->SetInstance("OTHER", this->NpcLeft); // Trader
-        const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_SELL_ITEM), {});
+        zDE_SaveParserVars();
 
-        if (result.has_value())
-            canSellItem = *result;
-        else
-            LogDaedalusCallError(log, C_PLAYER_CAN_SELL_ITEM, result.error());
+        parser->SetInstance("ITEM", itm);
+        parser->SetInstance("SELF", self->NpcRight); // player
+        parser->SetInstance("OTHER", self->NpcLeft); // trader
+
+        const auto apiCall = DaedalusCall<int>(parser, DCFunction("C_PLAYERCANSELLITEM"), {});
+
+        zDE_RestoreParserVars();
+
+        if (apiCall.has_value()) {
+            canSellItem = *apiCall;
+        }
+        else {
+            logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANSELLITEM", CallErrorToString(apiCall.error()));
+        }
 
         if (!canSellItem)
         {
-            log->Info("Cannot sell item: {0}", item->GetInstanceName().ToChar());
-            return 1;
+            logger->Info("Player cannot sell item: {0}", itm->GetInstanceName().ToChar());
+            reg.eip = 0x0068BA3F; // return 1
         }
-
-        short i;
-        for (i = 0; i < t_amount; i++)
-        {
-            pItemChosen = this->DlgInventoryPlayer->RemoveSelectedItem();
-
-            if (pItemChosen)
-            {
-                int value = pItemChosen->GetValue();
-
-                if (value > 0)
-                {
-                    value = zINT(zREAL(value) * this->DlgInventoryNpc->ValueMultiplier);
-
-                    if (value <= 0) value = 1;
-                }
-
-                if (value <= 0)
-                {
-                    this->DlgInventoryNpc->InsertItem(pItemChosen);
-                }
-                else
-                {
-                    oCItem* coin = oCItemContainer::CreateCurrencyItem(value);
-
-                    if (!coin)
-                    {
-                        this->DlgInventoryPlayer->InsertItem(pItemChosen);
-                    }
-                    else
-                    {
-                        this->DlgInventoryNpc->InsertItem(pItemChosen);
-                        this->DlgInventoryPlayer->InsertItem(coin);
-                        coin->Release();
-                    }
-                }
-            }
-        }
-
-        return 1;
     }
 #endif
 }

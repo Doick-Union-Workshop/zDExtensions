@@ -1,32 +1,43 @@
 namespace GOTHIC_NAMESPACE
 {
-    void RegisterHookAPIs()
+    oCNpc* zDE_oldSelfNpc = NULL;
+    oCNpc* zDE_oldOtherNpc = NULL;
+    oCNpc* zDE_oldVictimNpc = NULL;
+    oCItem* zDE_oldItem = NULL;
+
+    static void zDE_SaveParserVars()
     {
-        auto log = Utils::CreateLogger("zDExt::RegisterHookAPIs");
-        int index;
+        zDE_oldSelfNpc = NULL;
+        zDE_oldOtherNpc = NULL;
+        zDE_oldVictimNpc = NULL;
+        zDE_oldItem = NULL;
 
-        for (auto& name : hookAPIs)
-        {
-            index = parser->GetIndex(name);
-
-            if (index <= 0)
-                index = parserMenu->GetIndex(name);
-
-            if (index > 0)
-            {
-                registeredHookAPIs.Insert(name);
-                log->Info("Registered: {0}", name.ToChar());
-            }
-            else {
-                log->Warning("Failed to register {0}: {1}", name.ToChar(), DaedalusCallErrorToString(eCallFuncError::WRONG_SYMBOL));
-            }
+        auto sym = parser->GetSymbol("SELF");
+        if (sym) {
+            zDE_oldSelfNpc = dynamic_cast<oCNpc*>((zCVob*)sym->GetInstanceAdr());
         }
 
-        hookAPIs.Clear();
+        sym = parser->GetSymbol("OTHER");
+        if (sym) {
+            zDE_oldOtherNpc = dynamic_cast<oCNpc*>((zCVob*)sym->GetInstanceAdr());
+        }
+
+        sym = parser->GetSymbol("VICTIM");
+        if (sym) {
+            zDE_oldVictimNpc = dynamic_cast<oCNpc*>((zCVob*)sym->GetInstanceAdr());
+        }
+
+        sym = parser->GetSymbol("ITEM");
+        if (sym) {
+            zDE_oldItem = dynamic_cast<oCItem*>((zCVob*)sym->GetInstanceAdr());
+        }
     }
 
-    inline bool IsHookAPIRegistered(const zSTRING& t_name)
+    static void zDE_RestoreParserVars()
     {
-        return static_cast<bool>(registeredHookAPIs.IsIn(t_name));
+        parser->SetInstance("SELF", zDE_oldSelfNpc);
+        parser->SetInstance("OTHER", zDE_oldOtherNpc);
+        parser->SetInstance("VICTIM", zDE_oldVictimNpc);
+        parser->SetInstance("ITEM", zDE_oldItem);
     }
 }

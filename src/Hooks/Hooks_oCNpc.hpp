@@ -9,188 +9,104 @@ namespace GOTHIC_NAMESPACE
     );
     int __thiscall oCNpc::Hook_EV_DropVob(oCMsgManipulate* t_csg)
     {
-        if (!IsHookAPIRegistered(C_PLAYER_CAN_DROP_ITEM))
-            return (this->*Hook_oCNpc_EV_DropVob)(t_csg);
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
-        zCModel* model = GetModel();
-        SetBodyState(BS_INVENTORY);
+        int canDropItem = 1;
 
-        if (anictrl->IsStateAniActive(anictrl->_s_walk))
-        {
-            if (t_csg->IsInUse()) return 1;
+        oCItem* itm = dynamic_cast<oCItem*>(t_csg->targetVob);
 
-            oCItem* itm = dynamic_cast<oCItem*>(t_csg->targetVob);
-            int canDropItem = 1;
+        zDE_SaveParserVars();
 
-            parser->SetInstance("ITEM", itm);
-            parser->SetInstance("SELF", this);
-            const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_DROP_ITEM), {});
-
-            if (result.has_value())
-                canDropItem = *result;
-            else
-                LogDaedalusCallError(log, C_PLAYER_CAN_DROP_ITEM, result.error());
-
-            if (!canDropItem)
-            {
-                log->Info("Cannot drop item: {0}", itm->GetInstanceName().ToChar());
-                return 1;
-            }
-
-            model->StartAni("T_STAND_2_IDROP", NULL);
-        }
-        else if (anictrl->IsStateAniActive(anictrl->s_idrop))
-        {
-            if (t_csg->targetVob) {
-                DoDropVob(t_csg->targetVob);
-            }
-            else if (!slot.IsEmpty()) {
-                RemoveFromSlot(t_csg->npcSlot, 1, 1);
-            }
-            else if (!t_csg->name.IsEmpty())
-            {
-                oCItem* item = RemoveFromInv(t_csg->name, 1);
-                if (item) DoDropVob(item);
-            }
-
-            if (anictrl->t_idrop_2_stand)
-            {
-                anictrl->SetNextAni(anictrl->t_idrop_2_stand, anictrl->_s_walk);
-                model->StartAni(anictrl->t_idrop_2_stand, NULL);
-            }
-            else {
-                model->StartAni(anictrl->_s_walk, NULL);
-            }
-
-            t_csg->SetInUse(1);
-        }
-
-        return 0;
-    }
-
-    // G2A: 0x00762970 public: void __thiscall oCNpc::OpenDeadNpc(void)
-    auto Hook_oCNpc_OpenDeadNpc = Union::CreateHook(
-        reinterpret_cast<void*>(0x00762970),
-        &oCNpc::Hook_OpenDeadNpc,
-        Union::HookType::Hook_Detours
-    );
-    void __thiscall oCNpc::Hook_OpenDeadNpc(void)
-    {
-        if (!IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
-        {
-            (this->*Hook_oCNpc_OpenDeadNpc)();
-            return;
-        }
-
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
-        stealnpc = GetFocusNpc();
-
-        if (stealnpc)
-        {
-            if (stealnpc->IsDead() || stealnpc->IsUnconscious())
-            {
-                int canLootNpc = 1;
-
-                parser->SetInstance("OTHER", stealnpc);
-                parser->SetInstance("SELF", this);
-                const auto result = DaedalusCall<int>(parser, DCFunction(C_PLAYER_CAN_LOOT_NPC), {});
-
-                if (result.has_value())
-                    canLootNpc = *result;
-                else
-                    LogDaedalusCallError(log, C_PLAYER_CAN_LOOT_NPC, result.error());
-
-                if (!canLootNpc)
-                {
-                    log->Info("Cannot loot NPC: {0}", stealnpc->GetInstanceName().ToChar());
-                    SetFocusVob(nullptr);
-                    return;
-                }
-
-                if (npcContainer)
-                {
-                    delete npcContainer;
-                    npcContainer = nullptr;
-                }
-
-                npcContainer = zNEW(oCNpcContainer)();
-                npcContainer->SetOwner(stealnpc);
-
-                if (!npcContainer->IsEmpty())
-                {
-                    zSTRING containerName = stealnpc->GetName(0);
-                    npcContainer->SetName(containerName);
-                    npcContainer->Open(0, 0, INV_MODE_PLUNDER);
-                    OpenInventory(INV_MODE_DEFAULT);
-                    npcContainer->Activate();
-                    oCNpc::game_mode = NPC_GAME_PLUNDER;
-                    return;
-                }
-            }
-        }
-
-        GetEM()->OnMessage(zNEW(oCMsgManipulate)(oCMsgManipulate::EV_CALLSCRIPT, PLAYER_PLUNDER_IS_EMPTY, -1), this);
-    }
-
-    // G2A: 0x00762B40 public: void __thiscall oCNpc::CloseDeadNpc(void)
-    auto Hook_oCNpc_CloseDeadNpc = Union::CreateHook(
-        reinterpret_cast<void*>(0x00762B40),
-        &oCNpc::Hook_CloseDeadNpc,
-        Union::HookType::Hook_Detours
-    );
-    void __thiscall oCNpc::Hook_CloseDeadNpc(void)
-    {
-        if (!IsHookAPIRegistered(C_PLAYER_CAN_LOOT_NPC))
-        {
-            (this->*Hook_oCNpc_CloseDeadNpc)();
-            return;
-        }
-
-        if (!npcContainer) return;
-
-        CloseInventory();
-        npcContainer->Close();
-        delete (npcContainer);
-        npcContainer = nullptr;
-        oCNpc::game_mode = NPC_GAME_NORMAL;
-    }
-
-    // G2A: 0x00751AF0 public: int __thiscall oCNpc::EV_AttackFinish(class oCMsgAttack *)
-    auto Hook_oCNpc_EV_AttackFinish = Union::CreateHook(
-        reinterpret_cast<void*>(0x00751AF0),
-        &oCNpc::Hook_EV_AttackFinish,
-        Union::HookType::Hook_Detours
-    );
-    int __thiscall oCNpc::Hook_EV_AttackFinish(oCMsgAttack* t_csg)
-    {
-        if (!IsHookAPIRegistered(C_CAN_FINISH_NPC))
-        {
-            return (this->*Hook_oCNpc_EV_AttackFinish)(t_csg);
-        }
-
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
-
-        oCNpc* pTargetNpc = zDYNAMIC_CAST<oCNpc>(t_csg->target);
-
-        int canFinishNpc = 1;
-
-        parser->SetInstance("OTHER", pTargetNpc);
+        parser->SetInstance("ITEM", itm);
         parser->SetInstance("SELF", this);
-        const auto result = DaedalusCall<int>(parser, DCFunction(C_CAN_FINISH_NPC), {});
 
-        if (result.has_value())
-            canFinishNpc = *result;
-        else
-            LogDaedalusCallError(log, C_CAN_FINISH_NPC, result.error());
+        const auto apiCall = DaedalusCall<int>(parser, DCFunction("C_PLAYERCANDROPITEM"), {});
 
-        if (!canFinishNpc)
+        zDE_RestoreParserVars();
+
+        if (apiCall.has_value()) {
+            canDropItem = *apiCall;
+        } else {
+            logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANDROPITEM", CallErrorToString(apiCall.error()));
+        }
+
+        if (!canDropItem)
         {
-            log->Info("Cannot finish NPC: {0}", pTargetNpc->GetInstanceName().ToChar());
+            logger->Info("Cannot drop item: {0}", itm->GetInstanceName().ToChar());
             return 1;
         }
 
-        return (this->*Hook_oCNpc_EV_AttackFinish)(t_csg);
+        return (this->*Hook_oCNpc_EV_DropVob)(t_csg);
+    }
+
+    void __fastcall oCNpc_OpenDeadNpc(Union::Registers& reg);
+    auto PartialHook_oCNpc_OpenDeadNpc = Union::CreatePartialHook(reinterpret_cast<void*>(0x007629A1), &oCNpc_OpenDeadNpc);
+    void __fastcall oCNpc_OpenDeadNpc(Union::Registers& reg)
+    {
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
+
+        auto self = reinterpret_cast<oCNpc*>(reg.edi);
+        auto target = stealnpc;
+
+        int canLootNpc = 1;
+
+        zDE_SaveParserVars();
+
+        parser->SetInstance("SELF", self);
+        parser->SetInstance("OTHER", target);
+
+        const auto apiCall = DaedalusCall<int>(parser, DCFunction("C_PLAYERCANLOOTNPC"), {});
+
+        zDE_RestoreParserVars();
+
+        if (apiCall.has_value()) {
+            canLootNpc = *apiCall;
+        }
+        else {
+            logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANLOOTNPC", CallErrorToString(apiCall.error()));
+        }
+
+        if (!canLootNpc)
+        {
+            logger->Info("Player cannot loot NPC: {0}", target->GetInstanceName().ToChar());
+            self->SetFocusVob(NULL);
+            reg.eip = 0x00762B23; // return;
+        }
+    }
+
+    void __fastcall oCNpc_EV_AttackFinish(Union::Registers& reg);
+    auto PartialHook_oCNpc_EV_AttackFinish = Union::CreatePartialHook(reinterpret_cast<void*>(0x00751C7F), &oCNpc_EV_AttackFinish);
+    void __fastcall oCNpc_EV_AttackFinish(Union::Registers& reg)
+    {
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
+
+        auto self = reinterpret_cast<oCNpc*>(reg.esi);
+        auto target = reinterpret_cast<oCNpc*>(reg.ebx);
+
+        int canFinishNpc = 1;
+
+        zDE_SaveParserVars();
+
+        parser->SetInstance("SELF", self);
+        parser->SetInstance("OTHER", target);
+
+        const auto apiCall = DaedalusCall<int>(parser, DCFunction("C_CANFINISHNPC"), {});
+
+        zDE_RestoreParserVars();
+
+        if (apiCall.has_value()) {
+            canFinishNpc = *apiCall;
+        }
+        else {
+            logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_CANFINISHNPC", CallErrorToString(apiCall.error()));
+        }
+
+        if (!canFinishNpc)
+        {
+            logger->Info("Cannot finish NPC: {0}", target->GetInstanceName().ToChar());
+            reg.eax = 1;
+            reg.eip = 0x007522B3;
+        }
     }
 #endif
 }

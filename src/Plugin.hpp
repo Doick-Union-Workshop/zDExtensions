@@ -12,7 +12,7 @@ namespace GOTHIC_NAMESPACE
 
 	void Game_Init()
 	{
-		RegisterHookAPIs();
+
 	}
 
 	void Game_Exit()
