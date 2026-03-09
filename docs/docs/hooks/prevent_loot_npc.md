@@ -1,7 +1,3 @@
----
-status: new
----
-
 # Prevent looting NPCs by player
 
 !!! info "Engine restrictions"
