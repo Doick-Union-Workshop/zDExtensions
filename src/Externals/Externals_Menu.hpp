@@ -1,36 +1,40 @@
 namespace GOTHIC_NAMESPACE
 {
-    static void Menu_SetItemText(const zSTRING& t_name, const zSTRING& t_text, const int t_line, const int t_drawNow)
+    void Menu_SetItemText(const zSTRING& t_name, const zSTRING& t_text, const int t_line, const int t_drawNow)
     {
-        if (t_name.IsEmpty()) return;
+        if (t_name.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
 
         zSTRING name = Str_Upper(t_name);
-        zCMenuItem* menuItem = FindMenuItemByName(name, log);
-
-        if (!menuItem) return;
+        zCMenuItem* menuItem = FindMenuItemByName(name, logger);
+        if (!menuItem) {
+            return;
+        }
 
         menuItem->SetText(t_text, t_line, t_drawNow);
         MenuItem_Release(menuItem);
     }
 
-    static zSTRING Menu_GetItemText(const zSTRING& t_name, const int t_line)
+    zSTRING Menu_GetItemText(const zSTRING& t_name, const int t_line)
     {
-        if (t_name.IsEmpty()) return zSTRING{};
+        if (t_name.IsEmpty()) {
+            return zSTRING{};
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
 
         zSTRING name = Str_Upper(t_name);
-        zCMenuItem* menuItem = FindMenuItemByName(name, log);
-
-        if (!menuItem) return zSTRING{};
+        zCMenuItem* menuItem = FindMenuItemByName(name, logger);
+        if (!menuItem) {
+            return zSTRING{};
+        }
 
         zSTRING result = menuItem->GetText(t_line);
-
-        if (result.IsEmpty())
-        {
-            log->Warning("Menu item '{0}' has no value at {1} text line.", name.ToChar(), t_line);
+        if (result.IsEmpty()) {
+            logger->Info("Menu item {0} has no value at {1} text line.", name.ToChar(), t_line);
         }
 
         MenuItem_Release(menuItem);
@@ -38,7 +42,7 @@ namespace GOTHIC_NAMESPACE
     }
 
     // For menu parser
-    static int Menu_SetItemText_Old()
+    int Menu_SetItemText_Old()
     {
         auto const par = zCParser::GetParser();
 
@@ -50,19 +54,20 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(menuItemText);
         par->GetParameter(menuItemName);
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText_Old");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText_Old");
 
         menuItemName.Upper();
-        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, log);
-
-        if (!menuItem) return 0;
+        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, logger);
+        if (!menuItem) {
+            return 0;
+        }
 
         menuItem->SetText(menuItemText, line, drawNow);
         MenuItem_Release(menuItem);
         return 0;
     }
 
-    static int Menu_GetItemText_Old()
+    int Menu_GetItemText_Old()
     {
         static zSTRING result = "";
         auto const par = zCParser::GetParser();
@@ -73,11 +78,10 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(line);
         par->GetParameter(menuItemName);
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
 
         menuItemName.Upper();
-        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, log);
-
+        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, logger);
         if (!menuItem)
         {
             par->SetReturn(result);
@@ -85,9 +89,9 @@ namespace GOTHIC_NAMESPACE
         }
 
         result = menuItem->GetText(line);
-
-        if (result.IsEmpty())
-            log->Warning("Menu item '{0}' has no value at {1} text line.", menuItemName.ToChar(), line);
+        if (result.IsEmpty()) {
+            logger->Info("Menu item {0} has no value at {1} text line.", menuItemName.ToChar(), line);
+        }
 
         MenuItem_Release(menuItem);
         par->SetReturn(result);

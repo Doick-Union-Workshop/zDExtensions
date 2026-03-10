@@ -5,7 +5,7 @@ namespace GOTHIC_NAMESPACE
     auto PartialHook__oCViewDialogTrade_OnTransferLeft = Union::CreatePartialHook(reinterpret_cast<void*>(0x0068B888), &oCViewDialogTrade_OnTransferLeft);
     void __fastcall oCViewDialogTrade_OnTransferLeft(Union::Registers& reg)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
+        static auto logger = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
 
         auto self = reinterpret_cast<oCViewDialogTrade*>(reg.edi);
         auto itm = reinterpret_cast<oCItem*>(reg.esi);

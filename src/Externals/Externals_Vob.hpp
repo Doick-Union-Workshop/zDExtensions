@@ -1,20 +1,23 @@
 ﻿namespace GOTHIC_NAMESPACE
 {
-    static void Vob_Rotate(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void Vob_Rotate(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
         log->Warning("Vob_Rotate is deprecated. Use Vob_RotateLocal or Vob_RotateWorld instead.");
     }
 
-    static void Vob_RotateWorld(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void Vob_RotateWorld(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         const bool collDetectionStatic = vob->collDetectionStatic;
         const bool collDetectionDynamic = vob->collDetectionDynamic;
@@ -29,15 +32,18 @@
         vob->collDetectionDynamic = collDetectionDynamic;
     }
 
-    static void Vob_RotateLocal(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void Vob_RotateLocal(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         const bool collDetectionStatic = vob->collDetectionStatic;
         const bool collDetectionDynamic = vob->collDetectionDynamic;
@@ -52,15 +58,18 @@
         vob->collDetectionDynamic = collDetectionDynamic;
     }
 
-    static void Vob_SetVisual(const zSTRING& t_vobName, const zSTRING& t_visualName)
+    void Vob_SetVisual(const zSTRING& t_vobName, const zSTRING& t_visualName)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_SetVisual");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_SetVisual");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         zSTRING visualName = Str_Upper(t_visualName);
         zCVisual* visual = zCVisual::LoadVisual(visualName);
@@ -68,29 +77,35 @@
         visual->Release();
     }
 
-    static void Vob_SetToFloor(const zSTRING& t_vobName)
+    void Vob_SetToFloor(const zSTRING& t_vobName)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_SetToFloor");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_SetToFloor");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         zVEC3 pos = vob->GetPositionWorld();
         SetVobOnFloor(vob, pos);
     }
 
-    static void Vob_MoveTo(const zSTRING& t_vobName, const zSTRING& t_pointName)
+    void Vob_MoveTo(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
-        if (t_vobName.IsEmpty() || t_pointName.IsEmpty()) return;
+        if (t_vobName.IsEmpty() || t_pointName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         zSTRING pointName = Str_Upper(t_pointName);
         oCWorld* world = ogame->GetGameWorld();
@@ -103,22 +118,28 @@
         else
         {
             zCVob* pointVob = world->SearchVobByName(pointName);
-            if (!pointVob) return;
+            if (!pointVob) {
+                return;
+            }
+
             pos = pointVob->GetPositionWorld();
         }
 
         SetVobPositionWorld(vob, pos);
     }
 
-    static void Vob_MoveToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void Vob_MoveToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         zVEC3 pos = zVEC3(
             (float)t_posX,
@@ -127,31 +148,37 @@
         SetVobPositionWorld(vob, pos);
     }
 
-    static void Vob_SetCollisionDetection(const zSTRING& t_vobName, const int dynamicCollDet, const int staticCollDet)
+    void Vob_SetCollisionDetection(const zSTRING& t_vobName, const int dynamicCollDet, const int staticCollDet)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_SetCollisionDetection");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_SetCollisionDetection");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return;
+        if (!vob) {
+            return;
+        }
 
         vob->collDetectionDynamic = dynamicCollDet;
         vob->collDetectionStatic = staticCollDet;
     }
 
-    static int Vob_GetDistToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    int Vob_GetDistToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
         int dist = INT_MAX;
 
-        if (!t_vobName.IsEmpty()) return dist;
+        if (!t_vobName.IsEmpty()) {
+            return dist;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return dist;
+        if (!vob) {
+            return dist;
+        }
 
         zVEC3 pos = zVEC3(
             (float)t_posX,
@@ -161,34 +188,42 @@
         return dist;
     }
 
-    static int Vob_GetDistToNpc(const zSTRING& t_vobName, oCNpc* t_npc)
+    int Vob_GetDistToNpc(const zSTRING& t_vobName, oCNpc* t_npc)
     {
         int dist = INT_MAX;
 
-        if (!t_npc || t_vobName.IsEmpty()) return dist;
+        if (!t_npc || t_vobName.IsEmpty()) {
+            return dist;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return dist;
+        if (!vob) {
+            return dist;
+        }
 
         dist = static_cast<int>(vob->GetDistanceToVob(*t_npc));
         return dist;
     }
 
-    static zSTRING Vob_GetPortalRoom(const zSTRING& t_vobName)
+    zSTRING Vob_GetPortalRoom(const zSTRING& t_vobName)
     {
-        if (!t_vobName.IsEmpty()) return zSTRING{};
+        if (!t_vobName.IsEmpty()) {
+            return zSTRING{};
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
 
         zCVob* vob = FindVobByName(t_vobName, log);
+        if (!vob) {
+            return zSTRING{};
+        }
 
-        if (!vob) return zSTRING{};
-
-        if (auto portal = vob->GetSectorNameVobIsIn())
+        if (auto portal = vob->GetSectorNameVobIsIn()) {
             return *portal;
+        }
+
         return zSTRING{};
     }
 }

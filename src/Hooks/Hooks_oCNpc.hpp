@@ -9,7 +9,7 @@ namespace GOTHIC_NAMESPACE
     );
     int __thiscall oCNpc::Hook_EV_DropVob(oCMsgManipulate* t_csg)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
+        static auto logger = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
 
         int canDropItem = 1;
 
@@ -40,10 +40,10 @@ namespace GOTHIC_NAMESPACE
     }
 
     void __fastcall oCNpc_OpenDeadNpc(Union::Registers& reg);
-    auto PartialHook_oCNpc_OpenDeadNpc = Union::CreatePartialHook(reinterpret_cast<void*>(0x007629A1), &oCNpc_OpenDeadNpc);
+    auto PartialHook__oCNpc_OpenDeadNpc = Union::CreatePartialHook(reinterpret_cast<void*>(0x007629A1), &oCNpc_OpenDeadNpc);
     void __fastcall oCNpc_OpenDeadNpc(Union::Registers& reg)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
+        static auto logger = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
 
         auto self = reinterpret_cast<oCNpc*>(reg.edi);
         auto target = stealnpc;
@@ -69,16 +69,15 @@ namespace GOTHIC_NAMESPACE
         if (!canLootNpc)
         {
             logger->Info("Player cannot loot NPC: {0}", target->GetInstanceName().ToChar());
-            self->SetFocusVob(NULL);
             reg.eip = 0x00762B23; // return;
         }
     }
 
     void __fastcall oCNpc_EV_AttackFinish(Union::Registers& reg);
-    auto PartialHook_oCNpc_EV_AttackFinish = Union::CreatePartialHook(reinterpret_cast<void*>(0x00751C7F), &oCNpc_EV_AttackFinish);
+    auto PartialHook__oCNpc_EV_AttackFinish = Union::CreatePartialHook(reinterpret_cast<void*>(0x00751C7F), &oCNpc_EV_AttackFinish);
     void __fastcall oCNpc_EV_AttackFinish(Union::Registers& reg)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
+        static auto logger = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
 
         auto self = reinterpret_cast<oCNpc*>(reg.esi);
         auto target = reinterpret_cast<oCNpc*>(reg.ebx);

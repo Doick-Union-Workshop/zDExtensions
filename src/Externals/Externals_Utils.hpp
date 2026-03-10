@@ -51,7 +51,7 @@ namespace GOTHIC_NAMESPACE
      * Original source: https://github.com/bogu9821/BetterDaedalusExternals/blob/main/README.md
      *
      */
-    static int Ext_RGBA(const int r, const int g, const int b, const int a)
+    int Ext_RGBA(const int r, const int g, const int b, const int a)
     {
         const zCOLOR color
         {

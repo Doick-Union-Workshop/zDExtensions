@@ -1,12 +1,13 @@
 namespace GOTHIC_NAMESPACE
 {
     template<typename T>
-    static void Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
+    void Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
-        if (t_vobName.IsEmpty() || t_pointName.IsEmpty())
+        if (t_vobName.IsEmpty() || t_pointName.IsEmpty()) {
             return;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
 
         zSTRING vobName = Str_Upper(t_vobName);
         zSTRING pointName = Str_Upper(t_pointName);
@@ -21,7 +22,6 @@ namespace GOTHIC_NAMESPACE
         else
         {
             zCVob* pointVob = FindVobByName(t_pointName, log);
-
             if (!pointVob)
             {
                 vob->Release();
@@ -38,9 +38,11 @@ namespace GOTHIC_NAMESPACE
     }
 
     template<typename T>
-    static void Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) return;
+        if (t_vobName.IsEmpty()) {
+            return;
+        }
 
         zSTRING vobName = Str_Upper(t_vobName);
         T* vob = new T{};
@@ -54,38 +56,42 @@ namespace GOTHIC_NAMESPACE
         vob->Release();
     }
 
-    static int Wld_RemoveVob(const zSTRING& t_vobName)
+    int Wld_RemoveVob(const zSTRING& t_vobName)
     {
-        if (t_vobName.IsEmpty()) return 0;
+        if (t_vobName.IsEmpty()) {
+            return 0;
+        }
 
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
 
         zCVob* vob = FindVobByName(t_vobName, log);
-
-        if (!vob) return 0;
+        if (!vob) {
+            return 0;
+        }
 
         ogame->GetGameWorld()->RemoveVob(vob);
         return 1;
     }
 
-    static zSTRING Wld_GetPlayerPortalRoom()
+    zSTRING Wld_GetPlayerPortalRoom()
     {
-        if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal)
+        if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal) {
             return *name;
+        }
+
         return zSTRING{};
     }
 
-    static zSTRING Wld_GetWorldName()
+    zSTRING Wld_GetWorldName()
     {
 	    return ogame->GetGameWorld()->GetWorldName();
     }
 
-    static int Wld_SetRainTime(const int t_startHr, const int t_startMin, const int t_endHr, const int t_endMin)
+    int Wld_SetRainTime(const int t_startHr, const int t_startMin, const int t_endHr, const int t_endMin)
     {
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
-
         if (!skyCtrl)
         {
             log->Error("zCSkyControler_Outdoor not found");
@@ -115,37 +121,40 @@ namespace GOTHIC_NAMESPACE
         return 0;
     }
 
-    static void Wld_SetRainOn()
+    void Wld_SetRainOn()
     {
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
-
-        if (!skyCtrl) return;
+        if (!skyCtrl) {
+            return;
+        }
 
         skyCtrl->rainFX.timeStartRain = 0;
         skyCtrl->rainFX.timeStopRain = 1.0f;
     }
 
-    static void Wld_SetRainOff()
+    void Wld_SetRainOff()
     {
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
-
-        if (!skyCtrl) return;
+        if (!skyCtrl) {
+            return;
+        }
 
         skyCtrl->rainFX.timeStartRain = 0;
         skyCtrl->rainFX.timeStopRain = 0;
         skyCtrl->rainFX.soundVolume = 0;
 
-        if (!skyCtrl->rainFX.outdoorRainFX) return;
+        if (!skyCtrl->rainFX.outdoorRainFX) {
+            return;
+        }
 
 		skyCtrl->rainFX.outdoorRainFX->UpdateSound(0);
     }
 
-    static void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
+    void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
     {
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
+        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
-
         if (!skyCtrl)
         {
             log->Error("zCSkyControler_Outdoor not found");

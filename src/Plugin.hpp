@@ -122,8 +122,10 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Str_StartsWith),
 		BetterDaedalusExternal(Str_EndsWith),
 		BetterDaedalusExternal(Str_Cut),
+		BetterDaedalusExternal(Str_Put),
 		BetterDaedalusExternal(AI_TurnToWP),
 		BetterDaedalusExternal(AI_TurnToVob),
+		BetterDaedalusExternal(AI_CallFunction),
 		BetterDaedalusExternal(Npc_GetRoutineFuncName),
 		BetterDaedalusExternal(Npc_GetRoutineName),
 		BetterDaedalusExternal(Npc_EquipItem),
@@ -190,6 +192,7 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(Mob_SetFocusName),
 		BetterDaedalusExternal(Mob_GetFocusName),
 		BetterDaedalusExternal(Mob_GetScemeName),
+		BetterDaedalusExternal(Mob_SetUseWithItem),
 		BetterDaedalusExternalWithName(RGBA, Ext_RGBA)
 	);
 
@@ -206,6 +209,8 @@ namespace GOTHIC_NAMESPACE
 			zPAR_TYPE_VOID, zPAR_TYPE_INT, zPAR_TYPE_INT, zPAR_TYPE_INT, 0);
 		parser->DefineExternal("SetStringArrayValue", SetArrayValue<zSTRING>,
 			zPAR_TYPE_VOID, zPAR_TYPE_STRING, zPAR_TYPE_INT, zPAR_TYPE_STRING, 0);
+		parser->DefineExternal("Str_Format_Ext", Str_Format_Ext,
+			zPAR_TYPE_STRING, (zPAR_TYPE_INSTANCE + 1), 0);
 
 		// TODO: Change definitons to BetterDaedalusExternal when multi parser definitons are supported
 		parserMenu->DefineExternal("Menu_SetItemText", Menu_SetItemText_Old,
@@ -214,6 +219,8 @@ namespace GOTHIC_NAMESPACE
 			zPAR_TYPE_STRING, zPAR_TYPE_STRING, zPAR_TYPE_INT, 0);
 		parserMenu->DefineExternal("Hlp_StrCmp", Hlp_StrCmp,
 			zPAR_TYPE_INT, zPAR_TYPE_STRING, zPAR_TYPE_STRING, 0);
+		parserMenu->DefineExternal("Str_Format_Ext", Str_Format_Ext,
+			zPAR_TYPE_STRING, (zPAR_TYPE_INSTANCE + 1), 0);
 	}
 
 	void Game_ApplySettings()
@@ -229,13 +236,13 @@ namespace GOTHIC_NAMESPACE
 		return Hook_WinMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
 	}*/
 
-	void __fastcall oCGame_Init(oCGame* self, void* vtable);
+	/*void __fastcall oCGame_Init(oCGame* self, void* vtable);
 	auto Hook_oCGame_Init = Union::CreateHook(reinterpret_cast<void*>(zSwitch(0x00636F50, 0x0065D480, 0x006646D0, 0x006C1060)), &oCGame_Init, Union::HookType::Hook_Detours);
 	void __fastcall oCGame_Init(oCGame* self, void* vtable)
 	{
 		Hook_oCGame_Init(self, vtable);
 		Game_Init();
-	}
+	}*/
 
 	/*void __fastcall CGameManager_Done(CGameManager* self, void* vtable);
 	auto Hook_CGameManager_Done = Union::CreateHook(reinterpret_cast<void*>(zSwitch(0x00424850, 0x00427310, 0x004251A0, 0x004254E0)), &CGameManager_Done, Union::HookType::Hook_Detours);

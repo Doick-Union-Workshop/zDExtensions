@@ -4,9 +4,9 @@ namespace GOTHIC_NAMESPACE
 	{
 		zSTRING name = zSTRING(t_name).Upper();
 		zCVob* vob = ogame->GetGameWorld()->SearchVobByName(name);
-
-		if (!vob && t_logger)
-			t_logger->Error("No Vob found with specified name: {0}", name.ToChar());
+        if (!vob && t_logger) {
+            t_logger->Error("No Vob found with specified name: {0}", name.ToChar());
+        }
 
 		return vob;
 	}
@@ -14,8 +14,9 @@ namespace GOTHIC_NAMESPACE
     int GetVobFloorPosition(zCVob* t_vob, zVEC3& t_pos)
     {
         zCWorld* wld = t_vob->GetHomeWorld();
-
-        if (!wld) return 0;
+        if (!wld) {
+            return 0;
+        }
 
         zREAL diff = t_vob->GetPositionWorld()[VY] - t_vob->bbox3D.mins[VY];
 
@@ -35,7 +36,7 @@ namespace GOTHIC_NAMESPACE
 
     void SetVobOnFloor(zCVob* t_vob, zVEC3& t_pos)
     {
-        static Utils::Logger* log = Utils::CreateLogger("zDExt::SetVobOnFloor");
+        static auto log = Utils::CreateLogger("zDExt::SetVobOnFloor");
 
         if (!GetVobFloorPosition(t_vob, t_pos))
         {
@@ -50,7 +51,9 @@ namespace GOTHIC_NAMESPACE
 
     void SetVobPositionWorld(zCVob* t_vob, const zVEC3& t_pos)
     {
-        if (!t_vob || t_pos == zVEC3{}) return;
+        if (!t_vob || t_pos == zVEC3{}) {
+            return;
+        }
 
         const bool collDetectionStatic = t_vob->collDetectionStatic;
         const bool collDetectionDynamic = t_vob->collDetectionDynamic;
@@ -74,8 +77,10 @@ namespace GOTHIC_NAMESPACE
         zVEC3 p2 = t_pos;
         zTBBox3D bbox = t_vob->bbox3D;
 
-        if (t_dim2 || zInRange(t_pos[VY], bbox.mins[VY], bbox.maxs[VY]))
+        if (t_dim2 || zInRange(t_pos[VY], bbox.mins[VY], bbox.maxs[VY])) {
             p2[VY] = p1[VY];
+        }
+
         return GetzVEC3Length2(p1 - p2);
     }
 
@@ -83,9 +88,9 @@ namespace GOTHIC_NAMESPACE
     {
         zSTRING name = zSTRING(t_name).Upper();
         zCMenuItem* menuItem = zCMenuItem::GetByName(name);
-
-        if (!menuItem && t_logger)
+        if (!menuItem && t_logger) {
             t_logger->Error("No Menu Item found with specified name: {0}", name.ToChar());
+        }
 
         return menuItem;
     }
@@ -107,23 +112,28 @@ namespace GOTHIC_NAMESPACE
 
     void MenuItem_Release(zCMenuItem* t_menuItem)
     {
-        if (!t_menuItem) return;
+        if (!t_menuItem) {
+            return;
+        }
 
 #if ENGINE >= Engine_G2
         t_menuItem->Release();
 #else
         t_menuItem->m_iRefCtr--;
 
-        if (t_menuItem->m_iRefCtr <= 0 && !t_menuItem->registeredCPP)
+        if (t_menuItem->m_iRefCtr <= 0 && !t_menuItem->registeredCPP) {
             delete t_menuItem;
+        }
 #endif
     }
 
-    static zCOption* GetOptionsLevel(const zSTRING& t_level)
+    zCOption* GetOptionsLevel(const zSTRING& t_level)
     {
         zSTRING upper = zSTRING(t_level).Upper();
-        if (upper == "MOD")
+        if (upper == "MOD") {
             return zgameoptions;
+        }
+
         return zoptions;
     }
 }
