@@ -36,13 +36,13 @@ namespace GOTHIC_NAMESPACE
 
     void SetVobOnFloor(zCVob* t_vob, zVEC3& t_pos)
     {
-        static auto log = Utils::CreateLogger("zDExt::SetVobOnFloor");
+        static auto logger = Utils::CreateLogger("zDExt::SetVobOnFloor");
 
         if (!GetVobFloorPosition(t_vob, t_pos))
         {
             zSTRING vobName = t_vob->GetObjectName();
             vobName.Upper();
-            log->Error("Cannot set to floor Vob with specified name: {0}", vobName.ToChar());
+            logger->Error("Cannot set to floor Vob with specified name: {0}", vobName.ToChar());
             return;
         }
 

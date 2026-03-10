@@ -6,7 +6,7 @@ namespace GOTHIC_NAMESPACE
 			return;
 		}
 
-		static auto log = Utils::CreateLogger("zDExt::Externals::AI_TurnToWP");
+		static auto logger = Utils::CreateLogger("zDExt::Externals::AI_TurnToWP");
 
 		zSTRING pointName = zSTRING(t_pointName).Upper();
 		zCWorld* world = ogame->GetGameWorld();
@@ -18,8 +18,8 @@ namespace GOTHIC_NAMESPACE
 			return;
 		}
 
-		log->Warning("No Waypoint found with specified name: {0}. Looking for Vob...", pointName.ToChar());
-		zCVob* vob = FindVobByName(t_pointName, log);
+		logger->Warning("No Waypoint found with specified name: {0}. Looking for Vob...", pointName.ToChar());
+		zCVob* vob = FindVobByName(t_pointName, logger);
 
 		if (!vob) {
 			return;
@@ -34,9 +34,9 @@ namespace GOTHIC_NAMESPACE
 			return;
 		}
 
-		static auto log = Utils::CreateLogger("zDExt::Externals::AI_TurnToVob");
+		static auto logger = Utils::CreateLogger("zDExt::Externals::AI_TurnToVob");
 
-		zCVob* vob = FindVobByName(t_pointName, log);
+		zCVob* vob = FindVobByName(t_pointName, logger);
 		if (!vob) {
 			return;
 		}

@@ -182,9 +182,9 @@ namespace GOTHIC_NAMESPACE
 			return dist;
 		}
 
-		static Utils::Logger* log = Utils::CreateLogger("zDExt::Externals::Npc_GetDistToVob");
+		static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Npc_GetDistToVob");
 
-		zCVob* vob = FindVobByName(t_vobName, log);
+		zCVob* vob = FindVobByName(t_vobName, logger);
 		if (!vob) {
 			return dist;
 		}

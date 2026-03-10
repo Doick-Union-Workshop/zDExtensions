@@ -6,9 +6,9 @@ namespace GOTHIC_NAMESPACE
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Mob_SetFocusName");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Mob_SetFocusName");
 
-        zCVob* vob = FindVobByName(t_mobName, log);
+        zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob) {
             return;
         }
@@ -16,7 +16,7 @@ namespace GOTHIC_NAMESPACE
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
-            log->Error("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
+            logger->Error("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
             return;
         }
 
@@ -30,9 +30,9 @@ namespace GOTHIC_NAMESPACE
             return zSTRING{};
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Mob_GetFocusName");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Mob_GetFocusName");
 
-        zCVob* vob = FindVobByName(t_mobName, log);
+        zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob) {
             return zSTRING{};
         }
@@ -40,7 +40,7 @@ namespace GOTHIC_NAMESPACE
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
-            log->Warning("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
+            logger->Warning("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
             return zSTRING{};
         }
 
@@ -53,9 +53,9 @@ namespace GOTHIC_NAMESPACE
             return zSTRING{};
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Mob_GetScemeName");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Mob_GetScemeName");
 
-        zCVob* vob = FindVobByName(t_mobName, log);
+        zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob) {
             return zSTRING{};
         }
@@ -63,7 +63,7 @@ namespace GOTHIC_NAMESPACE
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
-            log->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
+            logger->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
             return zSTRING{};
         }
 
@@ -76,9 +76,9 @@ namespace GOTHIC_NAMESPACE
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Mob_SetUseWithItem");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Mob_SetUseWithItem");
 
-        zCVob* vob = FindVobByName(t_mobName, log);
+        zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob) {
             return;
         }
@@ -86,7 +86,7 @@ namespace GOTHIC_NAMESPACE
         oCMobInter* mob = vob->CastTo<oCMobInter>();
         if (!mob)
         {
-            log->Warning("Vob found, but it's not an oCMobInter or its derived class: {0}", t_mobName.ToChar());
+            logger->Warning("Vob found, but it's not an oCMobInter or its derived class: {0}", t_mobName.ToChar());
             return;
         }
 

@@ -7,7 +7,7 @@ namespace GOTHIC_NAMESPACE
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
 
         zSTRING vobName = Str_Upper(t_vobName);
         zSTRING pointName = Str_Upper(t_pointName);
@@ -21,7 +21,7 @@ namespace GOTHIC_NAMESPACE
         }
         else
         {
-            zCVob* pointVob = FindVobByName(t_pointName, log);
+            zCVob* pointVob = FindVobByName(t_pointName, logger);
             if (!pointVob)
             {
                 vob->Release();
@@ -62,9 +62,9 @@ namespace GOTHIC_NAMESPACE
             return 0;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return 0;
         }
@@ -89,12 +89,12 @@ namespace GOTHIC_NAMESPACE
 
     int Wld_SetRainTime(const int t_startHr, const int t_startMin, const int t_endHr, const int t_endMin)
     {
-        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
         {
-            log->Error("zCSkyControler_Outdoor not found");
+            logger->Error("zCSkyControler_Outdoor not found");
             return 0;
         }
 
@@ -105,7 +105,7 @@ namespace GOTHIC_NAMESPACE
 
             if (startHr > endHr)
             {
-                log->Error("Rain at 12 noon is not possible!");
+                logger->Error("Rain at 12 noon is not possible!");
                 return 0;
             }
 
@@ -152,12 +152,12 @@ namespace GOTHIC_NAMESPACE
 
     void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
     {
-        static auto log = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
         {
-            log->Error("zCSkyControler_Outdoor not found");
+            logger->Error("zCSkyControler_Outdoor not found");
             return;
         }
 

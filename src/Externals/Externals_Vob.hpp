@@ -2,8 +2,8 @@
 {
     void Vob_Rotate(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
-        log->Warning("Vob_Rotate is deprecated. Use Vob_RotateLocal or Vob_RotateWorld instead.");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
+        logger->Warning("This function is deprecated. Use Vob_RotateLocal or Vob_RotateWorld instead.");
     }
 
     void Vob_RotateWorld(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
@@ -12,9 +12,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -38,9 +38,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -64,9 +64,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_SetVisual");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_SetVisual");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -83,9 +83,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_SetToFloor");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_SetToFloor");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -100,9 +100,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -134,9 +134,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -154,9 +154,9 @@
             return;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_SetCollisionDetection");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_SetCollisionDetection");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return;
         }
@@ -173,9 +173,9 @@
             return dist;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return dist;
         }
@@ -196,9 +196,9 @@
             return dist;
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return dist;
         }
@@ -213,9 +213,9 @@
             return zSTRING{};
         }
 
-        static auto log = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
 
-        zCVob* vob = FindVobByName(t_vobName, log);
+        zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob) {
             return zSTRING{};
         }
