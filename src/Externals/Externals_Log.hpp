@@ -8,7 +8,8 @@ namespace GOTHIC_NAMESPACE
 		{
 			auto const log = list->GetData();
 
-			if (log->m_strDescription == t_topicName) {
+			if (log->m_strDescription == t_topicName)
+			{
 				return static_cast<int>(log->m_enuStatus);
 			}
 

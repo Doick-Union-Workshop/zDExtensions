@@ -3,53 +3,36 @@ namespace GOTHIC_NAMESPACE
     template<typename T>
     void Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
-        if (t_vobName.IsEmpty() || t_pointName.IsEmpty()) {
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
+
+        zSTRING pointName{ t_pointName };
+        pointName.Upper();
+
+        auto pos = GetWaypointPosition(t_pointName, logger);
+        if (!pos)
+        {
             return;
         }
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
+        zSTRING vobName{ t_vobName };
+        vobName.Upper();
 
-        zSTRING vobName = Str_Upper(t_vobName);
-        zSTRING pointName = Str_Upper(t_pointName);
         T* vob = new T{};
-        oCWorld* world = ogame->GetGameWorld();
-        zCWaypoint* wp = world->wayNet->GetWaypoint(pointName);
-        zVEC3 pos;
-
-        if (wp) {
-            pos = wp->GetPositionWorld();
-        }
-        else
-        {
-            zCVob* pointVob = FindVobByName(t_pointName, logger);
-            if (!pointVob)
-            {
-                vob->Release();
-                return;
-            }
-
-            pos = pointVob->GetPositionWorld();
-        }
-
         vob->SetVobName(vobName);
-        world->AddVob(vob);
-        SetVobPositionWorld(vob, pos);
+        ogame->GetGameWorld()->AddVob(vob);
+        SetVobPositionWorld(vob, pos.value());
         vob->Release();
     }
 
     template<typename T>
     void Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
+        zSTRING vobName{ t_vobName };
+        vobName.Upper();
 
-        zSTRING vobName = Str_Upper(t_vobName);
         T* vob = new T{};
-        zVEC3 pos = zVEC3(
-            (float)t_posX,
-            (float)t_posY,
-            (float)t_posZ);
+        auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
+
         vob->SetVobName(vobName);
         ogame->GetGameWorld()->AddVob(vob);
         SetVobPositionWorld(vob, pos);
@@ -58,14 +41,10 @@ namespace GOTHIC_NAMESPACE
 
     int Wld_RemoveVob(const zSTRING& t_vobName)
     {
-        if (t_vobName.IsEmpty()) {
-            return 0;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return 0;
         }
 
@@ -75,11 +54,11 @@ namespace GOTHIC_NAMESPACE
 
     zSTRING Wld_GetPlayerPortalRoom()
     {
-        if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal) {
+        if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal)
+        {
             return *name;
         }
-
-        return zSTRING{};
+        return {};
     }
 
     zSTRING Wld_GetWorldName()
@@ -87,9 +66,9 @@ namespace GOTHIC_NAMESPACE
 	    return ogame->GetGameWorld()->GetWorldName();
     }
 
-    int Wld_SetRainTime(const int t_startHr, const int t_startMin, const int t_endHr, const int t_endMin)
+    int Wld_SetRainTime(const int t_startHour, const int t_startMin, const int t_endHour, const int t_endMin)
     {
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
@@ -98,19 +77,19 @@ namespace GOTHIC_NAMESPACE
             return 0;
         }
 
-        if (ogame->GetWorldTimer()->IsTimeBetween(t_startHr, t_startMin, t_endHr, t_endMin))
+        if (ogame->GetWorldTimer()->IsTimeBetween(t_startHour, t_startMin, t_endHour, t_endMin))
         {
-            int startHr = (t_startHr + 12) % 24;
-            int endHr = (t_endHr + 12) % 24;
+            int startHour = (t_startHour + 12) % 24;
+            int endHour = (t_endHour + 12) % 24;
 
-            if (startHr > endHr)
+            if (startHour > endHour)
             {
                 logger->Error("Rain at 12 noon is not possible!");
                 return 0;
             }
 
-            float startF = GetTimeAsFraction(startHr, t_startMin);
-            float endF = GetTimeAsFraction(endHr, t_endMin);
+            float startF = GetTimeAsFraction(startHour, t_startMin);
+            float endF = GetTimeAsFraction(endHour, t_endMin);
 
             skyCtrl->rainFX.timeStartRain = startF;
             skyCtrl->rainFX.timeStopRain = endF;
@@ -124,7 +103,8 @@ namespace GOTHIC_NAMESPACE
     void Wld_SetRainOn()
     {
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
-        if (!skyCtrl) {
+        if (!skyCtrl)
+        {
             return;
         }
 
@@ -135,7 +115,8 @@ namespace GOTHIC_NAMESPACE
     void Wld_SetRainOff()
     {
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
-        if (!skyCtrl) {
+        if (!skyCtrl)
+        {
             return;
         }
 
@@ -143,7 +124,8 @@ namespace GOTHIC_NAMESPACE
         skyCtrl->rainFX.timeStopRain = 0;
         skyCtrl->rainFX.soundVolume = 0;
 
-        if (!skyCtrl->rainFX.outdoorRainFX) {
+        if (!skyCtrl->rainFX.outdoorRainFX)
+        {
             return;
         }
 
@@ -152,7 +134,7 @@ namespace GOTHIC_NAMESPACE
 
     void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
     {
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)

@@ -2,83 +2,61 @@ namespace GOTHIC_NAMESPACE
 {
 	zSTRING Str_Upper(const zSTRING& t_str)
 	{
-		if (t_str.IsEmpty()) {
-			return zSTRING{};
-		}
-
-		return zSTRING(t_str).Upper();
+		zSTRING result{ t_str };
+		result.Upper();
+		return result;
 	}
 
 	zSTRING Str_Lower(const zSTRING& t_str)
 	{
-		if (t_str.IsEmpty()) {
-			return zSTRING{};
-		}
-
-		return zSTRING(t_str).Lower();
+		zSTRING result{ t_str };
+		result.Lower();
+		return result;
 	}
 
 	zSTRING Str_Capitel(const zSTRING& t_str)
 	{
-		if (t_str.IsEmpty()) {
-			return zSTRING{};
-		}
-
-		return zSTRING(t_str).UpperFirstLowerRest();
+		zSTRING result{ t_str };
+		result.UpperFirstLowerRest();
+		return result;
 	}
 
 	int Str_StartsWith(const zSTRING& t_str, const zSTRING& t_prefix)
 	{
-		if (t_str.IsEmpty() || t_prefix.IsEmpty()) {
-			return 0;
-		}
-
-		zSTRING str = Str_Upper(t_str);
-		zSTRING prefix = Str_Upper(t_prefix);
-
+		zSTRING str{ t_str };
+		str.Upper();
+		zSTRING prefix{ t_prefix };
+		prefix.Upper();
 		return str.Search(prefix, 0) == 0;
 	}
 
 	int Str_EndsWith(const zSTRING& t_str, const zSTRING& t_suffix)
 	{
-		if (t_str.IsEmpty() || t_suffix.IsEmpty()) {
-			return 0;
-		}
-
-		zSTRING str = Str_Upper(t_str);
-		zSTRING suffix = Str_Upper(t_suffix);
+		zSTRING str{ t_str };
+		str.Upper();
+		zSTRING suffix{ t_suffix };
+		suffix.Upper();
 		int suffixPos = str.Length() - suffix.Length();
-
 		return str.Search(suffix, suffixPos) == suffixPos;
 	}
 
 	zSTRING Str_Cut(const zSTRING& t_str, const int t_start, const int t_end)
 	{
-		if (t_str.IsEmpty()) {
-			return zSTRING{};
-		}
-
-		zSTRING str = Str_Upper(t_str);
+		zSTRING str{ t_str };
 		str.Delete(t_start, t_end);
-
 		return str;
 	}
 
 	zSTRING Str_Put(const zSTRING& t_str, const zSTRING& t_value, const int t_idx)
 	{
-		if (t_str.IsEmpty()) {
-			return zSTRING{};
-		}
-
-		zSTRING str = Str_Upper(t_str);
+		zSTRING str{ t_str };
 		str.Insert(t_idx, t_value);
-
 		return str;
 	}
 
     int Str_Format_Ext()
     {
-        zCParser* parser = zCParser::GetParser();
+        const auto parser = zCParser::GetParser();
         static zSTRING format;
         zSTRING parameter_s;
         int parameter_i;
@@ -86,9 +64,11 @@ namespace GOTHIC_NAMESPACE
 
         parser->GetParameter(format);
 
-        for (u_int i = format.Length() - 1; i > 0; i--) {
+        for (u_int i = format.Length() - 1; i > 0; i--)
+		{
             if (format[i - 1] == '%') {
-				switch (format[i]) {
+				switch (format[i])
+				{
 				case 's':
 					parser->GetParameter(parameter_s);
 					format.Delete(i - 1, 2);

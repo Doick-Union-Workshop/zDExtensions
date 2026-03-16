@@ -1,39 +1,43 @@
 namespace GOTHIC_NAMESPACE
 {
-    oCNpc* zDE_oldSelfNpc = NULL;
-    oCNpc* zDE_oldOtherNpc = NULL;
-    oCNpc* zDE_oldVictimNpc = NULL;
-    oCItem* zDE_oldItem = NULL;
+    oCNpc* zDE_oldSelfNpc = nullptr;
+    oCNpc* zDE_oldOtherNpc = nullptr;
+    oCNpc* zDE_oldVictimNpc = nullptr;
+    oCItem* zDE_oldItem = nullptr;
 
-    static void zDE_SaveParserVars()
+    void zDE_SaveParserVars()
     {
-        zDE_oldSelfNpc = NULL;
-        zDE_oldOtherNpc = NULL;
-        zDE_oldVictimNpc = NULL;
-        zDE_oldItem = NULL;
+        zDE_oldSelfNpc = nullptr;
+        zDE_oldOtherNpc = nullptr;
+        zDE_oldVictimNpc = nullptr;
+        zDE_oldItem = nullptr;
 
-        auto sym = parser->GetSymbol("SELF");
-        if (sym) {
+        zCPar_Symbol* sym = parser->GetSymbol("SELF");
+        if (sym)
+        {
             zDE_oldSelfNpc = dynamic_cast<oCNpc*>((zCVob*)sym->GetInstanceAdr());
         }
 
         sym = parser->GetSymbol("OTHER");
-        if (sym) {
+        if (sym)
+        {
             zDE_oldOtherNpc = dynamic_cast<oCNpc*>((zCVob*)sym->GetInstanceAdr());
         }
 
         sym = parser->GetSymbol("VICTIM");
-        if (sym) {
+        if (sym)
+        {
             zDE_oldVictimNpc = dynamic_cast<oCNpc*>((zCVob*)sym->GetInstanceAdr());
         }
 
         sym = parser->GetSymbol("ITEM");
-        if (sym) {
+        if (sym)
+        {
             zDE_oldItem = dynamic_cast<oCItem*>((zCVob*)sym->GetInstanceAdr());
         }
     }
 
-    static void zDE_RestoreParserVars()
+    void zDE_RestoreParserVars()
     {
         parser->SetInstance("SELF", zDE_oldSelfNpc);
         parser->SetInstance("OTHER", zDE_oldOtherNpc);

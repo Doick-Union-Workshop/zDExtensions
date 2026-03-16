@@ -5,10 +5,10 @@ namespace GOTHIC_NAMESPACE
     auto PartialHook__oCViewDialogTrade_OnTransferLeft = Union::CreatePartialHook(reinterpret_cast<void*>(0x0068B888), &oCViewDialogTrade_OnTransferLeft);
     void __fastcall oCViewDialogTrade_OnTransferLeft(Union::Registers& reg)
     {
-        static auto logger = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
 
-        auto self = reinterpret_cast<oCViewDialogTrade*>(reg.edi);
-        auto itm = reinterpret_cast<oCItem*>(reg.esi);
+        oCViewDialogTrade* self = reinterpret_cast<oCViewDialogTrade*>(reg.edi);
+        oCItem* itm = reinterpret_cast<oCItem*>(reg.esi);
 
         int canSellItem = 1;
 
@@ -22,10 +22,12 @@ namespace GOTHIC_NAMESPACE
 
         zDE_RestoreParserVars();
 
-        if (apiCall.has_value()) {
+        if (apiCall.has_value())
+        {
             canSellItem = *apiCall;
         }
-        else {
+        else
+        {
             logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANSELLITEM", CallErrorToString(apiCall.error()));
         }
 

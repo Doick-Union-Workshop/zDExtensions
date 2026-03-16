@@ -2,14 +2,15 @@ namespace GOTHIC_NAMESPACE
 {
 	zSTRING Npc_GetRoutineFuncName(oCNpc* t_npc)
 	{
-		if (!t_npc) {
-			return zSTRING{};
+		if (!t_npc)
+		{
+			return {};
 		}
 
 		zSTRING routine = t_npc->state.GetRoutineName();
-
-		if (!Str_StartsWith(routine, "RTN_")) {
-			return zSTRING{};
+		if (!Str_StartsWith(routine, "RTN_"))
+		{
+			return {};
 		}
 
 		return routine;
@@ -17,37 +18,41 @@ namespace GOTHIC_NAMESPACE
 
 	zSTRING Npc_GetRoutineName(oCNpc* t_npc)
 	{
-		if (!t_npc) {
-			return zSTRING{};
+		if (!t_npc)
+		{
+			return {};
 		}
 
-		zSTRING routine = Npc_GetRoutineFuncName(t_npc);
+		zSTRING routine = t_npc->state.GetRoutineName();
 		zSTRING prefix = "RTN_";
-		zSTRING suffix = "_" + zSTRING(t_npc->idx);
+		zSTRING suffix{ "_" + t_npc->idx };
 
-		if (Str_StartsWith(routine, prefix)) {
+		if (Str_StartsWith(routine, prefix))
+		{
 			routine.Delete(0, prefix.Length());
 		}
 
 		int rtnLen = routine.Length();
 
-		if (Str_EndsWith(routine, suffix)) {
+		if (Str_EndsWith(routine, suffix))
+		{
 			routine.Delete(rtnLen - suffix.Length(), rtnLen);
 		}
 
 		return routine;
 	}
 
-	void Npc_EquipItem(oCNpc* t_npc, const int t_instance)
+	void Npc_EquipItem(oCNpc* t_npc, const int t_itemInstance)
 	{
-		if (!t_npc || !t_instance) {
+		if (!t_npc || !t_itemInstance)
+		{
 			return;
 		}
 
-		auto par = zCParser::GetParser();
-		zCPar_Symbol* sym = par->GetSymbol(t_instance);
+		zCPar_Symbol* sym = parser->GetSymbol(t_itemInstance);
 		oCItem* item = dynamic_cast<oCItem*>((zCVob*)sym->GetInstanceAdr());
-		if (!item) {
+		if (!item)
+		{
 			return;
 		}
 
@@ -83,23 +88,28 @@ namespace GOTHIC_NAMESPACE
 
 	int Npc_HasOverlayMds(oCNpc* t_npc, const zSTRING& t_overlay)
 	{
-		if (!t_npc || t_overlay.IsEmpty()) {
+		if (!t_npc)
+		{
 			return 0;
 		}
 
-		zSTRING overlay = Str_Upper(t_overlay);
+		zSTRING overlay{ t_overlay };
+		overlay.Upper();
+
 		return t_npc->activeOverlays.IsInList(overlay);
 	}
 
 	int Npc_HasTimedOverlayMds(oCNpc* t_npc, const zSTRING& t_overlay)
 	{
-		if (!t_npc || t_overlay.IsEmpty()) {
+		if (!t_npc)
+		{
 			return 0;
 		}
 
-		zSTRING overlay = Str_Upper(t_overlay);
-		auto list = t_npc->timedOverlays.GetNextInList();
+		zSTRING overlay{ t_overlay };
+		overlay.Upper();
 
+		auto list = t_npc->timedOverlays.GetNextInList();
 		while (list)
 		{
 			if (list->GetData()->mdsOverlayName.Upper() == overlay) {
@@ -114,17 +124,20 @@ namespace GOTHIC_NAMESPACE
 
 	void Npc_Teleport(oCNpc* t_npc, const zSTRING& t_point)
 	{
-		if (!t_npc || t_point.IsEmpty()) {
+		if (!t_npc)
+		{
 			return;
 		}
 
-		zSTRING point = Str_Upper(t_point);
+		zSTRING point{ t_point };
+		point.Upper();
 		t_npc->BeamTo(point);
 	}
 
 	void Npc_OpenDeadNpcInventory(oCNpc* t_npc)
 	{
-		if (!t_npc) {
+		if (!t_npc)
+		{
 			return;
 		}
 
@@ -133,7 +146,8 @@ namespace GOTHIC_NAMESPACE
 
 	void Npc_CloseInventory(oCNpc* t_npc)
 	{
-		if (!t_npc) {
+		if (!t_npc)
+		{
 			return;
 		}
 
@@ -142,7 +156,8 @@ namespace GOTHIC_NAMESPACE
 
 	void Npc_CloseInventorySteal(oCNpc* t_npc)
 	{
-		if (!t_npc) {
+		if (!t_npc)
+		{
 			return;
 		}
 
@@ -151,7 +166,8 @@ namespace GOTHIC_NAMESPACE
 
 	void Npc_CloseDeadNpcInventory(oCNpc* t_npc)
 	{
-		if (!t_npc) {
+		if (!t_npc)
+		{
 			return;
 		}
 
@@ -162,14 +178,12 @@ namespace GOTHIC_NAMESPACE
 	{
 		int dist = INT_MAX;
 
-		if (!t_npc) {
+		if (!t_npc)
+		{
 			return dist;
 		}
 
-		zVEC3 pos = zVEC3(
-			(float)t_posX,
-			(float)t_posY,
-			(float)t_posZ);
+		auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
 		dist = static_cast<int>(t_npc->GetDistanceToPos2(pos, 1));
 		return dist;
 	}
@@ -178,14 +192,15 @@ namespace GOTHIC_NAMESPACE
 	{
 		int dist = INT_MAX;
 
-		if (!t_npc || t_vobName.IsEmpty()) {
+		if (!t_npc)
+		{
 			return dist;
 		}
 
 		static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Npc_GetDistToVob");
-
 		zCVob* vob = FindVobByName(t_vobName, logger);
-		if (!vob) {
+		if (!vob)
+		{
 			return dist;
 		}
 
@@ -195,8 +210,9 @@ namespace GOTHIC_NAMESPACE
 
 	zSTRING Npc_GetVisualBody(oCNpc* t_npc)
 	{
-		if (!t_npc) {
-			return zSTRING{};
+		if (!t_npc)
+		{
+			return {};
 		}
 
 		return t_npc->GetVisualBody();
@@ -204,8 +220,9 @@ namespace GOTHIC_NAMESPACE
 
 	zSTRING Npc_GetVisualHead(oCNpc* t_npc)
 	{
-		if (!t_npc) {
-			return zSTRING{};
+		if (!t_npc)
+		{
+			return {};
 		}
 
 		return t_npc->GetVisualHead();
@@ -213,14 +230,16 @@ namespace GOTHIC_NAMESPACE
 
 	zSTRING Npc_GetPortalRoom(oCNpc* t_npc)
 	{
-		if (!t_npc) {
-			return zSTRING{};
+		if (!t_npc)
+		{
+			return {};
 		}
 
-		if (auto portal = t_npc->GetSectorNameVobIsIn()) {
+		if (const zSTRING* portal = t_npc->GetSectorNameVobIsIn())
+		{
 			return *portal;
 		}
 
-		return zSTRING{};
+		return {};
 	}
 }

@@ -6,17 +6,19 @@ namespace GOTHIC_NAMESPACE
     {
         oCItem* item = nullptr;
         zCPar_Symbol* sym = parser->GetSymbol(t_instance);
-
-        if (!sym) {
+        if (!sym)
+        {
             return item;
         }
 
-        if (sym->type == zPAR_TYPE_INSTANCE) {
+        if (sym->type == zPAR_TYPE_INSTANCE)
+        {
             item = dynamic_cast<oCItem*>((zCVob*)sym->GetInstanceAdr());
         }
 
-        if (!item) {
-            item = zDYNAMIC_CAST<oCItem>(ogame->GetGameWorld()->SearchVobByName(sym->name));
+        if (!item)
+        {
+            item = dynamic_cast<oCItem*>(ogame->GetGameWorld()->SearchVobByName(sym->name));
         }
 
         return item;
@@ -29,10 +31,10 @@ namespace GOTHIC_NAMESPACE
 
     oCNpc* Hlp_GetNpcPlunderedByPlayer()
     {
-        if (oCNpc::game_mode == NPC_GAME_PLUNDER) {
+        if (oCNpc::game_mode == NPC_GAME_PLUNDER)
+        {
             return stealnpc;
         }
-
         return nullptr;
     }
 
@@ -60,11 +62,7 @@ namespace GOTHIC_NAMESPACE
 
     int Hlp_IsOptionExists(const zSTRING& t_level, const zSTRING& t_section, const zSTRING& t_option)
     {
-        zCOption* options = GetOptionsLevel(t_level);
-        if (t_option.IsEmpty()) {
-            return options->SectionExists(t_section);
-        }
-
+        auto options = GetOptionsLevel(t_level);
         return options->EntryExists(t_section, t_option);
     }
 

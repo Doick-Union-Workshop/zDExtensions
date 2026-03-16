@@ -2,15 +2,14 @@ namespace GOTHIC_NAMESPACE
 {
     void Menu_SetItemText(const zSTRING& t_name, const zSTRING& t_text, const int t_line, const int t_drawNow)
     {
-        if (t_name.IsEmpty()) {
-            return;
-        }
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
+        zSTRING name{ t_name };
+        name.Upper();
 
-        zSTRING name = Str_Upper(t_name);
         zCMenuItem* menuItem = FindMenuItemByName(name, logger);
-        if (!menuItem) {
+        if (!menuItem)
+        {
             return;
         }
 
@@ -20,20 +19,20 @@ namespace GOTHIC_NAMESPACE
 
     zSTRING Menu_GetItemText(const zSTRING& t_name, const int t_line)
     {
-        if (t_name.IsEmpty()) {
-            return zSTRING{};
-        }
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
+        zSTRING name{ t_name };
+        name.Upper();
 
-        zSTRING name = Str_Upper(t_name);
         zCMenuItem* menuItem = FindMenuItemByName(name, logger);
-        if (!menuItem) {
-            return zSTRING{};
+        if (!menuItem)
+        {
+            return {};
         }
 
         zSTRING result = menuItem->GetText(t_line);
-        if (result.IsEmpty()) {
+        if (result.IsEmpty())
+        {
             logger->Info("Menu item {0} has no value at {1} text line.", name.ToChar(), t_line);
         }
 
@@ -54,11 +53,12 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(menuItemText);
         par->GetParameter(menuItemName);
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText_Old");
-
         menuItemName.Upper();
-        zCMenuItem* menuItem = FindMenuItemByName(menuItemName, logger);
-        if (!menuItem) {
+
+        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText_Old");
+        auto menuItem = FindMenuItemByName(menuItemName, logger);
+        if (!menuItem)
+        {
             return 0;
         }
 
@@ -78,9 +78,9 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(line);
         par->GetParameter(menuItemName);
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
-
         menuItemName.Upper();
+
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
         zCMenuItem* menuItem = FindMenuItemByName(menuItemName, logger);
         if (!menuItem)
         {
@@ -89,7 +89,8 @@ namespace GOTHIC_NAMESPACE
         }
 
         result = menuItem->GetText(line);
-        if (result.IsEmpty()) {
+        if (result.IsEmpty())
+        {
             logger->Info("Menu item {0} has no value at {1} text line.", menuItemName.ToChar(), line);
         }
 

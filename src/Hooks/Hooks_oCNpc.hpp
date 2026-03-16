@@ -9,7 +9,7 @@ namespace GOTHIC_NAMESPACE
     );
     int __thiscall oCNpc::Hook_EV_DropVob(oCMsgManipulate* t_csg)
     {
-        static auto logger = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::EV_DropVob");
 
         int canDropItem = 1;
 
@@ -24,9 +24,12 @@ namespace GOTHIC_NAMESPACE
 
         zDE_RestoreParserVars();
 
-        if (apiCall.has_value()) {
+        if (apiCall.has_value())
+        {
             canDropItem = *apiCall;
-        } else {
+        }
+        else
+        {
             logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANDROPITEM", CallErrorToString(apiCall.error()));
         }
 
@@ -43,7 +46,7 @@ namespace GOTHIC_NAMESPACE
     auto PartialHook__oCNpc_OpenDeadNpc = Union::CreatePartialHook(reinterpret_cast<void*>(0x007629A1), &oCNpc_OpenDeadNpc);
     void __fastcall oCNpc_OpenDeadNpc(Union::Registers& reg)
     {
-        static auto logger = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::OpenDeadNpc");
 
         auto self = reinterpret_cast<oCNpc*>(reg.edi);
         auto target = stealnpc;
@@ -59,10 +62,12 @@ namespace GOTHIC_NAMESPACE
 
         zDE_RestoreParserVars();
 
-        if (apiCall.has_value()) {
+        if (apiCall.has_value())
+        {
             canLootNpc = *apiCall;
         }
-        else {
+        else
+        {
             logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANLOOTNPC", CallErrorToString(apiCall.error()));
         }
 
@@ -77,10 +82,10 @@ namespace GOTHIC_NAMESPACE
     auto PartialHook__oCNpc_EV_AttackFinish = Union::CreatePartialHook(reinterpret_cast<void*>(0x00751C7F), &oCNpc_EV_AttackFinish);
     void __fastcall oCNpc_EV_AttackFinish(Union::Registers& reg)
     {
-        static auto logger = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCNpc::EV_AttackFinish");
 
-        auto self = reinterpret_cast<oCNpc*>(reg.esi);
-        auto target = reinterpret_cast<oCNpc*>(reg.ebx);
+        oCNpc* self = reinterpret_cast<oCNpc*>(reg.esi);
+        oCNpc* target = reinterpret_cast<oCNpc*>(reg.ebx);
 
         int canFinishNpc = 1;
 
@@ -93,10 +98,12 @@ namespace GOTHIC_NAMESPACE
 
         zDE_RestoreParserVars();
 
-        if (apiCall.has_value()) {
+        if (apiCall.has_value())
+        {
             canFinishNpc = *apiCall;
         }
-        else {
+        else
+        {
             logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_CANFINISHNPC", CallErrorToString(apiCall.error()));
         }
 

@@ -2,20 +2,16 @@
 {
     void Vob_Rotate(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_Rotate");
         logger->Warning("This function is deprecated. Use Vob_RotateLocal or Vob_RotateWorld instead.");
     }
 
     void Vob_RotateWorld(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_RotateWorld");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
@@ -34,14 +30,10 @@
 
     void Vob_RotateLocal(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_RotateLocal");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
@@ -60,18 +52,16 @@
 
     void Vob_SetVisual(const zSTRING& t_vobName, const zSTRING& t_visualName)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_SetVisual");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_SetVisual");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
-        zSTRING visualName = Str_Upper(t_visualName);
+        zSTRING visualName{ t_visualName };
+        visualName.Upper();
+
         zCVisual* visual = zCVisual::LoadVisual(visualName);
         vob->SetVisual(visual);
         visual->Release();
@@ -79,85 +69,52 @@
 
     void Vob_SetToFloor(const zSTRING& t_vobName)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_SetToFloor");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_SetToFloor");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
-        zVEC3 pos = vob->GetPositionWorld();
+        auto pos = vob->GetPositionWorld();
         SetVobOnFloor(vob, pos);
     }
 
     void Vob_MoveTo(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
-        if (t_vobName.IsEmpty() || t_pointName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_MoveTo");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
-        zSTRING pointName = Str_Upper(t_pointName);
-        oCWorld* world = ogame->GetGameWorld();
-        zCWaypoint* wp = world->wayNet->GetWaypoint(pointName);
-        zVEC3 pos;
+        zSTRING pointName{ t_pointName };
+        pointName.Upper();
 
-        if (wp) {
-            pos = wp->GetPositionWorld();
-        }
-        else
-        {
-            zCVob* pointVob = world->SearchVobByName(pointName);
-            if (!pointVob) {
-                return;
-            }
-
-            pos = pointVob->GetPositionWorld();
-        }
-
-        SetVobPositionWorld(vob, pos);
+        auto pos = GetWaypointPosition(pointName, logger);
+        SetVobPositionWorld(vob, pos.value());
     }
 
     void Vob_MoveToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_MoveToPos");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
-        zVEC3 pos = zVEC3(
-            (float)t_posX,
-            (float)t_posY,
-            (float)t_posZ);
+        auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
         SetVobPositionWorld(vob, pos);
     }
 
     void Vob_SetCollisionDetection(const zSTRING& t_vobName, const int dynamicCollDet, const int staticCollDet)
     {
-        if (t_vobName.IsEmpty()) {
-            return;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_SetCollisionDetection");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_SetCollisionDetection");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
@@ -169,21 +126,14 @@
     {
         int dist = INT_MAX;
 
-        if (!t_vobName.IsEmpty()) {
-            return dist;
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToPos");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return dist;
         }
 
-        zVEC3 pos = zVEC3(
-            (float)t_posX,
-            (float)t_posY,
-            (float)t_posZ);
+        auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
         dist = static_cast<int>(GetVobDistanceToPos2(vob, pos, 1));
         return dist;
     }
@@ -192,14 +142,15 @@
     {
         int dist = INT_MAX;
 
-        if (!t_npc || t_vobName.IsEmpty()) {
+        if (!t_npc)
+        {
             return dist;
         }
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_GetDistToNpc");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return dist;
         }
 
@@ -209,21 +160,18 @@
 
     zSTRING Vob_GetPortalRoom(const zSTRING& t_vobName)
     {
-        if (!t_vobName.IsEmpty()) {
-            return zSTRING{};
-        }
-
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
-
+        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Vob_GetPortalRoom");
         zCVob* vob = FindVobByName(t_vobName, logger);
-        if (!vob) {
-            return zSTRING{};
+        if (!vob)
+        {
+            return {};
         }
 
-        if (auto portal = vob->GetSectorNameVobIsIn()) {
+        if (auto portal = vob->GetSectorNameVobIsIn())
+        {
             return *portal;
         }
 
-        return zSTRING{};
+        return {};
     }
 }

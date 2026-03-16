@@ -2,9 +2,12 @@ namespace GOTHIC_NAMESPACE
 {
 	zCVob* FindVobByName(const zSTRING& t_name, Utils::Logger* t_logger = nullptr)
 	{
-		zSTRING name = zSTRING(t_name).Upper();
+        zSTRING name{ t_name };
+        name.Upper();
+
 		zCVob* vob = ogame->GetGameWorld()->SearchVobByName(name);
-        if (!vob && t_logger) {
+        if (!vob && t_logger)
+        {
             t_logger->Error("No Vob found with specified name: {0}", name.ToChar());
         }
 
@@ -13,19 +16,20 @@ namespace GOTHIC_NAMESPACE
 
     int GetVobFloorPosition(zCVob* t_vob, zVEC3& t_pos)
     {
-        zCWorld* wld = t_vob->GetHomeWorld();
-        if (!wld) {
+        zCWorld* world = t_vob->GetHomeWorld();
+        if (!world)
+        {
             return 0;
         }
 
         zREAL diff = t_vob->GetPositionWorld()[VY] - t_vob->bbox3D.mins[VY];
 
-        if (wld->TraceRayNearestHit(t_pos, zVEC3(0, -1000, 0), t_vob, zTRACERAY_STAT_POLY | zTRACERAY_VOB_IGNORE_NO_CD_DYN))
+        if (world->TraceRayNearestHit(t_pos, zVEC3(0, -1000, 0), t_vob, zTRACERAY_STAT_POLY | zTRACERAY_VOB_IGNORE_NO_CD_DYN))
         {
-            if (wld->traceRayReport.foundPoly || wld->traceRayReport.foundVob)
+            if (world->traceRayReport.foundPoly || world->traceRayReport.foundVob)
             {
-                zVEC3 newPos = wld->traceRayReport.foundIntersection;
-                newPos[VY] += diff + 4;
+                auto newPos = world->traceRayReport.foundIntersection;
+                newPos[VY] += (diff + 4);
                 t_pos = newPos;
                 return 1;
             }
@@ -36,12 +40,11 @@ namespace GOTHIC_NAMESPACE
 
     void SetVobOnFloor(zCVob* t_vob, zVEC3& t_pos)
     {
-        static auto logger = Utils::CreateLogger("zDExt::SetVobOnFloor");
-
         if (!GetVobFloorPosition(t_vob, t_pos))
         {
             zSTRING vobName = t_vob->GetObjectName();
             vobName.Upper();
+            static Utils::Logger* logger = Utils::CreateLogger("zDExt::SetVobOnFloor");
             logger->Error("Cannot set to floor Vob with specified name: {0}", vobName.ToChar());
             return;
         }
@@ -51,7 +54,8 @@ namespace GOTHIC_NAMESPACE
 
     void SetVobPositionWorld(zCVob* t_vob, const zVEC3& t_pos)
     {
-        if (!t_vob || t_pos == zVEC3{}) {
+        if (!t_vob)
+        {
             return;
         }
 
@@ -64,12 +68,15 @@ namespace GOTHIC_NAMESPACE
         t_vob->collDetectionDynamic = collDetectionDynamic;
     }
 
-    inline zREAL GetzVEC3Length2(const zVEC3& t_vec)
+    zREAL GetzVEC3Length2(const zVEC3& t_vec)
     {
         return t_vec.n[VX] * t_vec.n[VX] + t_vec.n[VY] * t_vec.n[VY] + t_vec.n[VZ] * t_vec.n[VZ];
     }
 
-#define	zInRange(a,low,high)	(((a)>=(low)) && ((a)<=(high)))
+    bool InRange(zREAL v, zREAL min, zREAL max)
+    {
+        return v >= min && v <= max;
+    }
 
     zREAL GetVobDistanceToPos2(zCVob* t_vob, zVEC3& t_pos, zBOOL t_dim2)
     {
@@ -77,7 +84,8 @@ namespace GOTHIC_NAMESPACE
         zVEC3 p2 = t_pos;
         zTBBox3D bbox = t_vob->bbox3D;
 
-        if (t_dim2 || zInRange(t_pos[VY], bbox.mins[VY], bbox.maxs[VY])) {
+        if (t_dim2 || InRange(t_pos[VY], bbox.mins[VY], bbox.maxs[VY]))
+        {
             p2[VY] = p1[VY];
         }
 
@@ -86,9 +94,12 @@ namespace GOTHIC_NAMESPACE
 
     zCMenuItem* FindMenuItemByName(const zSTRING& t_name, Utils::Logger* t_logger = nullptr)
     {
-        zSTRING name = zSTRING(t_name).Upper();
+        zSTRING name{ t_name };
+        name.Upper();
+
         zCMenuItem* menuItem = zCMenuItem::GetByName(name);
-        if (!menuItem && t_logger) {
+        if (!menuItem && t_logger)
+        {
             t_logger->Error("No Menu Item found with specified name: {0}", name.ToChar());
         }
 
@@ -97,9 +108,8 @@ namespace GOTHIC_NAMESPACE
 
     float GetTimeAsFraction(const int t_hour, const int t_minutes)
     {
-        int totalMinutesInDay = 24 * 60;
-        int totalMinutes = t_hour * 60 + t_minutes;
-        return static_cast<float>(totalMinutes) / static_cast<float>(totalMinutesInDay);
+        constexpr int totalMinutesInDay = 24 * 60;
+        return static_cast<float>(t_hour * 60 + t_minutes) / static_cast<float>(totalMinutesInDay);
     }
 
     zVEC3 GetColorFromString(const zSTRING& t_str)
@@ -112,7 +122,8 @@ namespace GOTHIC_NAMESPACE
 
     void MenuItem_Release(zCMenuItem* t_menuItem)
     {
-        if (!t_menuItem) {
+        if (!t_menuItem)
+        {
             return;
         }
 
@@ -129,11 +140,36 @@ namespace GOTHIC_NAMESPACE
 
     zCOption* GetOptionsLevel(const zSTRING& t_level)
     {
-        zSTRING upper = zSTRING(t_level).Upper();
-        if (upper == "MOD") {
+        zSTRING level{ t_level };
+        level.Upper();
+
+        if (level == "MOD")
+        {
             return zgameoptions;
         }
-
         return zoptions;
+    }
+
+    std::optional<zVEC3> GetWaypointPosition(const zSTRING& t_pointName, Utils::Logger* t_logger = nullptr)
+    {
+        zSTRING pointName{ t_pointName };
+        pointName.Upper();
+
+        if (zCWaypoint* waypoint = ogame->GetGameWorld()->wayNet->GetWaypoint(pointName))
+        {
+            return waypoint->GetPositionWorld();
+        }
+
+        if (t_logger)
+        {
+            t_logger->Warning("No Waypoint found with specified name: {0}. Looking for Vob...", pointName.ToChar());
+        }
+
+        if (zCVob* vob = FindVobByName(pointName, t_logger))
+        {
+            return vob->GetPositionWorld();
+        }
+
+        return std::nullopt;
     }
 }

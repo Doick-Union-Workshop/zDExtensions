@@ -13,8 +13,8 @@ $cmake = Get-Content -Path ./CMakeLists.txt
 $updated = $false
 
 $cmake = $cmake | ForEach-Object {
-    if ($_ -match '^\s*VERSION\s+\d+\.\d+\.\d+\.\d+') {
-        $_ -replace 'VERSION\s+\d+\.\d+\.\d+\.\d+', "VERSION $version"
+    if ($_ -match '^\s*set\s*\(\s*PROJECT_VERSION') {
+        $_ -replace '"\d+\.\d+\.\d+\.\d+"', "`"$version`""
         $updated = $true
     } else {
         $_
@@ -22,7 +22,7 @@ $cmake = $cmake | ForEach-Object {
 }
 
 if (-not $updated) {
-    Write-Host "No VERSION line found in CMakeLists.txt."
+    Write-Host "No PROJECT_VERSION line found in CMakeLists.txt."
     exit 2
 }
 
