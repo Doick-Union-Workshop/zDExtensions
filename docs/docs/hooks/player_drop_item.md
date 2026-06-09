@@ -6,15 +6,18 @@
 This hook is triggered whenever the player tries to **drop an item** from his inventory into the game world.  
 It lets you control whether an item can be dropped by using a script condition.  
 
-When an item is about to be dropped, the hook checks for a Daedalus function: `C_PlayerCanDropItem`.
+When an item is about to be dropped, the hook checks for a Daedalus function: `zDExt_Npc_CanDropItem` defined in `Scripts/Content` directory.
 
 - `item` - selected item in player's inventory to drop
 - `self` - player
 
 ```dae title="Example usage"
-func int C_PlayerCanDropItem()
+func int zDExt_Npc_CanDropItem()
 {
-    if (!Hlp_IsValidItem(item)) { return FALSE; };
+    if (!Hlp_IsValidItem(item))
+    {
+        return FALSE;
+    };
 
     if (Hlp_GetInstanceID(item) == ItMi_InnosEye_Mis)
     {

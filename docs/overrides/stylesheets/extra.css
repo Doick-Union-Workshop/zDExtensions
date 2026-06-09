@@ -7,7 +7,6 @@
 
 :root {
     --code-hl-externals-color: #2e7700;
-    --code-hl-zparserextender-color: #b00048;
     --code-hl-variable-color: #716e00;
     --code-hl-string-color: #694e37;
     --code-hl-type-color: #197277;
@@ -18,7 +17,6 @@
     [data-md-color-scheme=slate]
     {
         --code-hl-externals-color: #50c000;
-        --code-hl-zparserextender-color: #ff2e8c;
         --code-hl-variable-color: #b7b400;
         --code-hl-string-color: #ce9172;
         --code-hl-type-color: #2bbac5;

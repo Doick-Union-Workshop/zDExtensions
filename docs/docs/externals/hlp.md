@@ -1,47 +1,47 @@
 # HLP – help functions
 
-## Hlp_GetItem
+## zDExt_Hlp_GetItem
 
 Finds an item object by its instance name.
 
 ```dae
-func C_Item Hlp_GetItem(var int itemInstance) {};
+func C_Item zDExt_Hlp_GetItem(var int itemInstance) {};
 ```
 
 - `itemInstance` – instance name of the item
 - `return` – link to item object
 
 ```dae title="Example usage"
-var C_Item torch; torch = Hlp_GetItem(ItLsTorch);
+var C_Item torch; torch = zDExt_Hlp_GetItem(ItLsTorch);
 ```
 
-## Hlp_IsValidVob
+## zDExt_Hlp_IsValidVob
 
 Checks if vob is in the game world.
 
 ```dae
-func int Hlp_IsValidVob(var instance object) {};
+func int zDExt_Hlp_IsValidVob(var instance object) {};
 ```
 
 - `object` – any instance
 - `return` – `TRUE` or `FALSE`
 
-## Hlp_GetNpcPlunderedByPlayer
+## zDExt_Hlp_GetNpcPlunderedByPlayer
 
 Gets the NPC is currently plundered by the player.
 
 ```dae
-func C_NPC Hlp_GetNpcPlunderedByPlayer() {};
+func C_NPC zDExt_Hlp_GetNpcPlunderedByPlayer() {};
 ```
 
 - `return` – instance of the NPC
 
-## Hlp_IsOptionExists
+## zDExt_Hlp_IsOptionExists
 
 Checks whether an options section or a specific option entry exists in a given options level.
 
 ```dae
-func int Hlp_IsOptionExists(var string level, var string section, var string option) {};
+func int zDExt_Hlp_IsOptionExists(var string level, var string section, var string option) {};
 ```
 
 - `level` – options level name (e.g. `Gothic` level)
@@ -51,24 +51,24 @@ func int Hlp_IsOptionExists(var string level, var string section, var string opt
 
 ```dae title="Example usage"
 // Check if a section exists
-if (Hlp_IsOptionExists("Gothic", "ENGINE", ""))
+if (zDExt_Hlp_IsOptionExists("Gothic", "ENGINE", ""))
 {
     // Section exists
 };
 
 // Check if a specific option exists
-if (Hlp_IsOptionExists("Gothic", "ENGINE", "ZMAXFPS"))
+if (zDExt_Hlp_IsOptionExists("Gothic", "ENGINE", "ZMAXFPS"))
 {
     // Option exists
 };
 ```
 
-## Hlp_GetOptionIntValue
+## zDExt_Hlp_GetOptionIntValue
 
 Reads an integer option value from the specified options level.
 
 ```dae
-func int Hlp_GetOptionIntValue(var string level, var string section, var string option, var int defaultValue) {};
+func int zDExt_Hlp_GetOptionIntValue(var string level, var string section, var string option, var int defaultValue) {};
 ```
 
 - `level` – options level name
@@ -78,15 +78,15 @@ func int Hlp_GetOptionIntValue(var string level, var string section, var string 
 - `return` – integer value of the option
 
 ```dae title="Example usage"
-var int val; val = Hlp_GetOptionIntValue("Gothic", "ENGINE", "ZMAXFPS", 60);
+var int val; val = zDExt_Hlp_GetOptionIntValue("Gothic", "ENGINE", "ZMAXFPS", 60);
 ```
 
-## Hlp_GetOptionFloatValue
+## zDExt_Hlp_GetOptionFloatValue
 
 Reads a floating-point option value from the specified options level.
 
 ```dae
-func float Hlp_GetOptionFloatValue(var string level, var string section, var string option, var float defaultValue) {};
+func float zDExt_Hlp_GetOptionFloatValue(var string level, var string section, var string option, var float defaultValue) {};
 ```
 
 - `level` – options level name
@@ -96,15 +96,15 @@ func float Hlp_GetOptionFloatValue(var string level, var string section, var str
 - `return` – float value of the option
 
 ```dae title="Example usage"
-var float val; val = Hlp_GetOptionFloatValue("Gothic", "ENGINE", "zWindAngleVelo", 9.0);
+var float val; val = zDExt_Hlp_GetOptionFloatValue("Gothic", "ENGINE", "zWindAngleVelo", 9.0);
 ```
 
-## Hlp_GetOptionStringValue
+## zDExt_Hlp_GetOptionStringValue
 
 Reads a string option value from the specified options level.
 
 ```dae
-func string Hlp_GetOptionStringValue(var string level, var string section, var string option, var string defaultValue) {};
+func string zDExt_Hlp_GetOptionStringValue(var string level, var string section, var string option, var string defaultValue) {};
 ```
 
 - `level` – options level name
@@ -114,15 +114,15 @@ func string Hlp_GetOptionStringValue(var string level, var string section, var s
 - `return` – string value of the option
 
 ```dae title="Example usage"
-var string str; str = Hlp_GetOptionStringValue("Gothic", "ZMULTILOGUE", "LoggerLevelUnion", "INFO");
+var string str; str = zDExt_Hlp_GetOptionStringValue("Gothic", "ZMULTILOGUE", "LoggerLevelUnion", "INFO");
 ```
 
-## Hlp_SetOptionIntValue
+## zDExt_Hlp_SetOptionIntValue
 
 Writes an integer option value to the specified options level.
 
 ```dae
-func void Hlp_SetOptionIntValue(var string level, var string section, var string option, var int value) {};
+func void zDExt_Hlp_SetOptionIntValue(var string level, var string section, var string option, var int value) {};
 ```
 
 - `level` – options level name
@@ -134,12 +134,12 @@ func void Hlp_SetOptionIntValue(var string level, var string section, var string
 Hlp_SetOptionIntValue("Gothic", "ENGINE", "ZMAXFPS", 60);
 ```
 
-## Hlp_SetOptionFloatValue
+## zDExt_Hlp_SetOptionFloatValue
 
 Writes a floating-point option value to the specified options level.
 
 ```dae
-func void Hlp_SetOptionFloatValue(var string level, var string section, var string option, var float value) {};
+func void zDExt_Hlp_SetOptionFloatValue(var string level, var string section, var string option, var float value) {};
 ```
 
 - `level` – options level name
@@ -148,15 +148,15 @@ func void Hlp_SetOptionFloatValue(var string level, var string section, var stri
 - `value` – float value to write
 
 ```dae title="Example usage"
-Hlp_SetOptionFloatValue("Gothic", "ENGINE", "zWindAngleVelo", 9.0);
+zDExt_Hlp_SetOptionFloatValue("Gothic", "ENGINE", "zWindAngleVelo", 9.0);
 ```
 
-## Hlp_SetOptionStringValue
+## zDExt_Hlp_SetOptionStringValue
 
 Writes a string option value to the specified options level.
 
 ```dae
-func void Hlp_SetOptionStringValue(var string level, var string section, var string option, var string value) {};
+func void zDExt_Hlp_SetOptionStringValue(var string level, var string section, var string option, var string value) {};
 ```
 
 - `level` – options level name
@@ -165,21 +165,21 @@ func void Hlp_SetOptionStringValue(var string level, var string section, var str
 - `value` – string value to write
 
 ```dae title="Example usage"
-Hlp_SetOptionStringValue("Gothic", "ZMULTILOGUE", "LoggerLevelUnion", "WARN");
+zDExt_Hlp_SetOptionStringValue("Gothic", "ZMULTILOGUE", "LoggerLevelUnion", "WARN");
 ```
 
-## Hlp_IsDevModeActive
+## zDExt_Hlp_IsTestMode
 
 Returns whether the game is currently running in developer/test mode.
 
 ```dae
-func int Hlp_IsDevModeActive() {};
+func int zDExt_Hlp_IsTestMode() {};
 ```
 
 - `return` – `TRUE` if developer/test mode is active, `FALSE` otherwise
 
 ```dae title="Example usage"
-if (Hlp_IsDevModeActive())
+if (zDExt_Hlp_IsTestMode())
 {
     Print("Dev mode active");
 };

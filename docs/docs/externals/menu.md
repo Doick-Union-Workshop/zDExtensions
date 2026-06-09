@@ -1,11 +1,11 @@
 # Menu functions
 
-## Menu_GetItemText
+## zDExt_Menu_GetItemText
 
 Returns value of text on first line (`0` by default) of specified menu item.
 
 ```dae
-func string Menu_GetItemText(var string menuItemName, var int line) {};
+func string zDExt_Menu_GetItemText(var string menuItemName, var int line) {};
 ```
 
 - `menuItemName`
@@ -14,7 +14,7 @@ func string Menu_GetItemText(var string menuItemName, var int line) {};
 
 ```dae title="Example usage"
 var string playerGuild;
-playerGuild = Menu_GetItemText("MENU_ITEM_PLAYERGUILD", 0);
+playerGuild = zDExt_Menu_GetItemText("MENU_ITEM_PLAYERGUILD", 0);
 
 if (Hlp_StrCmp(playerGuild, "Necromancer"))
 {
@@ -22,12 +22,12 @@ if (Hlp_StrCmp(playerGuild, "Necromancer"))
 };
 ```
 
-## Menu_SetItemText
+## zDExt_Menu_SetItemText
 
 Sets value of specified menu item.
 
 ```dae
-func void Menu_SetItemText(var string menuItemName, var string value, var int line, var int drawNow) {};
+func void zDExt_Menu_SetItemText(var string menuItemName, var string value, var int line, var int drawNow) {};
 ```
 
 - `menuItemName`
@@ -36,5 +36,5 @@ func void Menu_SetItemText(var string menuItemName, var string value, var int li
 - `drawNow`
 
 ```dae title="Example usage"
-Menu_SetItemText("MENU_ITEM_PLAYERGUILD", "Necromancer", 0, TRUE);
+zDExt_Menu_SetItemText("MENU_ITEM_PLAYERGUILD", "Necromancer", 0, TRUE);
 ```

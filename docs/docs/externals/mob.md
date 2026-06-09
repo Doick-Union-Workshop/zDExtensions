@@ -1,26 +1,26 @@
 # MOB – interactive object functions
 
-## Mob_SetFocusName
+## zDExt_Mob_SetFocusName
 
 Sets the focus name of specified oCMOB in the game world.
 
 ```dae
-func void Mob_SetFocusName(var string mobName, var string focusName) {};
+func void zDExt_Mob_SetFocusName(var string mobName, var string focusName) {};
 ```
 
 - `mobName` – name of the mob (interactive vob) in the game world
 - `focusName`
 
 ```dae title="Example usage"
-Mob_SetFocusName("CHEST_LOBART", "MOBNAME_CHAIR");
+zDExt_Mob_SetFocusName("CHEST_LOBART", "MOBNAME_CHAIR");
 ```
 
-## Mob_GetFocusName
+## zDExt_Mob_GetFocusName
 
 Gets focus name of specified oCMOB in the game world.
 
 ```dae
-func string Mob_GetFocusName(var string mobName) {};
+func string zDExt_Mob_GetFocusName(var string mobName) {};
 ```
 
 - `mobName` – name of the mob (interactive vob) in the game world
@@ -28,7 +28,7 @@ func string Mob_GetFocusName(var string mobName) {};
 
 ```dae title="Example usage"
 var string focusName;
-focusName = Mob_GetFocusName("CHEST_LOBART");
+focusName = zDExt_Mob_GetFocusName("CHEST_LOBART");
 
 if (Hlp_StrCmp(focusName, MOBNAME_CHEST))
 {
@@ -36,12 +36,12 @@ if (Hlp_StrCmp(focusName, MOBNAME_CHEST))
 };
 ```
 
-## Mob_GetScemeName
+## zDExt_Mob_GetScemeName
 
 Gets the sceme name (interaction scheme) of a specified oCMobInter.
 
 ```dae
-func string Mob_GetScemeName(var string mobName) {};
+func string zDExt_Mob_GetScemeName(var string mobName) {};
 ```
 
 - `mobName` – name of the mob (interactive vob) in the game world
@@ -49,5 +49,5 @@ func string Mob_GetScemeName(var string mobName) {};
 
 ```dae title="Example usage"
 var string sceme;
-sceme = Mob_GetScemeName("LEVER_GATE_01");
+sceme = zDExt_Mob_GetScemeName("LEVER_GATE_01");
 ```

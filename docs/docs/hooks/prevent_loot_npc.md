@@ -6,15 +6,16 @@
 This hook is triggered whenever the player tries to **loot an NPCs** while they are unconscious or dead.
 It extends the default looting system by allowing custom script conditions to determine whether looting is allowed.
 
-To control looting behavior, define the following Daedalus function: `C_PlayerCanLootNpc`.
+To control looting behavior, define the following Daedalus function: `zDExt_Npc_CanPlayerPlunder` defined in `Scripts/Content` directory.
 
 - `self` - player
 - `other` - NPC to loot
 
 ```dae title="Example usage"
-func int C_PlayerCanLootNpc()
+func int zDExt_Npc_CanPlayerPlunder()
 {
-    if (!Hlp_IsValidNpc(self) || !Hlp_IsValidNpc(other)) { 
+    if (!Hlp_IsValidNpc(self) || !Hlp_IsValidNpc(other))
+    { 
         return FALSE;
     };
 

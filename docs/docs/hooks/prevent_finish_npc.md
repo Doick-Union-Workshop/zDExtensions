@@ -1,7 +1,3 @@
----
-status: new
----
-
 # Prevent finishing NPCs
 
 !!! info "Engine restrictions"
@@ -10,24 +6,25 @@ status: new
 This hook is triggered whenever the player tries to **finish an NPC** while they are unconscious.
 It extends the default finishing system by allowing custom script conditions to determine whether finishing is allowed.
 
-To control finishing behavior, define the following Daedalus function: `C_CanFinishNpc`.
+To control finishing behavior, define the following Daedalus function: `zDExt_Npc_CanFinishAttack` defined in `Scripts/Content` directory.
 
 - `self` - NPC performing the finishing move
 - `other` - target NPC
 
 ```dae title="Example usage"
-func int C_CanFinishNpc()
+func int zDExt_Npc_CanFinishAttack()
 {
-    if (!Hlp_IsValidNpc(self) || !Hlp_IsValidNpc(other)) { 
+    if (!Hlp_IsValidNpc(self) || !Hlp_IsValidNpc(other))
+    { 
         return FALSE;
     };
 
-	if (Npc_IsPlayer(self))
-	{
-		AI_PlayAni(self, "T_NO");
-		return FALSE;
-	};
+    if (Npc_IsPlayer(self))
+    {
+        AI_PlayAni(self, "T_NO");
+        return FALSE;
+    };
 
-	return TRUE;
+    return TRUE;
 };
 ```

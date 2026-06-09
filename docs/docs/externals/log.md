@@ -1,24 +1,24 @@
 # Log functions
 
-## Log_GetMissionStatus
+## zDExt_Log_GetTopicStatus
 
 Gets the status of diary topic. Works only for missions, not for notes.
 
 - `0` – Free
-- `1` – Running
-- `2` – Success
-- `3` – Failure
-- `4` – Obsolete
+- `1` / `LOG_RUNNING` – Running
+- `2` / `LOG_SUCCESS` – Success
+- `3` / `LOG_FAILED` – Failure
+- `4` / `LOG_OBSOLETE` – Obsolete
 
 ```dae
-func int Log_GetMissionStatus(var string topic) {};
+func int zDExt_Log_GetTopicStatus(var string topic) {};
 ```
 
 - `topic` – name of the mission topic
 - `return` – topic status
 
 ```dae title="Example usage"
-if (Log_GetMissionStatus(TOPIC_InnosEye) == LOG_SUCCESS)
+if (zDExt_Log_GetTopicStatus(TOPIC_InnosEye) == LOG_SUCCESS)
 {
     //...
 };

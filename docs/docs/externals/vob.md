@@ -1,11 +1,11 @@
 # VOB – functions for object manipulation
 
-## Vob_RotateLocal
+## zDExt_Vob_RotateLocal
 
 Rotates a specified vob by given angles in local scope.
 
 ```dae
-func void Vob_RotateLocal(var string vobName, var int rotX, var int rotY, var int rotZ) {};
+func void zDExt_Vob_RotateLocal(var string vobName, var int rotX, var int rotY, var int rotZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -14,15 +14,15 @@ func void Vob_RotateLocal(var string vobName, var int rotX, var int rotY, var in
 - `rotZ` – rotation angle around Z axis (degrees)
 
 ```dae title="Example usage"
-Vob_RotateLocal("CHEST_LOBART", 0, 180, 90);
+zDExt_Vob_RotateLocal("CHEST_LOBART", 0, 180, 90);
 ```
 
-## Vob_RotateWorld
+## zDExt_Vob_RotateWorld
 
 Rotates a specified vob by given angles in global scope.
 
 ```dae
-func void Vob_RotateWorld(var string vobName, var int rotX, var int rotY, var int rotZ) {};
+func void zDExt_Vob_RotateWorld(var string vobName, var int rotX, var int rotY, var int rotZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -31,30 +31,30 @@ func void Vob_RotateWorld(var string vobName, var int rotX, var int rotY, var in
 - `rotZ` – rotation angle around Z axis (degrees)
 
 ```dae title="Example usage"
-Vob_RotateWorld("CHEST_LOBART", 0, 180, 90);
+zDExt_Vob_RotateWorld("CHEST_LOBART", 0, 180, 90);
 ```
 
-## Vob_MoveTo
+## zDExt_Vob_MoveTo
 
 Moves a specified vob to the position of a given waypoint, freepoint, or another vob.
 
 ```dae
-func void Vob_MoveTo(var string vobName, var string pointName) {};
+func void zDExt_Vob_MoveTo(var string vobName, var string pointName) {};
 ```
 
 - `vobName` – name of vob in game world
 - `pointName` – name of waypoint, freepoint or vob in game world
 
 ```dae title="Example usage"
-Vob_MoveTo("CHEST_LOBART", "START");
+zDExt_Vob_MoveTo("CHEST_LOBART", "START");
 ```
 
-## Vob_MoveToPos
+## zDExt_Vob_MoveToPos
 
 Moves a specified vob to the exact coordinates (X, Y, Z) in the game world.
 
 ```dae
-func void Vob_MoveToPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Vob_MoveToPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in game world
@@ -63,44 +63,44 @@ func void Vob_MoveToPos(var string vobName, var int posX, var int posY, var int 
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-Vob_MoveToPos("CHEST_LOBART", 16795, 23120, 1400);
+zDExt_Vob_MoveToPos("CHEST_LOBART", 16795, 23120, 1400);
 ```
 
-## Vob_SetToFloor
+## zDExt_Vob_SetToFloor
 
 Sticks a vob with a specified name to the ground.
 
 ```dae
-func void Vob_SetToFloor(var string vobName) {};
+func void zDExt_Vob_SetToFloor(var string vobName) {};
 ```
 
 - `vobName` – name of vob in game world
 
 ```dae title="Example usage"
-Vob_SetToFloor("CHEST_LOBART");
+zDExt_Vob_SetToFloor("CHEST_LOBART");
 ```
 
-## Vob_SetVisual
+## zDExt_Vob_SetVisual
 
 Sets the visual of a specified vob in the game world.
 
 ```dae
-func void Vob_SetVisual(var string vobName, var string visualName) {};
+func void zDExt_Vob_SetVisual(var string vobName, var string visualName) {};
 ```
 
 - `vobName` – name of vob in game world
 - `visualName` – name of assets (e.g. 3DS, ASC or MDS)
 
 ```dae title="Example usage"
-Vob_SetVisual("CHEST_LOBART", "CHESTBIG_OCCHESTLARGELOCKED.MDS");
+zDExt_Vob_SetVisual("CHEST_LOBART", "CHESTBIG_OCCHESTLARGELOCKED.MDS");
 ```
 
-## Vob_SetCollisionDetection
+## zDExt_Vob_SetCollisionDetection
 
 Enables or disables dynamic and static collision detection for a specified vob.
 
 ```dae
-func void Vob_SetCollisionDetection(var string vobName, var int dynamicCollDet, var int staticCollDet) {};
+func void zDExt_Vob_SetCollisionDetection(var string vobName, var int dynamicCollDet, var int staticCollDet) {};
 ```
 
 - `vobName` – name of vob in game world
@@ -108,15 +108,15 @@ func void Vob_SetCollisionDetection(var string vobName, var int dynamicCollDet, 
 - `staticCollDet` – static collision detection
 
 ```dae title="Example usage"
-Vob_SetCollisionDetection("CHEST_LOBART", FALSE, TRUE);
+zDExt_Vob_SetCollisionDetection("CHEST_LOBART", FALSE, TRUE);
 ```
 
-## Vob_GetDistToPos
+## zDExt_Vob_GetDistToPos
 
 Gets the distance between a specified vob and a given position in the world (in cm).
 
 ```dae
-func int Vob_GetDistToPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func int zDExt_Vob_GetDistToPos(var string vobName, var int posX, var int posY, var int posZ) {};
 ```
 
 - `vobName` – name of vob in game world
@@ -126,18 +126,18 @@ func int Vob_GetDistToPos(var string vobName, var int posX, var int posY, var in
 - `return` – distance between vob and position in cm
 
 ```dae title="Example usage"
-if (Vob_GetDistToPos("CHEST_LOBART", 16795, 23120, 1400) <= 500)
+if (zDExt_Vob_GetDistToPos("CHEST_LOBART", 16795, 23120, 1400) <= 500)
 {
     //...
 };
 ```
 
-## Vob_GetDistToNpc
+## zDExt_Vob_GetDistToNpc
 
 Gets the distance between the vob and an NPC (in cm).
 
 ```dae
-func int Vob_GetDistToNpc(var string vobName, var C_NPC npc) {};
+func int zDExt_Vob_GetDistToNpc(var string vobName, var C_NPC npc) {};
 ```
 
 - `vobName` – name of vob in game world
@@ -145,25 +145,25 @@ func int Vob_GetDistToNpc(var string vobName, var C_NPC npc) {};
 - `return` – distance between vob and NPC in cm
 
 ```dae title="Example usage"
-if (Vob_GetDistToNpc("CHEST_LOBART", hero) <= 500)
+if (zDExt_Vob_GetDistToNpc("CHEST_LOBART", hero) <= 500)
 {
     //...
 };
 ```
 
-## Vob_GetPortalRoom
+## zDExt_Vob_GetPortalRoom
 
 Gets the name of the portal room in which the specified vob is currently located.
 
 ```dae
-func string Vob_GetPortalRoom(var string vobName) {};
+func string zDExt_Vob_GetPortalRoom(var string vobName) {};
 ```
 
 - `vobName` – name of vob in game world
 - `return` – name of portal room
 
 ```dae title="Example usage"
-var string room; room = Vob_GetPortalRoom("CHEST_LOBART");
+var string room; room = zDExt_Vob_GetPortalRoom("CHEST_LOBART");
 
 if (Hlp_StrCmp(room, ""))
 {

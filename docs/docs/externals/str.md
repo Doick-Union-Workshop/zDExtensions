@@ -1,59 +1,59 @@
 # String functions
 
-## Str_Upper
+## zDExt_Str_Upper
 
 Gets string with uppercase.
 
 ```dae
-func string Str_Upper(var string str) {};
+func string zDExt_Str_Upper(var string str) {};
 ```
 
 - `str` – string to format
 - `return` – formatted string
 
 ```dae title="Example usage"
-var string str; str = Str_Upper("Start");
+var string str; str = zDExt_Str_Upper("Start");
 Print(str); // Returns "START"
 ```
 
-## Str_Lower
+## zDExt_Str_Lower
 
 Gets string with lowercase.
 
 ```dae
-func string Str_Lower(var string str) {};
+func string zDExt_Str_Lower(var string str) {};
 ```
 
 - `str` – string to format
 - `return` – formatted string
 
 ```dae title="Example usage"
-var string str; str = Str_Lower("Start");
+var string str; str = zDExt_Str_Lower("Start");
 Print(str); // Returns "start"
 ```
 
-## Str_Capitel
+## zDExt_Str_Capitel
 
 Gets string with capitelcase.
 
 ```dae
-func string Str_Capitel(var string str) {};
+func string zDExt_Str_Capitel(var string str) {};
 ```
 
 - `str` – string to format
 - `return` – formatted string
 
 ```dae title="Example usage"
-var string str; str = Str_Capitel("start");
+var string str; str = zDExt_Str_Capitel("start");
 Print(str); // Returns "Start"
 ```
 
-## Str_StartsWith
+## zDExt_Str_StartsWith
 
 Checks whether a string starts with a given prefix (case-insensitive).
 
 ```dae
-func int Str_StartsWith(var string str, var string prefix) {};
+func int zDExt_Str_StartsWith(var string str, var string prefix) {};
 ```
 
 - `str` – string to check
@@ -61,18 +61,18 @@ func int Str_StartsWith(var string str, var string prefix) {};
 - `return` – `TRUE` if the string starts with the given prefix, otherwise returns `FALSE`
 
 ```dae title="Example usage"
-if (Str_StartsWith("GATE_MAIN", "GATE"))
+if (zDExt_Str_StartsWith("GATE_MAIN", "GATE"))
 {
     //...
 };
 ```
 
-## Str_EndsWith
+## zDExt_Str_EndsWith
 
 Checks whether a string ends with a given suffix (case-insensitive).
 
 ```dae
-func int Str_EndsWith(var string str, var string suffix) {};
+func int zDExt_Str_EndsWith(var string str, var string suffix) {};
 ```
 
 - `str` – string to check
@@ -80,18 +80,18 @@ func int Str_EndsWith(var string str, var string suffix) {};
 - `return` – `TRUE` if the string ends with the given suffix, otherwise returns `FALSE`
 
 ```dae title="Example usage"
-if (Str_EndsWith("CHEST_BIG", "_BIG"))
+if (zDExt_Str_EndsWith("CHEST_BIG", "_BIG"))
 {
     //...
 };
 ```
 
-## Str_Cut
+## zDExt_Str_Cut
 
 Gets a substring (slice) of a string between two given indices.
 
 ```dae
-func string Str_Cut(var string str, var int startIndex, var int length) {};
+func string zDExt_Str_Cut(var string str, var int startIndex, var int length) {};
 ```
 
 - `str` – string to cut
@@ -101,5 +101,5 @@ func string Str_Cut(var string str, var int startIndex, var int length) {};
 
 ```dae title="Example usage"
 var string part;
-part = Str_Cut("CHEST_BIG", 5, 4); // Returns "CHEST"
+part = zDExt_Str_Cut("CHEST_BIG", 5, 4); // Returns "CHEST"
 ```

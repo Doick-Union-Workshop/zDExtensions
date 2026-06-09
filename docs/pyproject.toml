@@ -1,0 +1,17 @@
+[project]
+name = "zdextensions-docs"
+version = "0.0.0"
+description = "Documentation for zDExtensions plugin"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gothic-lexer",
+]
+
+[dependency-groups]
+dev = [
+    "zensical>=0.0.30",
+]
+
+[tool.uv.sources]
+gothic-lexer = { git = "https://github.com/kamilkrzyskow/gothic-lexer.git" }

@@ -1,11 +1,11 @@
 # Utility functions
 
-## GetIntArrayValue
+## zDExt_GetIntArrayValue
 
 Returns value of index in the array of integers.
 
 ```dae
-func int GetIntArrayValue(var string arr, var int index) {};
+func int zDExt_GetIntArrayValue(var string arr, var int index) {};
 ```
 
 - `arr` – array of integers
@@ -13,15 +13,15 @@ func int GetIntArrayValue(var string arr, var int index) {};
 - `return` – value of index
 
 ```dae title="Example usage"
-var int i; i = GetIntArrayValue(self.hitChance, NPC_TALENT_1H);
+var int i; i = zDExt_GetIntArrayValue(self.hitChance, NPC_TALENT_1H);
 ```
 
-## GetStringArrayValue
+## zDExt_GetStringArrayValue
 
 Returns value of index in the array of strings.
 
 ```dae
-func string GetStringArrayValue(var string arr, var int index) {};
+func string zDExt_GetStringArrayValue(var string arr, var int index) {};
 ```
 
 - `arr` – array of strings
@@ -29,13 +29,13 @@ func string GetStringArrayValue(var string arr, var int index) {};
 - `return` – value of index
 
 ```dae title="Example usage"
-var string str; str = GetStringArrayValue(TXT_GUILDS, GIL_VLK);
+var string str; str = zDExt_GetStringArrayValue(TXT_GUILDS, GIL_VLK);
 ```
 
-## SetIntArrayValue
+## zDExt_SetIntArrayValue
 
 ```dae
-func void SetIntArrayValue(var string arr, var int index, var int value) {};
+func void zDExt_SetIntArrayValue(var int arr, var int index, var int value) {};
 ```
 
 - `arr` – array of integers
@@ -43,13 +43,13 @@ func void SetIntArrayValue(var string arr, var int index, var int value) {};
 - `value` – integer value to set
 
 ```dae title="Example usage"
-SetIntArrayValue(self.hitChance, NPC_TALENT_1H, 25);
+zDExt_SetIntArrayValue(self.hitChance, NPC_TALENT_1H, 25);
 ```
 
-## SetStringArrayValue
+## zDExt_SetStringArrayValue
 
 ```dae
-func void SetStringArrayValue(var string arr, var int index, var string value) {};
+func void zDExt_SetStringArrayValue(var string arr, var int index, var string value) {};
 ```
 
 - `arr` – array of strings
@@ -60,5 +60,5 @@ func void SetStringArrayValue(var string arr, var int index, var string value) {
 var string arr[2];
 arr[0] = "Test";
 arr[1] = "Test2";
-SetStringArrayValue(arr, 1, "Test3");
+zDExt_SetStringArrayValue(arr, 1, "Test3");
 ```

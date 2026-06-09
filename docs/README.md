@@ -1,68 +1,38 @@
-# Docs
+# zDExtensions Docs
 
-The documentation is built using [MkDocs](https://www.mkdocs.org/), making it easy to write, maintain, and publish project docs in Markdown format.
+Project documentation is built using [Zensical](https://zensical.org/) and managed with [uv](https://github.com/astral-sh/uv) – a fast Python dependency and environment manager.
 
-## Project setup
-
-### Requirements
+## Requirements
 
 - [Python 3.10+](https://www.python.org/downloads/)
-- [Visual Studio Code](https://code.visualstudio.com/Download) ([Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) + [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) extensions)
+- [uv](https://github.com/astral-sh/uv) (recommended for environment automation)
+- [Visual Studio Code](https://code.visualstudio.com/Download) ([Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) and [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) extensions)
 
-### Create virtual environment
+## Quick Start
 
-```sh
-python -m venv env
-```
+### 1. Install dependencies and environment
 
-### Activate virtual environment
-
-#### Windows
-
-##### PowerShell
+In the `docs/` directory, run:
 
 ```sh
-.\env\Scripts\Activate.ps1
+uv venv
+uv pip install -e .[dev]
 ```
 
-If an “Execution Policy” error appears, you need to allow, for example:
+### 2. Start documentation server (hot reload)
 
 ```sh
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+uv run zensical serve
 ```
 
-##### CMD
+### 3. Build static site
 
 ```sh
-env\Scripts\activate.bat
+uv run zensical build
 ```
 
-#### Linux / MacOS (bash, zsh)
+## Additional Information
 
-```sh
-source env/bin/activate
-```
-
-#### Linux / MacOS (Fish shell)
-
-```sh
-source env/bin/activate.fish
-```
-
-### Install dependencies
-
-```sh
-pip install -r requirements.txt
-```
-
-### Development (hot reload)
-
-```sh
-mkdocs serve
-```
-
-### Build for production
-
-```sh
-mkdocs build
-```
+- Zensical configuration: `zensical.toml`
+- Project dependencies and settings: `pyproject.toml`
+- Source documentation: `docs/docs/`
