@@ -1,18 +1,94 @@
+#include <optional>
+
 namespace GOTHIC_NAMESPACE
 {
-	zCVob* FindVobByName(const zSTRING& t_name, Utils::Logger* t_logger = nullptr)
-	{
-        zSTRING name{ t_name };
-        name.Upper();
+    zREAL GetzVEC3Length2(const zVEC3& t_vec)
+    {
+        return t_vec.n[VX] * t_vec.n[VX] + t_vec.n[VY] * t_vec.n[VY] + t_vec.n[VZ] * t_vec.n[VZ];
+    }
 
-		zCVob* vob = ogame->GetGameWorld()->SearchVobByName(name);
+    bool InRange(zREAL v, zREAL min, zREAL max)
+    {
+        return v >= min && v <= max;
+    }
+
+    float GetTimeAsFraction(const int t_hour, const int t_minutes)
+    {
+        constexpr int totalMinutesInDay = 24 * 60;
+        return static_cast<float>(t_hour * 60 + t_minutes) / static_cast<float>(totalMinutesInDay);
+    }
+
+    zVEC3 GetColorFromString(const zSTRING& t_str)
+    {
+        return zVEC3(
+            (t_str.PickWord_Old(1, "\r\t ").ToFloat()),
+            (t_str.PickWord_Old(2, "\r\t ").ToFloat()),
+            (t_str.PickWord_Old(3, "\r\t ").ToFloat()));
+    }
+
+    zCMenuItem* FindMenuItemByName(const zSTRING& t_name, zDUtils::Logger* t_logger = nullptr)
+    {
+        zSTRING name{ t_name };
+        (void)name.Upper();
+
+        zCMenuItem* menuItem = zCMenuItem::GetByName(name);
+        if (!menuItem && t_logger)
+        {
+            t_logger->Error("No Menu Item found with specified name: {0}", name.ToChar());
+        }
+
+        return menuItem;
+    }
+
+    void MenuItem_Release(zCMenuItem* t_menuItem)
+    {
+        if (!t_menuItem)
+        {
+            return;
+        }
+
+#if ENGINE >= Engine_G2
+        t_menuItem->Release();
+#else
+        t_menuItem->m_iRefCtr--;
+
+        if (t_menuItem->m_iRefCtr <= 0 && !t_menuItem->registeredCPP)
+        {
+            delete t_menuItem;
+        }
+#endif
+    }
+
+    zCOption* GetOptionsLevel(const zSTRING& t_level)
+    {
+        zSTRING level{ t_level };
+        (void)level.Lower();
+
+        if (level == "mod")
+        {
+            return zgameoptions;
+        }
+        else if (level == "gothic")
+        {
+            return zoptions;
+        }
+
+        return nullptr;
+    }
+
+    zCVob* FindVobByName(const zSTRING& t_name, zDUtils::Logger* t_logger = nullptr)
+    {
+        zSTRING name{ t_name };
+        (void)name.Upper();
+
+        zCVob* vob = ogame->GetGameWorld()->SearchVobByName(name);
         if (!vob && t_logger)
         {
             t_logger->Error("No Vob found with specified name: {0}", name.ToChar());
         }
 
-		return vob;
-	}
+        return vob;
+    }
 
     int GetVobFloorPosition(zCVob* t_vob, zVEC3& t_pos)
     {
@@ -43,8 +119,8 @@ namespace GOTHIC_NAMESPACE
         if (!GetVobFloorPosition(t_vob, t_pos))
         {
             zSTRING vobName = t_vob->GetObjectName();
-            vobName.Upper();
-            static Utils::Logger* logger = Utils::CreateLogger("zDExt::SetVobOnFloor");
+            (void)vobName.Upper();
+            static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::SetVobOnFloor");
             logger->Error("Cannot set to floor Vob with specified name: {0}", vobName.ToChar());
             return;
         }
@@ -68,16 +144,6 @@ namespace GOTHIC_NAMESPACE
         t_vob->collDetectionDynamic = collDetectionDynamic;
     }
 
-    zREAL GetzVEC3Length2(const zVEC3& t_vec)
-    {
-        return t_vec.n[VX] * t_vec.n[VX] + t_vec.n[VY] * t_vec.n[VY] + t_vec.n[VZ] * t_vec.n[VZ];
-    }
-
-    bool InRange(zREAL v, zREAL min, zREAL max)
-    {
-        return v >= min && v <= max;
-    }
-
     zREAL GetVobDistanceToPos2(zCVob* t_vob, zVEC3& t_pos, zBOOL t_dim2)
     {
         zVEC3 p1 = t_vob->GetPositionWorld();
@@ -92,68 +158,10 @@ namespace GOTHIC_NAMESPACE
         return GetzVEC3Length2(p1 - p2);
     }
 
-    zCMenuItem* FindMenuItemByName(const zSTRING& t_name, Utils::Logger* t_logger = nullptr)
-    {
-        zSTRING name{ t_name };
-        name.Upper();
-
-        zCMenuItem* menuItem = zCMenuItem::GetByName(name);
-        if (!menuItem && t_logger)
-        {
-            t_logger->Error("No Menu Item found with specified name: {0}", name.ToChar());
-        }
-
-        return menuItem;
-    }
-
-    float GetTimeAsFraction(const int t_hour, const int t_minutes)
-    {
-        constexpr int totalMinutesInDay = 24 * 60;
-        return static_cast<float>(t_hour * 60 + t_minutes) / static_cast<float>(totalMinutesInDay);
-    }
-
-    zVEC3 GetColorFromString(const zSTRING& t_str)
-    {
-        return zVEC3(
-            (t_str.PickWord_Old(1, "\r\t ").ToFloat()),
-            (t_str.PickWord_Old(2, "\r\t ").ToFloat()),
-            (t_str.PickWord_Old(3, "\r\t ").ToFloat()));
-    }
-
-    void MenuItem_Release(zCMenuItem* t_menuItem)
-    {
-        if (!t_menuItem)
-        {
-            return;
-        }
-
-#if ENGINE >= Engine_G2
-        t_menuItem->Release();
-#else
-        t_menuItem->m_iRefCtr--;
-
-        if (t_menuItem->m_iRefCtr <= 0 && !t_menuItem->registeredCPP) {
-            delete t_menuItem;
-        }
-#endif
-    }
-
-    zCOption* GetOptionsLevel(const zSTRING& t_level)
-    {
-        zSTRING level{ t_level };
-        level.Upper();
-
-        if (level == "MOD")
-        {
-            return zgameoptions;
-        }
-        return zoptions;
-    }
-
-    std::optional<zVEC3> GetWaypointPosition(const zSTRING& t_pointName, Utils::Logger* t_logger = nullptr)
+    std::optional<zVEC3> GetWaypointPosition(const zSTRING& t_pointName, zDUtils::Logger* t_logger = nullptr)
     {
         zSTRING pointName{ t_pointName };
-        pointName.Upper();
+        (void)pointName.Upper();
 
         if (zCWaypoint* waypoint = ogame->GetGameWorld()->wayNet->GetWaypoint(pointName))
         {

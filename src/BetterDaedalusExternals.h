@@ -1,16 +1,12 @@
 #include <forward_list>
-#include <concepts>
-#include <list>
 #include <string_view>
 #include <type_traits>
 #include <array>
 #include <ranges>
 #include <vector>
 #include <algorithm>
-#include <type_traits>
 
 #define BetterDaedalusExternal(function) BetterDaedalusExternals::DaedalusExternal<#function,function>
-#define BetterDaedalusExternalWithName(name, function) BetterDaedalusExternals::DaedalusExternal<#name,function>
 #define BetterDaedalusExternalWithCondition(function, condition) BetterDaedalusExternals::DaedalusExternal<#function,function,condition>
 
 #define BetterExternalDefinition(parserPointer, ...)\

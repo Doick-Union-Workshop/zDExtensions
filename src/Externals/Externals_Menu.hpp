@@ -1,11 +1,11 @@
 namespace GOTHIC_NAMESPACE
 {
-    void Menu_SetItemText(const zSTRING& t_name, const zSTRING& t_text, const int t_line, const int t_drawNow)
+    void zDExt_Menu_SetItemText(const zSTRING& t_name, const zSTRING& t_text, const int t_line, const int t_drawNow)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Menu_SetItemText");
 
         zSTRING name{ t_name };
-        name.Upper();
+        (void)name.Upper();
 
         zCMenuItem* menuItem = FindMenuItemByName(name, logger);
         if (!menuItem)
@@ -17,12 +17,12 @@ namespace GOTHIC_NAMESPACE
         MenuItem_Release(menuItem);
     }
 
-    zSTRING Menu_GetItemText(const zSTRING& t_name, const int t_line)
+    zSTRING zDExt_Menu_GetItemText(const zSTRING& t_name, const int t_line)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Menu_GetItemText");
 
         zSTRING name{ t_name };
-        name.Upper();
+        (void)name.Upper();
 
         zCMenuItem* menuItem = FindMenuItemByName(name, logger);
         if (!menuItem)
@@ -40,8 +40,8 @@ namespace GOTHIC_NAMESPACE
         return result;
     }
 
-    // For menu parser
-    int Menu_SetItemText_Old()
+    // MENU PARSER
+    int zDExt_Menu_SetItemText_MP()
     {
         auto const par = zCParser::GetParser();
 
@@ -53,9 +53,9 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(menuItemText);
         par->GetParameter(menuItemName);
 
-        menuItemName.Upper();
+        (void)menuItemName.Upper();
 
-        static auto logger = Utils::CreateLogger("zDExt::Externals::Menu_SetItemText_Old");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Menu_SetItemText_MP");
         auto menuItem = FindMenuItemByName(menuItemName, logger);
         if (!menuItem)
         {
@@ -67,7 +67,7 @@ namespace GOTHIC_NAMESPACE
         return 0;
     }
 
-    int Menu_GetItemText_Old()
+    int zDExt_Menu_GetItemText_MP()
     {
         static zSTRING result = "";
         auto const par = zCParser::GetParser();
@@ -78,9 +78,9 @@ namespace GOTHIC_NAMESPACE
         par->GetParameter(line);
         par->GetParameter(menuItemName);
 
-        menuItemName.Upper();
+        (void)menuItemName.Upper();
 
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Menu_GetItemText_Old");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Menu_GetItemText_MP");
         zCMenuItem* menuItem = FindMenuItemByName(menuItemName, logger);
         if (!menuItem)
         {

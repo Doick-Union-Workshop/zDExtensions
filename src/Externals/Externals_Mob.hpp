@@ -1,10 +1,11 @@
 namespace GOTHIC_NAMESPACE
 {
-    void Mob_SetFocusName(const zSTRING& t_mobName, const zSTRING& t_focusName)
+    void zDExt_Mob_SetFocusName(const zSTRING& t_mobName, const zSTRING& t_focusName)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Mob_SetFocusName");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_SetFocusName");
         zCVob* vob = FindVobByName(t_mobName, logger);
-        if (!vob) {
+        if (!vob)
+        {
             return;
         }
 
@@ -16,53 +17,53 @@ namespace GOTHIC_NAMESPACE
         }
 
         zSTRING focusName{ t_focusName };
-        focusName.Upper();
+        (void)focusName.Upper();
 
         mob->SetName(focusName);
     }
 
-    zSTRING Mob_GetFocusName(const zSTRING& t_mobName)
+    zSTRING zDExt_Mob_GetFocusName(const zSTRING& t_mobName)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Mob_GetFocusName");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_GetFocusName");
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {
-            return {};
+            return zSTRING{};
         }
 
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
             logger->Warning("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
-            return {};
+            return zSTRING{};
         }
 
         return mob->GetName();
     }
 
-    zSTRING Mob_GetScemeName(const zSTRING& t_mobName)
+    zSTRING zDExt_Mob_GetScemeName(const zSTRING& t_mobName)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Mob_GetScemeName");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_GetScemeName");
 
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {
-            return {};
+            return zSTRING{};
         }
 
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
             logger->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
-            return {};
+            return zSTRING{};
         }
 
         return mob->GetScemeName();
     }
 
-    void Mob_SetUseWithItem(const zSTRING& t_mobName, const zSTRING& t_itemInstance)
+    void zDExt_Mob_SetUseWithItem(const zSTRING& t_mobName, const zSTRING& t_itemInstance)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Mob_SetUseWithItem");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_SetUseWithItem");
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {
@@ -77,7 +78,7 @@ namespace GOTHIC_NAMESPACE
         }
 
         zSTRING itemInstance{ t_itemInstance };
-        itemInstance.Upper();
+        (void)itemInstance.Upper();
 
         mob->SetUseWithItem(itemInstance);
     }

@@ -1,26 +1,27 @@
 namespace GOTHIC_NAMESPACE
 {
-#if ENGINE == Engine_G2A
     void __fastcall oCViewDialogTrade_OnTransferLeft(Union::Registers& reg);
-    auto PartialHook__oCViewDialogTrade_OnTransferLeft = Union::CreatePartialHook(reinterpret_cast<void*>(0x0068B888), &oCViewDialogTrade_OnTransferLeft);
+    auto PartialHook__oCViewDialogTrade_OnTransferLeft = Union::CreatePartialHook(
+        reinterpret_cast<void*>(zSwitch(0x0, 0x0, 0x0, 0x0068B888)),
+        &oCViewDialogTrade_OnTransferLeft
+    );
     void __fastcall oCViewDialogTrade_OnTransferLeft(Union::Registers& reg)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCViewDialogTrade::OnTransferLeft");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::oCViewDialogTrade::OnTransferLeft");
 
-        oCViewDialogTrade* self = reinterpret_cast<oCViewDialogTrade*>(reg.edi);
-        oCItem* itm = reinterpret_cast<oCItem*>(reg.esi);
+        auto self = reinterpret_cast<oCViewDialogTrade*>(reg.edi);
+        auto itm = reinterpret_cast<oCItem*>(reg.esi);
 
         int canSellItem = 1;
 
-        zDE_SaveParserVars();
-
+        globalParserVars.Save();
         parser->SetInstance("ITEM", itm);
         parser->SetInstance("SELF", self->NpcRight); // player
         parser->SetInstance("OTHER", self->NpcLeft); // trader
 
-        const auto apiCall = DaedalusCall<int>(parser, DCFunction("C_PLAYERCANSELLITEM"), {});
+        const auto apiCall = DaedalusCall<int>(parser, DCFunction("zDExt_Npc_CanPlayerSellItem"), eClearStack::CLEAR);
 
-        zDE_RestoreParserVars();
+        globalParserVars.Restore();
 
         if (apiCall.has_value())
         {
@@ -28,7 +29,7 @@ namespace GOTHIC_NAMESPACE
         }
         else
         {
-            logger->Info(DAEDALUS_CALL_FAILED_MSG, "C_PLAYERCANSELLITEM", CallErrorToString(apiCall.error()));
+            logger->Info(DAEDALUS_CALL_FAILED_MSG, "zDExt_Npc_CanPlayerSellItem", CallErrorToString(apiCall.error()));
         }
 
         if (!canSellItem)
@@ -37,5 +38,4 @@ namespace GOTHIC_NAMESPACE
             reg.eip = 0x0068BA3F; // return 1
         }
     }
-#endif
 }

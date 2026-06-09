@@ -1,6 +1,6 @@
 namespace GOTHIC_NAMESPACE
 {
-	int Log_GetMissionStatus(const zSTRING& t_topicName)
+	int zDExt_Log_GetTopicStatus(const zSTRING& t_topicName)
 	{
 		auto list = oCLogManager::GetLogManager().m_lstTopics.GetNextInList();
 

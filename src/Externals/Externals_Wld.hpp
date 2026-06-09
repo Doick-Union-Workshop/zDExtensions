@@ -1,12 +1,12 @@
 namespace GOTHIC_NAMESPACE
 {
     template<typename T>
-    void Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
+    void zDExt_Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_InsertVob");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Wld_InsertVob");
 
         zSTRING pointName{ t_pointName };
-        pointName.Upper();
+        (void)pointName.Upper();
 
         auto pos = GetWaypointPosition(t_pointName, logger);
         if (!pos)
@@ -15,7 +15,7 @@ namespace GOTHIC_NAMESPACE
         }
 
         zSTRING vobName{ t_vobName };
-        vobName.Upper();
+        (void)vobName.Upper();
 
         T* vob = new T{};
         vob->SetVobName(vobName);
@@ -25,10 +25,10 @@ namespace GOTHIC_NAMESPACE
     }
 
     template<typename T>
-    void Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void zDExt_Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
     {
         zSTRING vobName{ t_vobName };
-        vobName.Upper();
+        (void)vobName.Upper();
 
         T* vob = new T{};
         auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
@@ -39,9 +39,9 @@ namespace GOTHIC_NAMESPACE
         vob->Release();
     }
 
-    int Wld_RemoveVob(const zSTRING& t_vobName)
+    int zDExt_Wld_RemoveVob(const zSTRING& t_vobName)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_RemoveVob");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Wld_RemoveVob");
         zCVob* vob = FindVobByName(t_vobName, logger);
         if (!vob)
         {
@@ -52,23 +52,51 @@ namespace GOTHIC_NAMESPACE
         return 1;
     }
 
-    zSTRING Wld_GetPlayerPortalRoom()
+    zSTRING zDExt_Wld_GetPlayerPortalRoom()
     {
         if (zSTRING* name = ogame->GetPortalRoomManager()->curPlayerPortal)
         {
             return *name;
         }
+
         return {};
     }
 
-    zSTRING Wld_GetWorldName()
+    zSTRING zDExt_Wld_GetWorldName()
     {
 	    return ogame->GetGameWorld()->GetWorldName();
     }
 
-    int Wld_SetRainTime(const int t_startHour, const int t_startMin, const int t_endHour, const int t_endMin)
+    void zDExt_Wld_SetWeatherType(const int t_weatherType)
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_SetRainTime");
+#if ENGINE >= Engine_G2
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Wld_SetWeatherType");
+        oCWorld* world = ogame->GetGameWorld();
+
+        zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
+        if (!skyCtrl)
+        {
+            logger->Error("zCSkyControler_Outdoor not found");
+            return;
+        }
+
+        skyCtrl->SetWeatherType(static_cast<zTWeather>(t_weatherType));
+#endif
+    }
+
+    int zDExt_Wld_GetWeatherType()
+    {
+#if ENGINE >= Engine_G2
+        oCWorld* world = ogame->GetGameWorld();
+        zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(world->GetActiveSkyControler());
+        return skyCtrl ? static_cast<int>(skyCtrl->GetWeatherType()) : -1;
+#endif
+        return -1;
+    }
+
+    int zDExt_Wld_SetRainTime(const int t_startHour, const int t_startMin, const int t_endHour, const int t_endMin)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Wld_SetRainTime");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
@@ -100,7 +128,7 @@ namespace GOTHIC_NAMESPACE
         return 0;
     }
 
-    void Wld_SetRainOn()
+    void zDExt_Wld_SetRainOn()
     {
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
@@ -112,7 +140,7 @@ namespace GOTHIC_NAMESPACE
         skyCtrl->rainFX.timeStopRain = 1.0f;
     }
 
-    void Wld_SetRainOff()
+    void zDExt_Wld_SetRainOff()
     {
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
@@ -132,9 +160,9 @@ namespace GOTHIC_NAMESPACE
 		skyCtrl->rainFX.outdoorRainFX->UpdateSound(0);
     }
 
-    void Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
+    void zDExt_Wld_OverrideWorldFogColors(const int t_index, const zSTRING& t_color) // WIP
     {
-        static Utils::Logger* logger = Utils::CreateLogger("zDExt::Externals::Wld_OverrideWorldFogColors");
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Wld_OverrideWorldFogColors");
 
         zCSkyControler_Outdoor* skyCtrl = dynamic_cast<zCSkyControler_Outdoor*>(ogame->GetGameWorld()->GetActiveSkyControler());
         if (!skyCtrl)
@@ -145,5 +173,31 @@ namespace GOTHIC_NAMESPACE
 
         zVEC3 color = GetColorFromString(t_color);
         skyCtrl->fogColorDayVariations.Insert(color);
+    }
+
+    void zDExt_Wld_ChangeLevel(const zSTRING& t_worldName, const zSTRING& t_waypoint)
+    {
+        const zSTRING transformedWorldName =
+            [&]()
+        {
+            zSTRING name{ t_worldName };
+            (void)name.Upper();
+
+            if (const size_t pos = std::string_view(t_worldName.ToChar()).find_last_of(".");
+                pos == std::string::npos
+                || std::string_view(t_worldName.ToChar()).substr(pos) != ".ZEN")
+            {
+                name += ".ZEN";
+            }
+
+            return name;
+        }();
+
+        if (transformedWorldName == ogame->GetGameWorld()->GetWorldFilename().Upper())
+        {
+            return;
+        }
+
+        ogame->TriggerChangeLevel(transformedWorldName, t_waypoint);
     }
 }

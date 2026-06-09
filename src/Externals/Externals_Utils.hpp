@@ -7,7 +7,7 @@ namespace GOTHIC_NAMESPACE
      *
      */
     template<typename T>
-    int _cdecl GetArrayValue()
+    int _cdecl zDExt_GetArrayValue()
     {
         const auto par = zCParser::GetParser();
 
@@ -28,7 +28,7 @@ namespace GOTHIC_NAMESPACE
      *
      */
     template<typename T>
-    int _cdecl SetArrayValue()
+    int _cdecl zDExt_SetArrayValue()
     {
         const auto par = zCParser::GetParser();
 
@@ -43,24 +43,5 @@ namespace GOTHIC_NAMESPACE
         statArray[index] = static_cast<T&&>(value);
 
         return {};
-    }
-
-    /*
-     *
-     * Created by Boguś (bogu9821), 2025
-     * Original source: https://github.com/bogu9821/BetterDaedalusExternals/blob/main/README.md
-     *
-     */
-    int Ext_RGBA(const int r, const int g, const int b, const int a)
-    {
-        const zCOLOR color
-        {
-            static_cast<unsigned char>(r),
-            static_cast<unsigned char>(g),
-            static_cast<unsigned char>(b),
-            static_cast<unsigned char>(a)
-        };
-
-        return static_cast<int>(color.dword);
     }
 }

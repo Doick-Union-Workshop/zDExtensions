@@ -13,12 +13,12 @@ namespace GOTHIC_NAMESPACE
 	{
 		(this->*Hook_oCMenuSavegame_HandleSlotChange)(t_key);
 
-		const auto apiCall = DaedalusCall(parserMenu, DCFunction("MENU_SAVELOADGAME_API"), {});
+		const auto apiCall = DaedalusCall(parserMenu, DCFunction("zDExt_Menu_SaveLoadGame_Hook"), eClearStack::CLEAR);
 
 		if (!apiCall.has_value())
 		{
-			static Utils::Logger* logger = Utils::CreateLogger("zDExt::oCMenuSavegame::HandleSlotChange");
-			logger->Info(DAEDALUS_CALL_FAILED_MSG, "MENU_SAVELOADGAME_API", CallErrorToString(apiCall.error()));
+			static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::oCMenuSavegame::HandleSlotChange");
+			logger->Info(DAEDALUS_CALL_FAILED_MSG, "zDExt_Menu_SaveLoadGame_Hook", CallErrorToString(apiCall.error()));
 		}
 	}
 }
