@@ -5,3 +5,7 @@
 
 # Build directories
 /out/
+
+# Build files
+*.dll
+*.vdf

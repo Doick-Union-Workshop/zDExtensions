@@ -50,10 +50,10 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1.13.0
         with:
           arch: x86
- 
+
       - name: Compile plugin
         run: |
-          cmake . --preset MP-Release -DPROJECT_VERSION="${{ inputs.version }}"
+          cmake . --preset MP-Release
           cmake --build --preset MP-Release
 
       - name: Find plugin
