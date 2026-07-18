@@ -77,4 +77,4 @@ jobs:
         with:
           tag_name: ${{ inputs.version }}
           name: ${{ inputs.version }}
-          files: ${{ env.plugin_dll }}
+          files: ${{ env.plugin_path }}
