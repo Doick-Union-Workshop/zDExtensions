@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.25)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 
-set(PROJECT_VERSION "1.2.0.0" CACHE STRING "Project version")
+set(PROJECT_VERSION "1.3.0.0" CACHE STRING "Project version")
 
 include(target_add_versioninfo)
 
