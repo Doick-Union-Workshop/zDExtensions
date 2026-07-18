@@ -31,6 +31,12 @@ uv run zensical serve
 uv run zensical build
 ```
 
+### 4. Update dependencies
+
+```sh
+uv sync --upgrade
+```
+
 ## Additional Information
 
 - Zensical configuration: `zensical.toml`
