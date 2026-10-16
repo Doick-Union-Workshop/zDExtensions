@@ -153,4 +153,53 @@ namespace GOTHIC_NAMESPACE
 
 #endif
 
+    // G1:  0x00737C60 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor &)
+    // G1A: 0x00777150 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor &)
+    // G2:  0x00783C70 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor &)
+    // G2A: 0x0066CF30 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor&)
+    auto Hook_oCNpc_OnDamage_Condition = Union::CreateHook(
+        reinterpret_cast<void*>(zSwitch(0x00737C60, 0x00777150, 0x00783C70, 0x0066CF30)),
+        &oCNpc::Hook_OnDamage_Condition,
+        Union::HookType::Hook_Detours
+    );
+    void __thiscall oCNpc::Hook_OnDamage_Condition(oCNpc::oSDamageDescriptor& t_descDamage)
+    {
+        (this->*Hook_oCNpc_OnDamage_Condition)(t_descDamage);
+
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::oCNpc::OnDamage_Condition");
+
+        int canKillNpc = 1;
+
+        const auto result = DaedalusCall<int>(
+            parser,
+            DCFunction("zDExt_Npc_CanKill"),
+            eClearStack::CLEAR,
+            t_descDamage.pNpcAttacker, // attacker
+            this // target
+        );
+
+        if (result.has_value())
+        {
+            canKillNpc = *result;
+        }
+        else
+        {
+            logger->Error(
+                DAEDALUS_CALL_FAILED_MSG,
+                "zDExt_Npc_CanKill",
+                DaedalusCallErrorToString(result.error())
+            );
+        }
+
+        if (t_descDamage.bIsDead && !canKillNpc)
+        {
+            logger->Info(
+                "Cannot kill NPC: {0}",
+                GetInstanceName().ToChar()
+            );
+
+            t_descDamage.bIsDead = 0;
+            t_descDamage.bIsUnconscious = 1;
+        }
+    }
 }

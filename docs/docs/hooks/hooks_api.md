@@ -19,5 +19,6 @@ Define callbacks in the appropriate parser: `Scripts/System` for the save/load m
 | `zDExt_Npc_CanPlayerSellItem` | `C_NPC player`, `C_NPC trader`, `C_Item itm` | `int` | G2A |
 | `zDExt_Npc_CanPlayerPlunder` | `C_NPC plunderer`, `C_NPC target` | `int` | G2A |
 | `zDExt_Npc_CanFinishAttack` | `C_NPC attacker`, `C_NPC target` | `int` | G2A |
+| `zDExt_Npc_CanKill` | `C_NPC attacker`, `C_NPC target` | `int` | G1, G1A, G2, G2A |
 
 Action permission callbacks return zero to block an action and a nonzero value to allow it. If an enabled callback cannot be called because its signature is invalid, the action is allowed and the error is logged.
