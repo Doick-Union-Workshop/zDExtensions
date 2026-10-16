@@ -1,9 +1,9 @@
 namespace GOTHIC_NAMESPACE
 {
-	// G1:	0x0042C420 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
-	// G1A:	0x0042F500 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
-	// G2:	0x0042E620 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
-	// G2A:	0x0042E940 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
+	// G1:  0x0042C420 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
+	// G1A: 0x0042F500 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
+	// G2:  0x0042E620 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
+	// G2A: 0x0042E940 public: virtual void __thiscall oCMenuSavegame::HandleSlotChange(int)
 	auto Hook_oCMenuSavegame_HandleSlotChange = Union::CreateHook(
 		reinterpret_cast<void*>(zSwitch(0x0042C420, 0x0042F500, 0x0042E620, 0x0042E940)),
 		&oCMenuSavegame::Hook_HandleSlotChange,
@@ -13,12 +13,20 @@ namespace GOTHIC_NAMESPACE
 	{
 		(this->*Hook_oCMenuSavegame_HandleSlotChange)(t_key);
 
-		const auto apiCall = DaedalusCall(parserMenu, DCFunction("zDExt_Menu_SaveLoadGame_Hook"), eClearStack::CLEAR);
+		const auto result = DaedalusCall(
+			parserMenu,
+			DCFunction("zDExt_Menu_SaveLoadGame_Hook"),
+			eClearStack::CLEAR
+		);
 
-		if (!apiCall.has_value())
+		if (!result.has_value())
 		{
 			static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::oCMenuSavegame::HandleSlotChange");
-			logger->Info(DAEDALUS_CALL_FAILED_MSG, "zDExt_Menu_SaveLoadGame_Hook", CallErrorToString(apiCall.error()));
+			logger->Info(
+				DAEDALUS_CALL_FAILED_MSG,
+				"zDExt_Menu_SaveLoadGame_Hook",
+				DaedalusCallErrorToString(result.error())
+			);
 		}
 	}
 }

@@ -17,7 +17,6 @@
 #include "Externals/Externals_Definitions.hpp"
 
 // Hooks
-#include "Hooks/Hooks_Globals.hpp"
 #include "Hooks/Hooks_Helpers.hpp"
 #include "Hooks/Hooks_oCInfo.hpp"
 #include "Hooks/Hooks_oCMenuSavegame.hpp"
