@@ -1,29 +1,41 @@
-name: "Plugin CI/CD"
+﻿name: "Build Plugin"
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Plugin version'
-        type: string
+        description: "Plugin version (1.2.3 or v1.2.3)"
         required: true
-      branch:
-        description: 'Branch to push version change to'
-        required: false
         type: string
+
+      branch:
+        description: "Branch to build and push version change to"
+        required: true
         default: main
+        type: string
+
+      create_release:
+        description: "Create release"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
-    
+
+concurrency:
+  group: plugin-${{ inputs.branch }}
+  cancel-in-progress: false
+
 jobs:
   plugin:
     runs-on: windows-latest
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
+          ref: ${{ inputs.branch }}
           submodules: recursive
           lfs: true
 
@@ -47,13 +59,13 @@ jobs:
           }
 
       - name: Set up MSVC
-        uses: ilammy/msvc-dev-cmd@v1.13.0
+        uses: ./.github/actions/msvc-dev-cmd
         with:
           arch: x86
 
       - name: Compile plugin
         run: |
-          cmake . --preset MP-Release
+          cmake . --preset MP-Release -DPROJECT_VERSION="${{ inputs.version }}"
           cmake --build --preset MP-Release
 
       - name: Find plugin
@@ -72,8 +84,17 @@ jobs:
 
           echo "plugin_path=$plugin_path" >> $env:GITHUB_ENV
 
-      - name: Create release and upload plugin
-        uses: softprops/action-gh-release@v2
+      - name: Upload plugin as artifact
+        if: ${{ !inputs.create_release }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: plugin-${{ inputs.version }}
+          path: ${{ env.plugin_path }}
+          if-no-files-found: error
+
+      - name: Release plugin
+        if: ${{ inputs.create_release }}
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ inputs.version }}
           name: ${{ inputs.version }}

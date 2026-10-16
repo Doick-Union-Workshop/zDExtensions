@@ -3,6 +3,24 @@
 Thank you for contributing to this project!
 To keep commit history clean and consistent, follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 
+## Source layout
+
+Engine-specific implementations belong in `src/**/*.ipp`, inside `namespace GOTHIC_NAMESPACE`.
+CMake generates a separate translation unit for each enabled engine from `src/IppFileTemplate.in`,
+which supplies the engine macros and `HOOKSPACE`. New `.ipp` files are discovered automatically;
+do not include them from other source files.
+
+Keep shared declarations and templates in headers with include guards, and include dependencies
+explicitly in each module. Put engine-independent implementations in `.cpp` files.
+
+Each external module declares its functions in `Externals_<module>.hpp` and includes that header
+from its `.ipp` implementation. Function template definitions live in the header so other modules
+can instantiate them; `Externals_Utils.hpp` contains only templates and needs no `.ipp` file.
+
+`Externals/Externals_Definitions.ipp` owns the central BDE table and native parser registrations.
+`Plugin.ipp` includes `Externals/Externals_Definitions.hpp` and calls `zDExt_DefineExternals()`
+from the game callback.
+
 ## Commit Messages
 
 Each commit message **must** follow this format:

@@ -1,3 +1,7 @@
+#pragma once
+
+#include <ZenGin/zGothicAPI.h>
+
 namespace GOTHIC_NAMESPACE
 {
     /*

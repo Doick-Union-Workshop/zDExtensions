@@ -1,5 +1,8 @@
 {
-	"version": 3,
+	"version": 5,
+	"include": [
+		"CMakeUserConfigPresets.json"
+	],
 	"configurePresets": [
 		{
 			"name": "windows",
@@ -14,6 +17,21 @@
 			"cacheVariables": {
 				"CMAKE_C_COMPILER": "cl.exe",
 				"CMAKE_CXX_COMPILER": "cl.exe"
+			}
+		},
+		{
+			"name": "msvc-wine",
+			"hidden": true,
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			},
+			"cacheVariables": {
+				"CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/msvc-wine-x86.cmake",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": true
 			}
 		},
 		{
@@ -62,18 +80,33 @@
 		{
 			"name": "mp",
 			"hidden": true,
-			"cacheVariables": { "GOTHIC_API_G1": true, "GOTHIC_API_G1A": true, "GOTHIC_API_G2": true, "GOTHIC_API_G2A": true }
+			"cacheVariables": {
+				"GOTHIC_API_G1": true,
+				"GOTHIC_API_G1A": true,
+				"GOTHIC_API_G2": true,
+				"GOTHIC_API_G2A": true
+			}
 		},
-		{ "name": "G1-Debug", "inherits": [ "windows", "x86", "debug", "g1" ] },
-		{ "name": "G1-Release", "inherits": [ "windows", "x86", "release", "g1" ] },
-		{ "name": "G1A-Debug", "inherits": [ "windows", "x86", "debug", "g1a" ] },
-		{ "name": "G1A-Release", "inherits": [ "windows", "x86", "release", "g1a" ] },
-		{ "name": "G2-Debug", "inherits": [ "windows", "x86", "debug", "g2" ] },
-		{ "name": "G2-Release", "inherits": [ "windows", "x86", "release", "g2" ] },
-		{ "name": "G2A-Debug", "inherits": [ "windows", "x86", "debug", "g2a" ] },
-		{ "name": "G2A-Release", "inherits": [ "windows", "x86", "release", "g2a" ] },
-		{ "name": "MP-Debug", "inherits": [ "windows", "x86", "debug", "mp" ] },
-		{ "name": "MP-Release", "inherits": [ "windows", "x86", "release", "mp" ] }
+		{ "name": "G1-Debug", "inherits": [ "windows", "x86", "debug", "g1", "config" ]},
+		{ "name": "G1-Release", "inherits": [ "windows", "x86", "release", "g1", "config" ] },
+		{ "name": "G1A-Debug", "inherits": [ "windows", "x86", "debug", "g1a", "config" ] },
+		{ "name": "G1A-Release", "inherits": [ "windows", "x86", "release", "g1a", "config" ] },
+		{ "name": "G2-Debug", "inherits": [ "windows", "x86", "debug", "g2", "config" ] },
+		{ "name": "G2-Release", "inherits": [ "windows", "x86", "release", "g2", "config" ] },
+		{ "name": "G2A-Debug", "inherits": [ "windows", "x86", "debug", "g2a", "config" ] },
+		{ "name": "G2A-Release", "inherits": [ "windows", "x86", "release", "g2a", "config" ] },
+		{ "name": "MP-Debug", "inherits": [ "windows", "x86", "debug", "mp", "config" ] },
+		{ "name": "MP-Release", "inherits": [ "windows", "x86", "release", "mp", "config" ] },
+		{ "name": "G1-Debug-msvc-wine", "inherits": [ "msvc-wine", "x86", "debug", "g1", "msvc-wine-config" ] },
+		{ "name": "G1-Release-msvc-wine", "inherits": [ "msvc-wine", "x86", "release", "g1", "msvc-wine-config" ] },
+		{ "name": "G1A-Debug-msvc-wine", "inherits": [ "msvc-wine", "x86", "debug", "g1a", "msvc-wine-config" ] },
+		{ "name": "G1A-Release-msvc-wine", "inherits": [ "msvc-wine", "x86", "release", "g1a", "msvc-wine-config" ] },
+		{ "name": "G2-Debug-msvc-wine", "inherits": [ "msvc-wine", "x86", "debug", "g2", "msvc-wine-config" ] },
+		{ "name": "G2-Release-msvc-wine", "inherits": [ "msvc-wine", "x86", "release", "g2", "msvc-wine-config" ] },
+		{ "name": "G2A-Debug-msvc-wine", "inherits": [ "msvc-wine", "x86", "debug", "g2a", "msvc-wine-config" ] },
+		{ "name": "G2A-Release-msvc-wine", "inherits": [ "msvc-wine", "x86", "release", "g2a", "msvc-wine-config" ] },
+		{ "name": "MP-Debug-msvc-wine", "inherits": [ "msvc-wine", "x86", "debug", "mp", "msvc-wine-config" ] },
+		{ "name": "MP-Release-msvc-wine", "inherits": [ "msvc-wine", "x86", "release", "mp", "msvc-wine-config" ] }
 	],
 	"buildPresets": [
 		{ "name": "G1-Debug", "configurePreset": "G1-Debug" },
@@ -85,6 +118,16 @@
 		{ "name": "G2A-Debug", "configurePreset": "G2A-Debug" },
 		{ "name": "G2A-Release", "configurePreset": "G2A-Release" },
 		{ "name": "MP-Debug", "configurePreset": "MP-Debug" },
-		{ "name": "MP-Release", "configurePreset": "MP-Release" }
+		{ "name": "MP-Release", "configurePreset": "MP-Release" },
+		{ "name": "G1-Debug-msvc-wine", "configurePreset": "G1-Debug-msvc-wine" },
+		{ "name": "G1-Release-msvc-wine", "configurePreset": "G1-Release-msvc-wine" },
+		{ "name": "G1A-Debug-msvc-wine", "configurePreset": "G1A-Debug-msvc-wine" },
+		{ "name": "G1A-Release-msvc-wine", "configurePreset": "G1A-Release-msvc-wine" },
+		{ "name": "G2-Debug-msvc-wine", "configurePreset": "G2-Debug-msvc-wine" },
+		{ "name": "G2-Release-msvc-wine", "configurePreset": "G2-Release-msvc-wine" },
+		{ "name": "G2A-Debug-msvc-wine", "configurePreset": "G2A-Debug-msvc-wine" },
+		{ "name": "G2A-Release-msvc-wine", "configurePreset": "G2A-Release-msvc-wine" },
+		{ "name": "MP-Debug-msvc-wine", "configurePreset": "MP-Debug-msvc-wine" },
+		{ "name": "MP-Release-msvc-wine", "configurePreset": "MP-Release-msvc-wine" }
 	]
 }

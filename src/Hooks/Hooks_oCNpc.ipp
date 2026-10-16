@@ -1,11 +1,9 @@
+#include "Hooks/Hooks_Helpers.hpp"
+
 namespace GOTHIC_NAMESPACE
 {
-    // G1:  0x006ADE00 protected: int __thiscall oCNpc::EV_DropVob(class oCMsgManipulate *)
-    // G1A: 0x006E15B0 protected: int __thiscall oCNpc::EV_DropVob(class oCMsgManipulate *)
-    // G2:  0x006F4A90 protected: int __thiscall oCNpc::EV_DropVob(class oCMsgManipulate *)
-    // G2A: 0x007538C0 protected: int __thiscall oCNpc::EV_DropVob(class oCMsgManipulate *)
     auto Hook_oCNpc_EV_DropVob = Union::CreateHook(
-        reinterpret_cast<void*>(zSwitch(0x006ADE00, 0x006E15B0, 0x006F4A90, 0x007538C0)),
+        SIGNATURE_OF(&oCNpc::EV_DropVob),
         &oCNpc::Hook_EV_DropVob,
         Union::HookType::Hook_Detours
     );
@@ -153,12 +151,8 @@ namespace GOTHIC_NAMESPACE
 
 #endif
 
-    // G1:  0x00737C60 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor &)
-    // G1A: 0x00777150 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor &)
-    // G2:  0x00783C70 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor &)
-    // G2A: 0x0066CF30 public: void __thiscall oCNpc::OnDamage_Condition(struct oCNpc::oSDamageDescriptor&)
     auto Hook_oCNpc_OnDamage_Condition = Union::CreateHook(
-        reinterpret_cast<void*>(zSwitch(0x00737C60, 0x00777150, 0x00783C70, 0x0066CF30)),
+        SIGNATURE_OF(&oCNpc::OnDamage_Condition),
         &oCNpc::Hook_OnDamage_Condition,
         Union::HookType::Hook_Detours
     );

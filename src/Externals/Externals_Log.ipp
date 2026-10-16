@@ -1,0 +1,23 @@
+#include "Externals/Externals_Log.hpp"
+
+namespace GOTHIC_NAMESPACE
+{
+	int zDExt_Log_GetTopicStatus(const zSTRING& t_topicName)
+	{
+		auto list = oCLogManager::GetLogManager().m_lstTopics.GetNextInList();
+
+		while (list)
+		{
+			auto const log = list->GetData();
+
+			if (log->m_strDescription == t_topicName)
+			{
+				return static_cast<int>(log->m_enuStatus);
+			}
+
+			list = list->GetNextInList();
+		}
+
+		return static_cast<int>(oCLogTopic::zELogTopicStatus_Free);
+	}
+}

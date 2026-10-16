@@ -1,3 +1,8 @@
+#pragma once
+
+#include "Utils/DaedalusCall.h"
+#include "Utils/zDUtils/Logger/Logger.h"
+
 namespace GOTHIC_NAMESPACE
 {
     inline constexpr const char* DAEDALUS_CALL_FAILED_MSG = "Failed to call {0}: {1}";

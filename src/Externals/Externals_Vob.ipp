@@ -1,0 +1,185 @@
+#include "Externals/Externals_Vob.hpp"
+#include "Externals/Externals_Helpers.hpp"
+
+namespace GOTHIC_NAMESPACE
+{
+    void zDExt_Vob_RotateWorld(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_RotateWorld");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        const bool collDetectionStatic = vob->collDetectionStatic;
+        const bool collDetectionDynamic = vob->collDetectionDynamic;
+        vob->collDetectionStatic = 0;
+        vob->collDetectionDynamic = 0;
+
+        vob->RotateWorldX(t_posX);
+        vob->RotateWorldY(t_posY);
+        vob->RotateWorldZ(t_posZ);
+
+        vob->collDetectionStatic = collDetectionStatic;
+        vob->collDetectionDynamic = collDetectionDynamic;
+    }
+
+    void zDExt_Vob_RotateLocal(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_RotateLocal");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        const bool collDetectionStatic = vob->collDetectionStatic;
+        const bool collDetectionDynamic = vob->collDetectionDynamic;
+        vob->collDetectionStatic = 0;
+        vob->collDetectionDynamic = 0;
+
+        vob->RotateLocalX(t_posX);
+        vob->RotateLocalY(t_posY);
+        vob->RotateLocalZ(t_posZ);
+
+        vob->collDetectionStatic = collDetectionStatic;
+        vob->collDetectionDynamic = collDetectionDynamic;
+    }
+
+    void zDExt_Vob_SetVisual(const zSTRING& t_vobName, const zSTRING& t_visualName)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_SetVisual");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        zSTRING visualName{ t_visualName };
+        (void)visualName.Upper();
+
+        zCVisual* visual = zCVisual::LoadVisual(visualName);
+        if (!visual)
+        {
+            logger->Warning("Visual not found: {0}", visualName.ToChar());
+            return;
+        }
+
+        vob->SetVisual(visual);
+        visual->Release();
+    }
+
+    void zDExt_Vob_SetToFloor(const zSTRING& t_vobName)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_SetToFloor");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        auto pos = vob->GetPositionWorld();
+        SetVobOnFloor(vob, pos);
+    }
+
+    void zDExt_Vob_MoveTo(const zSTRING& t_vobName, const zSTRING& t_pointName)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_MoveTo");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        zSTRING pointName{ t_pointName };
+        (void)pointName.Upper();
+
+        auto pos = GetWaypointPosition(pointName, logger);
+        if (!pos)
+        {
+            return;
+        }
+
+        SetVobPositionWorld(vob, pos.value());
+    }
+
+    void zDExt_Vob_MoveToPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_MoveToPos");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        auto pos = zVEC3(t_posX, t_posY, t_posZ);
+        SetVobPositionWorld(vob, pos);
+    }
+
+    void zDExt_Vob_SetCollisionDetection(const zSTRING& t_vobName, const int t_dynamicCollDet, const int t_staticCollDet)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_SetCollisionDetection");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return;
+        }
+
+        vob->collDetectionDynamic = t_dynamicCollDet;
+        vob->collDetectionStatic = t_staticCollDet;
+    }
+
+    int zDExt_Vob_GetDistToPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
+    {
+        int dist = INT_MAX;
+
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_GetDistToPos");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return dist;
+        }
+
+        auto pos = zVEC3(t_posX, t_posY, t_posZ);
+        dist = static_cast<int>(GetVobDistanceToPos2(vob, pos, 1));
+        return dist;
+    }
+
+    int zDExt_Vob_GetDistToNpc(const zSTRING& t_vobName, oCNpc* t_npc)
+    {
+        int dist = INT_MAX;
+
+        if (!t_npc)
+        {
+            return dist;
+        }
+
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_GetDistToNpc");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return dist;
+        }
+
+        dist = static_cast<int>(vob->GetDistanceToVob(*t_npc));
+        return dist;
+    }
+
+    zSTRING zDExt_Vob_GetPortalRoom(const zSTRING& t_vobName)
+    {
+        static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_GetPortalRoom");
+        zCVob* vob = FindVobByName(t_vobName, logger);
+        if (!vob)
+        {
+            return {};
+        }
+
+        if (auto portal = vob->GetSectorNameVobIsIn())
+        {
+            return *portal;
+        }
+
+        return {};
+    }
+}

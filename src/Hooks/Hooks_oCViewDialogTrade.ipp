@@ -1,3 +1,5 @@
+#include "Hooks/Hooks_Helpers.hpp"
+
 namespace GOTHIC_NAMESPACE
 {
 #if ENGINE == Engine_G2A

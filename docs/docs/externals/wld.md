@@ -325,21 +325,6 @@ func void zDExt_Wld_SetRainOff() {};
 zDExt_Wld_SetRainOff();
 ```
 
-## zDExt_Wld_OverrideWorldFogColors
-
-Adds a color to the outdoor sky controller's daytime fog color variations. This function is a work in progress: `index` is currently ignored and existing colors are not replaced.
-
-```dae
-func void zDExt_Wld_OverrideWorldFogColors(var int index, var string color) {};
-```
-
-- `index` – currently unused
-- `color` – three space-separated color components, parsed as floats
-
-```dae title="Example usage"
-zDExt_Wld_OverrideWorldFogColors(0, "100 120 140");
-```
-
 ## zDExt_Wld_ChangeLevel
 
 Requests a level change and specifies the destination waypoint. Does nothing when the destination is the current world.
