@@ -19,24 +19,10 @@ namespace GOTHIC_NAMESPACE
     );
     void oCInfo::Hook_Info(void)
     {
-        zCPar_Symbol* symbol1 = parser->GetSymbol("DIA_CURRENTNAME");
-        if (symbol1 && symbol1->type == zPAR_TYPE_STRING)
+        zCPar_Symbol* sym = parser->GetSymbol("DIA_CURRENTINSTANCE");
+        if (sym && (sym->type == zPAR_TYPE_INT || sym->type == zPAR_TYPE_INSTANCE))
         {
-            static zSTRING currentName;
-            currentName = name;
-            symbol1->SetValue(currentName, 0);
-        }
-
-        zCPar_Symbol* symbol2 = parser->GetSymbol("DIA_CURRENTCOUNTER");
-        if (symbol2 && symbol2->type == zPAR_TYPE_INT)
-        {
-            symbol2->SetValue(0, 0);
-        }
-
-        zCPar_Symbol* symbol3 = parser->GetSymbol("DIA_CURRENTINSTANCE");
-        if (symbol3 && (symbol3->type == zPAR_TYPE_INT || symbol3->type == zPAR_TYPE_INSTANCE))
-        {
-            symbol3->SetValue(instance, 0);
+            sym->SetValue(instance, 0);
         }
 
         (this->*Hook_oCInfo_Info)();
