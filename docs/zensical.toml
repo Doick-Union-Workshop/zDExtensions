@@ -54,6 +54,7 @@ nav = [
     { "HLP functions" = "externals/hlp.md" },
     { "Log functions" = "externals/log.md" },
     { "MOB functions" = "externals/mob.md" },
+    { "MDL functions" = "externals/mdl.md" },
     { "Menu functions" = "externals/menu.md" },
     { "NPC functions" = "externals/npc.md" },
     { "String functions" = "externals/str.md" },
