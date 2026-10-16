@@ -1,6 +1,6 @@
 ﻿namespace GOTHIC_NAMESPACE
 {
-    void zDExt_Vob_RotateWorld(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void zDExt_Vob_RotateWorld(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_RotateWorld");
         zCVob* vob = FindVobByName(t_vobName, logger);
@@ -14,15 +14,15 @@
         vob->collDetectionStatic = 0;
         vob->collDetectionDynamic = 0;
 
-        vob->RotateWorldX((float)t_posX);
-        vob->RotateWorldY((float)t_posY);
-        vob->RotateWorldZ((float)t_posZ);
+        vob->RotateWorldX(t_posX);
+        vob->RotateWorldY(t_posY);
+        vob->RotateWorldZ(t_posZ);
 
         vob->collDetectionStatic = collDetectionStatic;
         vob->collDetectionDynamic = collDetectionDynamic;
     }
 
-    void zDExt_Vob_RotateLocal(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void zDExt_Vob_RotateLocal(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_RotateLocal");
         zCVob* vob = FindVobByName(t_vobName, logger);
@@ -36,9 +36,9 @@
         vob->collDetectionStatic = 0;
         vob->collDetectionDynamic = 0;
 
-        vob->RotateLocalX((float)t_posX);
-        vob->RotateLocalY((float)t_posY);
-        vob->RotateLocalZ((float)t_posZ);
+        vob->RotateLocalX(t_posX);
+        vob->RotateLocalY(t_posY);
+        vob->RotateLocalZ(t_posZ);
 
         vob->collDetectionStatic = collDetectionStatic;
         vob->collDetectionDynamic = collDetectionDynamic;
@@ -90,7 +90,7 @@
         SetVobPositionWorld(vob, pos.value());
     }
 
-    void zDExt_Vob_MoveToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void zDExt_Vob_MoveToPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_MoveToPos");
         zCVob* vob = FindVobByName(t_vobName, logger);
@@ -99,7 +99,7 @@
             return;
         }
 
-        auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
+        auto pos = zVEC3(t_posX, t_posY, t_posZ);
         SetVobPositionWorld(vob, pos);
     }
 
@@ -116,7 +116,7 @@
         vob->collDetectionStatic = staticCollDet;
     }
 
-    int zDExt_Vob_GetDistToPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    int zDExt_Vob_GetDistToPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
     {
         int dist = INT_MAX;
 
@@ -127,7 +127,7 @@
             return dist;
         }
 
-        auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
+        auto pos = zVEC3(t_posX, t_posY, t_posZ);
         dist = static_cast<int>(GetVobDistanceToPos2(vob, pos, 1));
         return dist;
     }

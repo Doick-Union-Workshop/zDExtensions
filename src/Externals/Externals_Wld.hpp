@@ -25,13 +25,13 @@ namespace GOTHIC_NAMESPACE
     }
 
     template<typename T>
-    void zDExt_Wld_InsertVobPos(const zSTRING& t_vobName, const int t_posX, const int t_posY, const int t_posZ)
+    void zDExt_Wld_InsertVobPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
     {
         zSTRING vobName{ t_vobName };
         (void)vobName.Upper();
 
         T* vob = new T{};
-        auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
+        auto pos = zVEC3(t_posX, t_posY, t_posZ);
 
         vob->SetVobName(vobName);
         ogame->GetGameWorld()->AddVob(vob);

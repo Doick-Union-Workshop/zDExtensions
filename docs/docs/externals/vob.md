@@ -5,7 +5,7 @@
 Rotates a specified vob by given angles in local scope.
 
 ```dae
-func void zDExt_Vob_RotateLocal(var string vobName, var int rotX, var int rotY, var int rotZ) {};
+func void zDExt_Vob_RotateLocal(var string vobName, var float rotX, var float rotY, var float rotZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -14,7 +14,7 @@ func void zDExt_Vob_RotateLocal(var string vobName, var int rotX, var int rotY, 
 - `rotZ` – rotation angle around Z axis (degrees)
 
 ```dae title="Example usage"
-zDExt_Vob_RotateLocal("CHEST_LOBART", 0, 180, 90);
+zDExt_Vob_RotateLocal("CHEST_LOBART", 0.0, 180.0, 90.0);
 ```
 
 ## zDExt_Vob_RotateWorld
@@ -22,7 +22,7 @@ zDExt_Vob_RotateLocal("CHEST_LOBART", 0, 180, 90);
 Rotates a specified vob by given angles in global scope.
 
 ```dae
-func void zDExt_Vob_RotateWorld(var string vobName, var int rotX, var int rotY, var int rotZ) {};
+func void zDExt_Vob_RotateWorld(var string vobName, var float rotX, var float rotY, var float rotZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -31,7 +31,7 @@ func void zDExt_Vob_RotateWorld(var string vobName, var int rotX, var int rotY, 
 - `rotZ` – rotation angle around Z axis (degrees)
 
 ```dae title="Example usage"
-zDExt_Vob_RotateWorld("CHEST_LOBART", 0, 180, 90);
+zDExt_Vob_RotateWorld("CHEST_LOBART", 0.0, 180.0, 90.0);
 ```
 
 ## zDExt_Vob_MoveTo
@@ -54,7 +54,7 @@ zDExt_Vob_MoveTo("CHEST_LOBART", "START");
 Moves a specified vob to the exact coordinates (X, Y, Z) in the game world.
 
 ```dae
-func void zDExt_Vob_MoveToPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Vob_MoveToPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in game world
@@ -63,7 +63,7 @@ func void zDExt_Vob_MoveToPos(var string vobName, var int posX, var int posY, va
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Vob_MoveToPos("CHEST_LOBART", 16795, 23120, 1400);
+zDExt_Vob_MoveToPos("CHEST_LOBART", 16795.0, 23120.0, 1400.0);
 ```
 
 ## zDExt_Vob_SetToFloor
@@ -113,20 +113,20 @@ zDExt_Vob_SetCollisionDetection("CHEST_LOBART", FALSE, TRUE);
 
 ## zDExt_Vob_GetDistToPos
 
-Gets the distance between a specified vob and a given position in the world (in cm).
+Gets the squared horizontal distance between a vob and a world position. The Y coordinate is ignored. For a 500 cm radius, compare against `500 * 500`.
 
 ```dae
-func int zDExt_Vob_GetDistToPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func int zDExt_Vob_GetDistToPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in game world
 - `posX` – X coordinate of target position
 - `posY` – Y coordinate of target position
 - `posZ` – Z coordinate of target position
-- `return` – distance between vob and position in cm
+- `return` – squared horizontal distance in cm², truncated to an integer; `2147483647` if the vob is missing
 
 ```dae title="Example usage"
-if (zDExt_Vob_GetDistToPos("CHEST_LOBART", 16795, 23120, 1400) <= 500)
+if (zDExt_Vob_GetDistToPos("CHEST_LOBART", 16795.0, 23120.0, 1400.0) <= 250000)
 {
     //...
 };

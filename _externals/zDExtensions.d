@@ -19,7 +19,7 @@ func void zDExt_AI_TurnToVob(var C_NPC npc, var string vob) {};
 /// @param posX The X coordinate of the position to turn to.
 /// @param posY The Y coordinate of the position to turn to.
 /// @param posZ The Z coordinate of the position to turn to.
-func void zDExt_AI_TurnToPos(var C_NPC npc, var int posX, var int posY, var int posZ) {};
+func void zDExt_AI_TurnToPos(var C_NPC npc, var float posX, var float posY, var float posZ) {};
 
 /// Calls the specified function on the NPC.
 /// @param npc The NPC to perform the action on.
@@ -171,7 +171,7 @@ func void zDExt_Npc_CloseDeadNpcInventory(var C_NPC npc) {};
 /// @param posX The X coordinate of the position to get the distance to.
 /// @param posY The Y coordinate of the position to get the distance to.
 /// @param posZ The Z coordinate of the position to get the distance to.
-func int zDExt_Npc_GetDistToPos(var C_NPC npc, var int posX, var int posY, var int posZ) {};
+func int zDExt_Npc_GetDistToPos(var C_NPC npc, var float posX, var float posY, var float posZ) {};
 
 /// Gets the distance from the NPC to the specified VOB.
 /// @param npc The NPC to get the distance from.
@@ -283,14 +283,14 @@ func void zDExt_SetStringArrayValue(var string arr, var int index, var string va
 /// @param rotX The rotation value around the X axis to rotate the VOB by.
 /// @param rotY The rotation value around the Y axis to rotate the VOB by.
 /// @param rotZ The rotation value around the Z axis to rotate the VOB by.
-func void zDExt_Vob_RotateLocal(var string vobName, var int rotX, var int rotY, var int rotZ) {};
+func void zDExt_Vob_RotateLocal(var string vobName, var float rotX, var float rotY, var float rotZ) {};
 
 /// Rotates the specified VOB in world space by the specified rotation values.
 /// @param vobName The name of the VOB to rotate.
 /// @param rotX The rotation value around the X axis to rotate the VOB by.
 /// @param rotY The rotation value around the Y axis to rotate the VOB by.
 /// @param rotZ The rotation value around the Z axis to rotate the VOB by.
-func void zDExt_Vob_RotateWorld(var string vobName, var int rotX, var int rotY, var int rotZ) {};
+func void zDExt_Vob_RotateWorld(var string vobName, var float rotX, var float rotY, var float rotZ) {};
 
 /// Moves the specified VOB to the specified point.
 /// @param vobName The name of the VOB to move.
@@ -302,7 +302,7 @@ func void zDExt_Vob_MoveTo(var string vobName, var string pointName) {};
 /// @param posX The X coordinate of the position to move the VOB to.
 /// @param posY The Y coordinate of the position to move the VOB to.
 /// @param posZ The Z coordinate of the position to move the VOB to.
-func void zDExt_Vob_MoveToPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Vob_MoveToPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Sets the specified VOB to the floor.
 /// @param vobName The name of the VOB to set to the floor.
@@ -324,7 +324,7 @@ func void zDExt_Vob_SetCollisionDetection(var string vobName, var int dynamicCol
 /// @param posX The X coordinate of the position to get the distance to.
 /// @param posY The Y coordinate of the position to get the distance to.
 /// @param posZ The Z coordinate of the position to get the distance to.
-func int zDExt_Vob_GetDistToPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func int zDExt_Vob_GetDistToPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Gets the distance from the specified VOB to the specified NPC.
 /// @param vobName The name of the VOB to get the distance from.
@@ -381,49 +381,49 @@ func void zDExt_Wld_InsertMobBed(var string vobName, var string pointName) {};
 /// @param posX The X coordinate of the position to insert the VOB at.
 /// @param posY The Y coordinate of the position to insert the VOB at.
 /// @param posZ The Z coordinate of the position to insert the VOB at.
-func void zDExt_Wld_InsertVobPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertVobPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Inserts a MOB with the specified name at the specified position in the game world.
 /// @param vobName The name of the MOB to insert.
 /// @param posX The X coordinate of the position to insert the MOB at.
 /// @param posY The Y coordinate of the position to insert the MOB at.
 /// @param posZ The Z coordinate of the position to insert the MOB at.
-func void zDExt_Wld_InsertMobPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Inserts an interactive MOB with the specified name at the specified position in the game world.
 /// @param vobName The name of the interactive MOB to insert.
 /// @param posX The X coordinate of the position to insert the interactive MOB at.
 /// @param posY The Y coordinate of the position to insert the interactive MOB at.
 /// @param posZ The Z coordinate of the position to insert the interactive MOB at.
-func void zDExt_Wld_InsertMobInterPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobInterPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Inserts a container MOB with the specified name at the specified position in the game world.
 /// @param vobName The name of the container MOB to insert.
 /// @param posX The X coordinate of the position to insert the container MOB at.
 /// @param posY The Y coordinate of the position to insert the container MOB at.
 /// @param posZ The Z coordinate of the position to insert the container MOB at.
-func void zDExt_Wld_InsertMobContainerPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobContainerPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Inserts a fire MOB with the specified name at the specified position in the game world.
 /// @param vobName The name of the fire MOB to insert.
 /// @param posX The X coordinate of the position to insert the fire MOB at.
 /// @param posY The Y coordinate of the position to insert the fire MOB at.
 /// @param posZ The Z coordinate of the position to insert the fire MOB at.
-func void zDExt_Wld_InsertMobFirePos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobFirePos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Inserts a door MOB with the specified name at the specified position in the game world.
 /// @param vobName The name of the door MOB to insert.
 /// @param posX The X coordinate of the position to insert the door MOB at.
 /// @param posY The Y coordinate of the position to insert the door MOB at.
 /// @param posZ The Z coordinate of the position to insert the door MOB at.
-func void zDExt_Wld_InsertMobDoorPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobDoorPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Inserts a bed MOB with the specified name at the specified position in the game world.
 /// @param vobName The name of the bed MOB to insert.
 /// @param posX The X coordinate of the position to insert the bed MOB at.
 /// @param posY The Y coordinate of the position to insert the bed MOB at.
 /// @param posZ The Z coordinate of the position to insert the bed MOB at.
-func void zDExt_Wld_InsertMobBedPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobBedPos(var string vobName, var float posX, var float posY, var float posZ) {};
 
 /// Removes the specified VOB from the game world.
 /// @param vobName The name of the VOB to remove.

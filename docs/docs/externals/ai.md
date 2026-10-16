@@ -29,3 +29,17 @@ func void zDExt_AI_TurnToVob(var C_NPC npc, var string vob) {};
 ```dae title="Example usage"
 zDExt_AI_TurnToVob(self, "CHEST_LOBART");
 ```
+## zDExt_AI_TurnToPos
+
+Queues an AI action that turns the NPC towards the specified world position.
+
+```dae
+func void zDExt_AI_TurnToPos(var C_NPC npc, var float posX, var float posY, var float posZ) {};
+```
+
+- `npc` – NPC to turn
+- `posX`, `posY`, `posZ` – world coordinates in cm
+
+```dae title="Example usage"
+zDExt_AI_TurnToPos(self, 16795.0, 1400.0, 23120.0);
+```

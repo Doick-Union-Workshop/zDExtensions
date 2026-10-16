@@ -220,7 +220,7 @@ namespace GOTHIC_NAMESPACE
 		t_npc->CloseSteal();
 	}
 
-	int zDExt_Npc_GetDistToPos(oCNpc* t_npc, const int t_posX, const int t_posY, const int t_posZ)
+	int zDExt_Npc_GetDistToPos(oCNpc* t_npc, const float t_posX, const float t_posY, const float t_posZ)
 	{
 		int dist = INT_MAX;
 
@@ -229,7 +229,7 @@ namespace GOTHIC_NAMESPACE
 			return dist;
 		}
 
-		auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
+		auto pos = zVEC3(t_posX, t_posY, t_posZ);
 		dist = static_cast<int>(t_npc->GetDistanceToPos2(pos, 1));
 		return dist;
 	}

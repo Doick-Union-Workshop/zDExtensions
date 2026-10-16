@@ -207,20 +207,20 @@ zDExt_Npc_CloseDeadNpcInventory(self);
 
 ## zDExt_Npc_GetDistToPos
 
-Gets the distance between the NPC and a given position in the world (in cm).
+Gets the distance between the NPC and a world position using the engine distance calculation (in cm).
 
 ```dae
-func int zDExt_Npc_GetDistToPos(var C_NPC npc, var int posX, var int posY, var int posZ) {};
+func int zDExt_Npc_GetDistToPos(var C_NPC npc, var float posX, var float posY, var float posZ) {};
 ```
 
 - `npc` – instance of the NPC
 - `posX` – X coordinate in the game world
 - `posY` – Y coordinate in the game world
 - `posZ` – Z coordinate in the game world
-- `return` – distance between `npc` and the specified position (in cm)
+- `return` – distance in cm, truncated to an integer; `2147483647` for an invalid NPC
 
 ```dae title="Example usage"
-if (zDExt_Npc_GetDistToPos(hero, 16795, 23120, 1400) <= 500)
+if (zDExt_Npc_GetDistToPos(hero, 16795.0, 23120.0, 1400.0) <= 500)
 {
     //...
 };

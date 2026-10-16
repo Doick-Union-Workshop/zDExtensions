@@ -30,14 +30,14 @@ namespace GOTHIC_NAMESPACE
 		t_npc->GetEM()->OnMessage(msg, t_npc);
 	}
 
-	void zDExt_AI_TurnToPos(oCNpc* t_npc, const int t_posX, const int t_posY, const int t_posZ)
+	void zDExt_AI_TurnToPos(oCNpc* t_npc, const float t_posX, const float t_posY, const float t_posZ)
 	{
 		if (!t_npc)
 		{
 			return;
 		}
 
-		auto pos = zVEC3((float)t_posX, (float)t_posY, (float)t_posZ);
+		auto pos = zVEC3(t_posX, t_posY, t_posZ);
 		auto const msg = new oCMsgMovement(oCMsgMovement::EV_TURNTOPOS, pos);
 		t_npc->GetEM()->OnMessage(msg, t_npc);
 	}

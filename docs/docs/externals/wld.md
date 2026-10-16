@@ -110,7 +110,7 @@ zDExt_Wld_InsertMobBed("BOSPER_BED", "NW_CITY_BOSPER_HOUSE_BED");
 Inserts a vob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertVobPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertVobPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -119,7 +119,7 @@ func void zDExt_Wld_InsertVobPos(var string vobName, var int posX, var int posY,
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertVobPos("SECRET_CHEST", 0, 0, 0);
+zDExt_Wld_InsertVobPos("SECRET_CHEST", 0.0, 0.0, 0.0);
 ```
 
 ## zDExt_Wld_InsertMobPos
@@ -127,7 +127,7 @@ zDExt_Wld_InsertVobPos("SECRET_CHEST", 0, 0, 0);
 Inserts a mob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertMobPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -136,7 +136,7 @@ func void zDExt_Wld_InsertMobPos(var string vobName, var int posX, var int posY,
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertMobPos("SIGNPOST", 23120, 1400, 16795);
+zDExt_Wld_InsertMobPos("SIGNPOST", 23120.0, 1400.0, 16795.0);
 ```
 
 ## zDExt_Wld_InsertMobInterPos
@@ -144,7 +144,7 @@ zDExt_Wld_InsertMobPos("SIGNPOST", 23120, 1400, 16795);
 Inserts an interactive mob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertMobInterPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobInterPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -153,7 +153,7 @@ func void zDExt_Wld_InsertMobInterPos(var string vobName, var int posX, var int 
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertMobInterPos("EDDA_CAULDRON", 16795, 1400, 23120);
+zDExt_Wld_InsertMobInterPos("EDDA_CAULDRON", 16795.0, 1400.0, 23120.0);
 ```
 
 ## zDExt_Wld_InsertMobContainerPos
@@ -161,7 +161,7 @@ zDExt_Wld_InsertMobInterPos("EDDA_CAULDRON", 16795, 1400, 23120);
 Inserts a container mob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertMobContainerPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobContainerPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -170,7 +170,7 @@ func void zDExt_Wld_InsertMobContainerPos(var string vobName, var int posX, var 
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertMobContainerPos("CAVALORN_CHEST", 16795, 23120, 1400);
+zDExt_Wld_InsertMobContainerPos("CAVALORN_CHEST", 16795.0, 23120.0, 1400.0);
 ```
 
 ## zDExt_Wld_InsertMobFirePos
@@ -178,7 +178,7 @@ zDExt_Wld_InsertMobContainerPos("CAVALORN_CHEST", 16795, 23120, 1400);
 Inserts a fire mob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertMobFirePos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobFirePos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -187,7 +187,7 @@ func void zDExt_Wld_InsertMobFirePos(var string vobName, var int posX, var int p
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertMobFirePos("CAVALORN_CAMPFIRE", 16795, 23120, 1400);
+zDExt_Wld_InsertMobFirePos("CAVALORN_CAMPFIRE", 16795.0, 23120.0, 1400.0);
 ```
 
 ## zDExt_Wld_InsertMobDoorPos
@@ -195,7 +195,7 @@ zDExt_Wld_InsertMobFirePos("CAVALORN_CAMPFIRE", 16795, 23120, 1400);
 Inserts a door mob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertMobDoorPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobDoorPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -204,7 +204,7 @@ func void zDExt_Wld_InsertMobDoorPos(var string vobName, var int posX, var int p
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertMobDoorPos("BOSPER_HOUSE_DOOR", 1400, 16795, 23120);
+zDExt_Wld_InsertMobDoorPos("BOSPER_HOUSE_DOOR", 1400.0, 16795.0, 23120.0);
 ```
 
 ## zDExt_Wld_InsertMobBedPos
@@ -212,7 +212,7 @@ zDExt_Wld_InsertMobDoorPos("BOSPER_HOUSE_DOOR", 1400, 16795, 23120);
 Inserts a bed mob into the world at exact coordinates.
 
 ```dae
-func void zDExt_Wld_InsertMobBedPos(var string vobName, var int posX, var int posY, var int posZ) {};
+func void zDExt_Wld_InsertMobBedPos(var string vobName, var float posX, var float posY, var float posZ) {};
 ```
 
 - `vobName` – name of vob in the game world
@@ -221,7 +221,7 @@ func void zDExt_Wld_InsertMobBedPos(var string vobName, var int posX, var int po
 - `posZ` – Z coordinate in the game world
 
 ```dae title="Example usage"
-zDExt_Wld_InsertMobBedPos("BOSPER_BED", 1400, 16795, 23120);
+zDExt_Wld_InsertMobBedPos("BOSPER_BED", 1400.0, 16795.0, 23120.0);
 ```
 
 ## zDExt_Wld_RemoveVob
