@@ -184,3 +184,18 @@ if (zDExt_Hlp_IsTestMode())
     Print("Dev mode active");
 };
 ```
+
+## zDExt_Hlp_GetPlayerStatus
+
+Returns the current player status reported by the engine through `GetHeroStatus()`. Available on all four engines.
+
+```dae
+func int zDExt_Hlp_GetPlayerStatus() {};
+```
+
+- `return` – integer value of the engine `oHEROSTATUS` enumeration
+
+```dae title="Example usage"
+var int playerStatus;
+playerStatus = zDExt_Hlp_GetPlayerStatus();
+```

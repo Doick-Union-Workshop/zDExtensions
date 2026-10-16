@@ -58,6 +58,7 @@ namespace GOTHIC_NAMESPACE
 		BetterDaedalusExternal(zDExt_Hlp_SetOptionFloatValue),
 		BetterDaedalusExternal(zDExt_Hlp_SetOptionStringValue),
 		BetterDaedalusExternal(zDExt_Hlp_IsTestMode),
+		BetterDaedalusExternal(zDExt_Hlp_GetPlayerStatus),
 		/* WLD */
 		BetterDaedalusExternal(zDExt_Wld_RemoveVob),
 		BetterDaedalusExternal(zDExt_Wld_SetRainTime),

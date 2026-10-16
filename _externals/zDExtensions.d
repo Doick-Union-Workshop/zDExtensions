@@ -61,6 +61,9 @@ func void zDExt_Hlp_SetOptionStringValue(var string level, var string section, v
 /// Checks if the game is currently running in test mode.
 func int zDExt_Hlp_IsTestMode() {};
 
+/// Returns the current player status reported by the engine.
+func int zDExt_Hlp_GetPlayerStatus() {};
+
 // =========================================================
 //
 //  Log functions 

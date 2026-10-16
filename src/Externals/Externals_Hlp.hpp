@@ -114,4 +114,9 @@ namespace GOTHIC_NAMESPACE
     {
         return ogame->game_testmode != 0;
     }
+
+    int zDExt_Hlp_GetPlayerStatus()
+    {
+        return ogame->GetHeroStatus();
+    }
 }
