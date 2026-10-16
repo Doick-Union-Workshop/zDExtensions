@@ -27,7 +27,7 @@ site_author = "Doick"
 # The site_url is the canonical URL for your site. When building online
 # documentation you should set this.
 # Read more: https://zensical.org/docs/setup/basics/#site_url
-site_url = "https://github.com/Doick-Union-Workshop/zDExtensions"
+site_url = "https://doick-union-workshop.github.io/zDExtensions/"
 
 repo_url = "https://github.com/Doick-Union-Workshop/zDExtensions"
 repo_name = "zDExtensions"
@@ -336,15 +336,29 @@ link = "https://github.com/Doick-Union-Workshop/zDExtensions"
 # ----------------------------------------------------------------------------
 # Markdown extensions
 # ----------------------------------------------------------------------------
-[markdown]
-extensions = [
-  "admonition",
-  "pymdownx.caret",
-  "pymdownx.details",
-  "pymdownx.smartsymbols"
-]
+# Explicit configuration replaces the defaults, so retain the standard extensions.
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+toc = { permalink = true }
+pymdownx.arithmatex = { generic = true }
+pymdownx.caret = {}
+pymdownx.details = {}
+pymdownx.emoji = { emoji_generator = "zensical.extensions.emoji.to_svg", emoji_index = "zensical.extensions.emoji.twemoji" }
+pymdownx.inlinehilite = {}
+pymdownx.keys = {}
+pymdownx.magiclink = {}
+pymdownx.mark = {}
+pymdownx.smartsymbols = {}
+pymdownx.tabbed = { alternate_style = true, combine_header_slug = true }
+pymdownx.tasklist = { custom_checkbox = true }
+pymdownx.tilde = {}
 
-[markdown.pymdownx.highlight]
+[project.markdown_extensions.pymdownx.highlight]
 use_pygments = true
 linenums = true
 anchor_linenums = true
@@ -352,10 +366,10 @@ line_anchors = "example"
 line_spans = "example"
 pygments_lang_class = true
 
-[markdown.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.superfences]
 custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
 ]
 
-[markdown.pymdownx.betterem]
+[project.markdown_extensions.pymdownx.betterem]
 smart_enable = "all"

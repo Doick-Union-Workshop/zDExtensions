@@ -4,7 +4,7 @@ Project documentation is built using [Zensical](https://zensical.org/) and manag
 
 ## Requirements
 
-- [Python 3.10+](https://www.python.org/downloads/)
+- [Python 3.13+](https://www.python.org/downloads/)
 - [uv](https://github.com/astral-sh/uv) (recommended for environment automation)
 - [Visual Studio Code](https://code.visualstudio.com/Download) ([Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) and [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) extensions)
 
@@ -15,26 +15,26 @@ Project documentation is built using [Zensical](https://zensical.org/) and manag
 In the `docs/` directory, run:
 
 ```sh
-uv venv
-uv pip install -e .[dev]
+uv sync --locked
 ```
 
 ### 2. Start documentation server (hot reload)
 
 ```sh
-uv run zensical serve
+uv run --locked zensical serve
 ```
 
 ### 3. Build static site
 
 ```sh
-uv run zensical build
+uv run --locked zensical build --clean --strict
 ```
 
-### 4. Update dependencies
+### 4. Update Zensical
 
 ```sh
-uv sync --upgrade
+uv lock --upgrade-package zensical
+uv sync --locked
 ```
 
 ## Additional Information
