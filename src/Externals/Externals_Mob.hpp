@@ -3,6 +3,7 @@ namespace GOTHIC_NAMESPACE
     void zDExt_Mob_SetFocusName(const zSTRING& t_mobName, const zSTRING& t_focusName)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_SetFocusName");
+
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {
@@ -12,7 +13,7 @@ namespace GOTHIC_NAMESPACE
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
-            logger->Error("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
+            logger->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
             return;
         }
 
@@ -25,17 +26,18 @@ namespace GOTHIC_NAMESPACE
     zSTRING zDExt_Mob_GetFocusName(const zSTRING& t_mobName)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_GetFocusName");
+
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {
-            return zSTRING{};
+            return{};
         }
 
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
-            logger->Warning("Vob found, but it's not an oCMob or its derived class: {0}", t_mobName.ToChar());
-            return zSTRING{};
+            logger->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
+            return {};
         }
 
         return mob->GetName();
@@ -48,14 +50,14 @@ namespace GOTHIC_NAMESPACE
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {
-            return zSTRING{};
+            return{};
         }
 
         oCMOB* mob = vob->CastTo<oCMOB>();
         if (!mob)
         {
             logger->Warning("Vob found, but it's not an oCMOB or its derived class: {0}", t_mobName.ToChar());
-            return zSTRING{};
+            return {};
         }
 
         return mob->GetScemeName();
@@ -64,6 +66,7 @@ namespace GOTHIC_NAMESPACE
     void zDExt_Mob_SetUseWithItem(const zSTRING& t_mobName, const zSTRING& t_itemInstance)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Mob_SetUseWithItem");
+
         zCVob* vob = FindVobByName(t_mobName, logger);
         if (!vob)
         {

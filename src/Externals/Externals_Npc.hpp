@@ -25,7 +25,7 @@ namespace GOTHIC_NAMESPACE
 
 		zSTRING routine = t_npc->state.GetRoutineName();
 		zSTRING prefix = "RTN_";
-		zSTRING suffix{ "_" + t_npc->idx };
+		zSTRING suffix = zSTRING{ "_" } + zSTRING{ t_npc->idx };
 
 		if (zDExt_Str_StartsWith(routine, prefix))
 		{
@@ -50,6 +50,11 @@ namespace GOTHIC_NAMESPACE
 		}
 
 		zCPar_Symbol* sym = parser->GetSymbol(t_itemInstance);
+		if (!sym || sym->type != zPAR_TYPE_INSTANCE)
+		{
+			return;
+		}
+
 		oCItem* item = dynamic_cast<oCItem*>((zCVob*)sym->GetInstanceAdr());
 		if (!item)
 		{
@@ -67,6 +72,11 @@ namespace GOTHIC_NAMESPACE
 		}
 
 		zCPar_Symbol* sym = parser->GetSymbol(t_itemInstance);
+		if (!sym || sym->type != zPAR_TYPE_INSTANCE)
+		{
+			return;
+		}
+
 		oCItem* item = dynamic_cast<oCItem*>((zCVob*)sym->GetInstanceAdr());
 		if (!item)
 		{
@@ -148,7 +158,8 @@ namespace GOTHIC_NAMESPACE
 		auto list = t_npc->timedOverlays.GetNextInList();
 		while (list)
 		{
-			if (list->GetData()->mdsOverlayName.Upper() == overlay) {
+			if (list->GetData()->mdsOverlayName.Upper() == overlay)
+			{
 				return 1;
 			}
 

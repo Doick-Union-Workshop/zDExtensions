@@ -57,6 +57,12 @@
         (void)visualName.Upper();
 
         zCVisual* visual = zCVisual::LoadVisual(visualName);
+        if (!visual)
+        {
+            logger->Warning("Visual not found: {0}", visualName.ToChar());
+            return;
+        }
+
         vob->SetVisual(visual);
         visual->Release();
     }
@@ -87,6 +93,11 @@
         (void)pointName.Upper();
 
         auto pos = GetWaypointPosition(pointName, logger);
+        if (!pos)
+        {
+            return;
+        }
+
         SetVobPositionWorld(vob, pos.value());
     }
 
@@ -103,7 +114,7 @@
         SetVobPositionWorld(vob, pos);
     }
 
-    void zDExt_Vob_SetCollisionDetection(const zSTRING& t_vobName, const int dynamicCollDet, const int staticCollDet)
+    void zDExt_Vob_SetCollisionDetection(const zSTRING& t_vobName, const int t_dynamicCollDet, const int t_staticCollDet)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Vob_SetCollisionDetection");
         zCVob* vob = FindVobByName(t_vobName, logger);
@@ -112,8 +123,8 @@
             return;
         }
 
-        vob->collDetectionDynamic = dynamicCollDet;
-        vob->collDetectionStatic = staticCollDet;
+        vob->collDetectionDynamic = t_dynamicCollDet;
+        vob->collDetectionStatic = t_staticCollDet;
     }
 
     int zDExt_Vob_GetDistToPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)

@@ -84,6 +84,7 @@ namespace GOTHIC_NAMESPACE
         zCMenuItem* menuItem = FindMenuItemByName(menuItemName, logger);
         if (!menuItem)
         {
+            result = "";
             par->SetReturn(result);
             return 0;
         }

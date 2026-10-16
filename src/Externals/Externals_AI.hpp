@@ -9,6 +9,11 @@ namespace GOTHIC_NAMESPACE
 
 		static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::AI_TurnToWP");
 		auto pos = GetWaypointPosition(t_pointName, logger);
+		if (!pos)
+		{
+			return;
+		}
+
 		auto const msg = new oCMsgMovement(oCMsgMovement::EV_TURNTOPOS, pos.value());
 		t_npc->GetEM()->OnMessage(msg, t_npc);
 	}
@@ -22,7 +27,8 @@ namespace GOTHIC_NAMESPACE
 
 		static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::AI_TurnToVob");
 		zCVob* vob = FindVobByName(t_pointName, logger);
-		if (!vob) {
+		if (!vob)
+		{
 			return;
 		}
 

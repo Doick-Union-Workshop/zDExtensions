@@ -44,7 +44,7 @@ namespace GOTHIC_NAMESPACE
 		return str.Search(suffix, suffixPos) == suffixPos;
 	}
 
-	zSTRING zDExt_Str_Length(const zSTRING& t_str)
+	int zDExt_Str_Length(const zSTRING& t_str)
 	{
 		return t_str.Length();
 	}
@@ -74,10 +74,10 @@ namespace GOTHIC_NAMESPACE
 
         parser->GetParameter(format);
 
-		for (u_int i = format.Length() - 1; i > 1; --i)
+		for (int i = format.Length() - 1; i > 0; --i)
 		{
-            if (format[i - 1] == '%') {
-				switch (format[i])
+            if (format.ToChar()[i - 1] == '%') {
+				switch (format.ToChar()[i])
 				{
 				case 's':
 					parser->GetParameter(parameter_s);

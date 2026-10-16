@@ -1,12 +1,9 @@
 namespace GOTHIC_NAMESPACE
 {
-    template<typename T>
+    template<typename VobT>
     void zDExt_Wld_InsertVob(const zSTRING& t_vobName, const zSTRING& t_pointName)
     {
         static zDUtils::Logger* logger = zDUtils::CreateLogger("zDExtensions::Wld_InsertVob");
-
-        zSTRING pointName{ t_pointName };
-        (void)pointName.Upper();
 
         auto pos = GetWaypointPosition(t_pointName, logger);
         if (!pos)
@@ -17,20 +14,20 @@ namespace GOTHIC_NAMESPACE
         zSTRING vobName{ t_vobName };
         (void)vobName.Upper();
 
-        T* vob = new T{};
+        auto* vob = new VobT{};
         vob->SetVobName(vobName);
         ogame->GetGameWorld()->AddVob(vob);
         SetVobPositionWorld(vob, pos.value());
         vob->Release();
     }
 
-    template<typename T>
+    template<typename VobT>
     void zDExt_Wld_InsertVobPos(const zSTRING& t_vobName, const float t_posX, const float t_posY, const float t_posZ)
     {
         zSTRING vobName{ t_vobName };
         (void)vobName.Upper();
 
-        T* vob = new T{};
+        auto* vob = new VobT{};
         auto pos = zVEC3(t_posX, t_posY, t_posZ);
 
         vob->SetVobName(vobName);
@@ -183,9 +180,9 @@ namespace GOTHIC_NAMESPACE
             zSTRING name{ t_worldName };
             (void)name.Upper();
 
-            if (const size_t pos = std::string_view(t_worldName.ToChar()).find_last_of(".");
+            if (const size_t pos = std::string_view(name.ToChar()).find_last_of(".");
                 pos == std::string::npos
-                || std::string_view(t_worldName.ToChar()).substr(pos) != ".ZEN")
+                || std::string_view(name.ToChar()).substr(pos) != ".ZEN")
             {
                 name += ".ZEN";
             }
