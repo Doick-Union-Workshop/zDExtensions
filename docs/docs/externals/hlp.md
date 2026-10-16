@@ -1,5 +1,7 @@
 # HLP – help functions
 
+Option functions accept `"Gothic"` (main game options) or `"Mod"` (mod options), without regard to case. Other level names are unsupported.
+
 ## zDExt_Hlp_GetItem
 
 Finds an item object by its instance name.
@@ -20,15 +22,15 @@ var C_Item torch; torch = zDExt_Hlp_GetItem(ItLsTorch);
 Checks if vob is in the game world.
 
 ```dae
-func int zDExt_Hlp_IsValidVob(var instance object) {};
+func int zDExt_Hlp_IsValidVob(var string vobName) {};
 ```
 
-- `object` – any instance
+- `vobName` – name of the vob in the game world
 - `return` – `TRUE` or `FALSE`
 
 ## zDExt_Hlp_GetNpcPlunderedByPlayer
 
-Gets the NPC is currently plundered by the player.
+Gets the NPC currently being plundered by the player. Returns a null instance when the game is not in plunder mode.
 
 ```dae
 func C_NPC zDExt_Hlp_GetNpcPlunderedByPlayer() {};
@@ -38,7 +40,7 @@ func C_NPC zDExt_Hlp_GetNpcPlunderedByPlayer() {};
 
 ## zDExt_Hlp_IsOptionExists
 
-Checks whether an options section or a specific option entry exists in a given options level.
+Checks whether a specific option entry exists in the given options level.
 
 ```dae
 func int zDExt_Hlp_IsOptionExists(var string level, var string section, var string option) {};
@@ -46,16 +48,10 @@ func int zDExt_Hlp_IsOptionExists(var string level, var string section, var stri
 
 - `level` – options level name (e.g. `Gothic` level)
 - `section` – section name inside the options file
-- `option` – option name; if empty, the function checks for section existence
-- `return` – `TRUE` if the section or option exists, `FALSE` otherwise
+- `option` – option entry name
+- `return` – `TRUE` if the option entry exists, `FALSE` otherwise
 
 ```dae title="Example usage"
-// Check if a section exists
-if (zDExt_Hlp_IsOptionExists("Gothic", "ENGINE", ""))
-{
-    // Section exists
-};
-
 // Check if a specific option exists
 if (zDExt_Hlp_IsOptionExists("Gothic", "ENGINE", "ZMAXFPS"))
 {
@@ -131,7 +127,7 @@ func void zDExt_Hlp_SetOptionIntValue(var string level, var string section, var 
 - `value` – integer value to write
 
 ```dae title="Example usage"
-Hlp_SetOptionIntValue("Gothic", "ENGINE", "ZMAXFPS", 60);
+zDExt_Hlp_SetOptionIntValue("Gothic", "ENGINE", "ZMAXFPS", 60);
 ```
 
 ## zDExt_Hlp_SetOptionFloatValue
@@ -182,6 +178,24 @@ func int zDExt_Hlp_IsTestMode() {};
 if (zDExt_Hlp_IsTestMode())
 {
     Print("Dev mode active");
+};
+```
+
+## zDExt_Hlp_StrCmp
+
+Compares two strings without regard to case. This external is registered in the menu parser; use the engine `Hlp_StrCmp` function in Content scripts.
+
+```dae
+func int zDExt_Hlp_StrCmp(var string str1, var string str2) {};
+```
+
+- `str1`, `str2` – strings to compare
+- `return` – `TRUE` when the strings match after conversion to uppercase; otherwise `FALSE`
+
+```dae title="Example usage"
+if (zDExt_Hlp_StrCmp("Hero", "HERO"))
+{
+    zDExt_Menu_SetItemText("MENU_ITEM_PLAYERGUILD", "Necromancer", 0, TRUE);
 };
 ```
 

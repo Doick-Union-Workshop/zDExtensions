@@ -8,6 +8,6 @@ When a slot is changed, the hook will try to call a Daedalus function named: `zD
 ```dae title="Example usage"
 func void zDExt_Menu_SaveLoadGame_Hook()
 {
-    zDExt_Menu_SetItemText("MENUITEM_LOADSAVE_LEVELNAME_VALUE", "Valley of Mines");
+    zDExt_Menu_SetItemText("MENUITEM_LOADSAVE_LEVELNAME_VALUE", "Valley of Mines", 0, TRUE);
 };
 ```

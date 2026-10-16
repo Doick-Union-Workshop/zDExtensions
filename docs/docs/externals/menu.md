@@ -1,14 +1,16 @@
 # Menu functions
 
+Both functions are available in the content and menu parsers.
+
 ## zDExt_Menu_GetItemText
 
-Returns value of text on first line (`0` by default) of specified menu item.
+Returns the text at the specified line of a menu item. The line argument is required; pass `0` for the first line.
 
 ```dae
 func string zDExt_Menu_GetItemText(var string menuItemName, var int line) {};
 ```
 
-- `menuItemName`
+- `menuItemName` – name of the menu item (case-insensitive)
 - `line` – index of text lines array
 - `return` – text value of menu item
 
@@ -30,10 +32,10 @@ Sets value of specified menu item.
 func void zDExt_Menu_SetItemText(var string menuItemName, var string value, var int line, var int drawNow) {};
 ```
 
-- `menuItemName`
+- `menuItemName` – name of the menu item (case-insensitive)
 - `value` – text value to set
 - `line` – index of text lines array
-- `drawNow`
+- `drawNow` – `TRUE` to request immediate drawing, `FALSE` otherwise
 
 ```dae title="Example usage"
 zDExt_Menu_SetItemText("MENU_ITEM_PLAYERGUILD", "Necromancer", 0, TRUE);

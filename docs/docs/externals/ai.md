@@ -2,7 +2,7 @@
 
 ## zDExt_AI_TurnToWP
 
-Turns an NPC to a specified waypoint in the world.
+Queues an AI action that turns an NPC towards a waypoint. If no waypoint matches, the function also searches for a freepoint or another vob with that name. The target point must exist.
 
 ```dae
 func void zDExt_AI_TurnToWP(var C_NPC npc, var string wp) {};
@@ -17,7 +17,7 @@ zDExt_AI_TurnToWP(self, "WP_START");
 
 ## zDExt_AI_TurnToVob
 
-Turns an NPC to a specified freepoint or vob in the world. It works similarly to `zDExt_AI_TurnToWP`.
+Queues an AI action that turns an NPC towards a freepoint or vob in the world. If the vob is not found, no action is queued.
 
 ```dae
 func void zDExt_AI_TurnToVob(var C_NPC npc, var string vob) {};
@@ -29,6 +29,7 @@ func void zDExt_AI_TurnToVob(var C_NPC npc, var string vob) {};
 ```dae title="Example usage"
 zDExt_AI_TurnToVob(self, "CHEST_LOBART");
 ```
+
 ## zDExt_AI_TurnToPos
 
 Queues an AI action that turns the NPC towards the specified world position.
@@ -42,4 +43,24 @@ func void zDExt_AI_TurnToPos(var C_NPC npc, var float posX, var float posY, var 
 
 ```dae title="Example usage"
 zDExt_AI_TurnToPos(self, 16795.0, 1400.0, 23120.0);
+```
+
+## zDExt_AI_CallFunction
+
+Queues a script function call on the NPC through its AI event manager. Pass a function reference with no arguments.
+
+```dae
+func void zDExt_AI_CallFunction(var C_NPC npc, var func function) {};
+```
+
+- `npc` – NPC whose AI queue receives the call
+- `function` – reference to the Daedalus function to execute
+
+```dae title="Example usage"
+func void MyQueuedAction()
+{
+    Print("Queued action executed");
+};
+
+zDExt_AI_CallFunction(self, MyQueuedAction);
 ```

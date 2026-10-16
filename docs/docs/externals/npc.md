@@ -9,7 +9,7 @@ func string zDExt_Npc_GetRoutineFuncName(var C_NPC npc) {};
 ```
 
 - `npc` – instance of the NPC
-- `return` – function name of the NPC's current routine
+- `return` – function name of the NPC's current routine; empty if the NPC is invalid or the routine does not start with `RTN_`
 
 ```dae title="Example usage"
 if (Hlp_StrCmp(zDExt_Npc_GetRoutineFuncName(self), "RTN_PreStart_100"))
@@ -38,7 +38,7 @@ if (Hlp_StrCmp(zDExt_Npc_GetRoutineName(self), "PreStart"))
 
 ## zDExt_Npc_EquipItem
 
-Equips or unequips the specified item on the NPC.
+Equips or unequips an existing item on the NPC through the engine equip operation. It does not create an item.
 
 ```dae
 func void zDExt_Npc_EquipItem(var C_NPC npc, var int itemInstance) {};
@@ -236,7 +236,7 @@ func int zDExt_Npc_GetDistToVob(var C_NPC npc, var string vobName) {};
 
 - `npc` – instance of the NPC
 - `vobName` – name of vob in game world
-- `return` – distance between NPC and vob in cm
+- `return` – distance between NPC and vob in cm, truncated to an integer; `2147483647` if either object is invalid
 
 ```dae title="Example usage"
 if (zDExt_Npc_GetDistToVob(hero, "CHEST_LOBART") <= 500)
@@ -294,7 +294,7 @@ func string zDExt_Npc_GetPortalRoom(var C_NPC npc) {};
 ```
 
 - `npc` – instance of the NPC
-- `return` – name of the portal room
+- `return` – name of the portal room, or an empty string if the NPC is invalid or outside a portal room
 
 ```dae title="Example usage"
 var string room; room = zDExt_Npc_GetPortalRoom(hero);
@@ -318,4 +318,96 @@ func void zDExt_Npc_Teleport(var C_NPC npc, var string point) {};
 
 ```dae title="Example usage"
 zDExt_Npc_Teleport(hero, "START");
+```
+
+## zDExt_Npc_OpenInventorySteal
+
+Opens the steal inventory of the NPC currently focused by `npc`.
+
+```dae
+func void zDExt_Npc_OpenInventorySteal(var C_NPC npc) {};
+```
+
+- `npc` – NPC opening the steal inventory
+
+```dae title="Example usage"
+zDExt_Npc_OpenInventorySteal(hero);
+```
+
+## zDExt_Npc_SetAsPlayer
+
+Makes the specified NPC the player character.
+
+```dae
+func void zDExt_Npc_SetAsPlayer(var C_NPC npc) {};
+```
+
+- `npc` – NPC to set as the player character
+
+```dae title="Example usage"
+zDExt_Npc_SetAsPlayer(hero);
+```
+
+## zDExt_Npc_TakeItem
+
+Makes the NPC take the specified item vob directly, without adding an AI action to its queue.
+
+```dae
+func void zDExt_Npc_TakeItem(var C_NPC npc, var C_Item item) {};
+```
+
+- `npc` – NPC taking the item
+- `item` – reference to an existing item vob, not its instance ID
+
+```dae title="Example usage"
+var C_Item item;
+item = zDExt_Hlp_GetItem(ItLsTorch);
+zDExt_Npc_TakeItem(hero, item);
+```
+
+## zDExt_Npc_DropItem
+
+Makes the NPC drop the specified item vob directly, without adding an AI action to its queue.
+
+```dae
+func void zDExt_Npc_DropItem(var C_NPC npc, var C_Item item) {};
+```
+
+- `npc` – NPC dropping the item
+- `item` – reference to an existing item belonging to the NPC
+
+```dae title="Example usage"
+var C_Item item;
+item = zDExt_Hlp_GetItem(ItLsTorch);
+zDExt_Npc_DropItem(hero, item);
+```
+
+## zDExt_Npc_EquipArmor
+
+Passes the existing armor item to the engine armor equip operation. It does not create an item.
+
+```dae
+func void zDExt_Npc_EquipArmor(var C_NPC npc, var int itemInstance) {};
+```
+
+- `npc` – NPC equipping the armor
+- `itemInstance` – instance ID of an existing armor item
+
+```dae title="Example usage"
+zDExt_Npc_EquipArmor(hero, ITAR_MIL_L);
+```
+
+## zDExt_Npc_UnequipArmor
+
+Toggles the currently equipped armor through the engine armor equip operation. The second argument is required and must be nonzero; it does not select which armor is removed.
+
+```dae
+func void zDExt_Npc_UnequipArmor(var C_NPC npc, var int itemInstance) {};
+```
+
+- `npc` – NPC whose equipped armor is removed
+- `itemInstance` – nonzero argument required by the current implementation
+
+```dae title="Example usage"
+zDExt_Npc_UnequipArmor(hero, ITAR_MIL_L);
 ```

@@ -1,5 +1,7 @@
 # WLD – world manipulation functions
 
+The insert functions create new objects of the named engine class. They do not clone existing objects or configure a visual, inventory, or interaction state. `vobName` becomes the new object name (converted to uppercase). Set a visual separately with `zDExt_Vob_SetVisual`. The point-based variants do nothing when the target point is missing.
+
 ## zDExt_Wld_InsertVob
 
 Inserts a vob into the world at the position of a given waypoint, freepoint, or another vob.
@@ -17,7 +19,7 @@ zDExt_Wld_InsertVob("SECRET_CHEST", "WP_START");
 
 ## zDExt_Wld_InsertMob
 
-Inserts a static interactive object (mob) into the world at a given location.
+Inserts an `oCMOB` object into the world at a given location.
 
 ```dae
 func void zDExt_Wld_InsertMob(var string vobName, var string pointName) {};
@@ -250,7 +252,7 @@ Gets name of portal room where the player currently is.
 func string zDExt_Wld_GetPlayerPortalRoom() {};
 ```
 
-- `return` - name of player's portal room
+- `return` – name of the player's portal room, or an empty string when no portal is active
 
 ```dae title="Example usage"
 var string playerPortalRoom;
@@ -263,4 +265,95 @@ if (Hlp_StrCmp(playerPortalRoom, "hütte2"))
 ```
 
 !!! note
-    You can also use [zDExt_Npc_GetPortalRoom](http://localhost:8000/Doick-Union-Workshop/zDExtensions/externals/npc/#zdext_npc_getportalroom) instead.
+    You can also use [zDExt_Npc_GetPortalRoom](npc.md#zdext_npc_getportalroom) instead.
+
+## zDExt_Wld_GetWorldName
+
+Returns the current game world name.
+
+```dae
+func string zDExt_Wld_GetWorldName() {};
+```
+
+- `return` – world name returned by the engine
+
+```dae title="Example usage"
+var string worldName;
+worldName = zDExt_Wld_GetWorldName();
+```
+
+## zDExt_Wld_SetRainTime
+
+Sets the rain interval on the active outdoor sky controller only if the current game time is within the requested interval. Intervals crossing noon are rejected.
+
+```dae
+func int zDExt_Wld_SetRainTime(var int startHour, var int startMin, var int endHour, var int endMin) {};
+```
+
+- `startHour`, `endHour` – hours in the range 0–23
+- `startMin`, `endMin` – minutes in the range 0–59
+- `return` – `TRUE` if the interval was set; `FALSE` outside the interval, for an unsupported interval, or without an outdoor sky controller
+
+```dae title="Example usage"
+if (zDExt_Wld_SetRainTime(18, 0, 23, 0))
+{
+    Print("Rain interval set");
+};
+```
+
+## zDExt_Wld_SetRainOn
+
+Sets the rain interval to cover the full day. Does nothing without an outdoor sky controller.
+
+```dae
+func void zDExt_Wld_SetRainOn() {};
+```
+
+```dae title="Example usage"
+zDExt_Wld_SetRainOn();
+```
+
+## zDExt_Wld_SetRainOff
+
+Clears the rain interval and mutes rain sound. Does nothing without an outdoor sky controller.
+
+```dae
+func void zDExt_Wld_SetRainOff() {};
+```
+
+```dae title="Example usage"
+zDExt_Wld_SetRainOff();
+```
+
+## zDExt_Wld_OverrideWorldFogColors
+
+Adds a color to the outdoor sky controller's daytime fog color variations. This function is a work in progress: `index` is currently ignored and existing colors are not replaced.
+
+```dae
+func void zDExt_Wld_OverrideWorldFogColors(var int index, var string color) {};
+```
+
+- `index` – currently unused
+- `color` – three space-separated color components, parsed as floats
+
+```dae title="Example usage"
+zDExt_Wld_OverrideWorldFogColors(0, "100 120 140");
+```
+
+## zDExt_Wld_ChangeLevel
+
+Requests a level change and specifies the destination waypoint. Does nothing when the destination is the current world.
+
+```dae
+func void zDExt_Wld_ChangeLevel(var string worldName, var string waypoint) {};
+```
+
+- `worldName` – destination filename; use an uppercase `.ZEN` extension or omit the extension
+- `waypoint` – destination waypoint name
+
+```dae title="Example usage"
+zDExt_Wld_ChangeLevel("NEWWORLD.ZEN", "START");
+```
+
+!!! note "Weather type functions"
+    `zDExt_Wld_SetWeatherType` and `zDExt_Wld_GetWeatherType` have C++ implementations but are not registered as externals in the current build. They cannot currently be called from Daedalus.

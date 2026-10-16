@@ -1,11 +1,13 @@
 # Utility functions
 
+Pass the array variable itself. Indices are zero-based and must be within the array bounds; these functions do not check the bounds.
+
 ## zDExt_GetIntArrayValue
 
 Returns value of index in the array of integers.
 
 ```dae
-func int zDExt_GetIntArrayValue(var string arr, var int index) {};
+func int zDExt_GetIntArrayValue(var int arr, var int index) {};
 ```
 
 - `arr` – array of integers

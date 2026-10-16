@@ -43,7 +43,7 @@ func void zDExt_Vob_MoveTo(var string vobName, var string pointName) {};
 ```
 
 - `vobName` – name of vob in game world
-- `pointName` – name of waypoint, freepoint or vob in game world
+- `pointName` – name of an existing waypoint, freepoint or vob in game world
 
 ```dae title="Example usage"
 zDExt_Vob_MoveTo("CHEST_LOBART", "START");
@@ -142,7 +142,7 @@ func int zDExt_Vob_GetDistToNpc(var string vobName, var C_NPC npc) {};
 
 - `vobName` – name of vob in game world
 - `npc` – instance of the NPC
-- `return` – distance between vob and NPC in cm
+- `return` – distance between vob and NPC in cm, truncated to an integer; `2147483647` if either object is invalid
 
 ```dae title="Example usage"
 if (zDExt_Vob_GetDistToNpc("CHEST_LOBART", hero) <= 500)
@@ -160,7 +160,7 @@ func string zDExt_Vob_GetPortalRoom(var string vobName) {};
 ```
 
 - `vobName` – name of vob in game world
-- `return` – name of portal room
+- `return` – name of portal room, or an empty string when the vob is missing or outside a portal room
 
 ```dae title="Example usage"
 var string room; room = zDExt_Vob_GetPortalRoom("CHEST_LOBART");

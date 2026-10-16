@@ -8,6 +8,6 @@ When the status menu is displayed, the hook will try to call a Daedalus function
 ```dae title="Example usage"
 func void zDExt_Menu_Status_Hook()
 {
-    zDExt_Menu_SetItemText("MENU_ITEM_PLAYERGUILD", "Necromancer");
+    zDExt_Menu_SetItemText("MENU_ITEM_PLAYERGUILD", "Necromancer", 0, TRUE);
 };
 ```
