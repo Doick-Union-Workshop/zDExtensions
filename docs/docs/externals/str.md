@@ -50,7 +50,7 @@ Print(str); // Returns "Start"
 
 ## zDExt_Str_StartsWith
 
-Checks whether a string starts with a given prefix (case-insensitive).
+Checks whether a string starts with a given prefix (case-insensitive). An empty prefix always matches, including an empty string. A prefix longer than the string never matches.
 
 ```dae
 func int zDExt_Str_StartsWith(var string str, var string prefix) {};
@@ -69,7 +69,7 @@ if (zDExt_Str_StartsWith("GATE_MAIN", "GATE"))
 
 ## zDExt_Str_EndsWith
 
-Checks whether a string ends with a given suffix (case-insensitive).
+Checks whether a string ends with a given suffix (case-insensitive). An empty suffix always matches, including an empty string. A suffix longer than the string never matches.
 
 ```dae
 func int zDExt_Str_EndsWith(var string str, var string suffix) {};
